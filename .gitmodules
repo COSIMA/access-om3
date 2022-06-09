@@ -1,0 +1,3 @@
+[submodule "MOM6/MOM6"]
+	path = MOM6/MOM6
+	url = https://github.com/mom-ocean/MOM6
