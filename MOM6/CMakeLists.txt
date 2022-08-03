@@ -24,6 +24,7 @@ target_include_directories(MOM6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE
                                         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
 
 target_link_libraries(MOM6 PRIVATE FMS::fms_r8
+                                   NetCDF::NetCDF_C
                                    NetCDF::NetCDF_Fortran)
 
 
