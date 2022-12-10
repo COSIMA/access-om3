@@ -1,3 +1,6 @@
 [submodule "MOM6/MOM6"]
 	path = MOM6/MOM6
 	url = https://github.com/mom-ocean/MOM6
+[submodule "CICE/CICE"]
+	path = CICE/CICE
+	url = git@github.com:CICE-Consortium/CICE.git
