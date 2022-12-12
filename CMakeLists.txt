@@ -9,9 +9,11 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # Set what is going to be built
 set(MOM6 ON CACHE BOOL "Enable MOM6")
+set(CICE ON CACHE BOOL "Enable MOM6")
 
 message("")
 message("MOM6 ............. ${MOM6}")
+message("CICE ............. ${CICE}")
 
 # Debug or release mode?
 if(DEBUG)
@@ -30,4 +32,8 @@ endif()
 # Components
 if(MOM6)
   add_subdirectory(MOM6)
+endif()
+
+if(CICE)
+  add_subdirectory(CICE)
 endif()
