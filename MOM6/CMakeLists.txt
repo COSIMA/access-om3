@@ -27,12 +27,3 @@ target_link_libraries(MOM6 PRIVATE FMS::fms_r8
                                    NetCDF::NetCDF_C
                                    NetCDF::NetCDF_Fortran)
 
-
-# Installation
-include(GNUInstallDirs)
-
-install(
-  TARGETS MOM6
-  EXPORT  MOM6-targets
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
