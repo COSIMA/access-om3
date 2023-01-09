@@ -22,6 +22,7 @@ endif()
 # Find dependencies
 find_package(MPI REQUIRED)
 find_package(NetCDF 4.7.4 REQUIRED Fortran)
+find_package(ESMF 8.3.0 MODULE REQUIRED)
 find_package(fms COMPONENTS R8 REQUIRED)
 
 # Components

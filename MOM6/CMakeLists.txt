@@ -27,6 +27,7 @@ target_compile_options(mom6 PUBLIC "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_comp
 target_compile_options(mom6 PUBLIC "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(mom6 PUBLIC "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_link_libraries(mom6 PUBLIC FMS::fms_r8
+                                  esmf
                                   NetCDF::NetCDF_Fortran)
 
 ### Create standalone MOM6 executable
@@ -39,4 +40,5 @@ target_include_directories(mom6solo PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SO
                                             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
 target_link_libraries(mom6solo PRIVATE mom6
                                        FMS::fms_r8
+                                       esmf
                                        NetCDF::NetCDF_Fortran)
