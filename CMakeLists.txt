@@ -12,7 +12,9 @@ set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
 message(STATUS "Build options")
 message(STATUS "  - OPENMP ${OPENMP}")
 
-# Common compiler flags
+# Common compiler flags and definitions
+add_compile_definitions($<$<CONFIG:Debug>:DEBUG>)
+
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fbacktrace")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
@@ -24,6 +26,21 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
 else()
   message(WARNING "Fortran compiler with ID ${CMAKE_Fortran_COMPILER_ID} will be used with CMake default options")
 endif()
+
+if(CMAKE_C_COMPILER_ID MATCHES "GNU")
+  set(CMAKE_C_FLAGS_RELEASE "")
+  set(CMAKE_C_FLAGS_DEBUG "-g -O0")
+elseif(CMAKE_C_COMPILER_ID MATCHES "Intel")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -traceback")
+  set(CMAKE_C_FLAGS_RELEASE "")
+  set(CMAKE_C_FLAGS_DEBUG "-g -O0 -ftrapuv")
+elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_C_FLAGS_RELEASE "")
+  set(CMAKE_C_FLAGS_DEBUG "-g -O0")
+else()
+  message(WARNING "C compiler with ID ${CMAKE_C_COMPILER_ID} will be used with CMake default options")
+endif()
+
 
 # Find dependencies
 find_package(MPI REQUIRED)
