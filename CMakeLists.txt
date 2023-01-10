@@ -54,3 +54,4 @@ find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran STATIC)
 
 # Components
 add_subdirectory(MOM6)
+add_subdirectory(CICE)
