@@ -53,5 +53,13 @@ find_package(fms COMPONENTS R8 REQUIRED)
 find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran STATIC)
 
 # Components
+
+# MOM6
 add_subdirectory(MOM6)
+
+# CICE6
 add_subdirectory(CICE)
+
+# WW3
+set(SWITCH "multi_esmf" CACHE STRING "NUOPC mesh cap")
+add_subdirectory(WW3)
