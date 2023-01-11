@@ -63,3 +63,6 @@ add_subdirectory(CICE)
 # WW3
 set(SWITCH "multi_esmf" CACHE STRING "NUOPC mesh cap")
 add_subdirectory(WW3)
+
+# CMEPS
+add_subdirectory(CMEPS)
