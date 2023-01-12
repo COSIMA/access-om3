@@ -1,5 +1,6 @@
 <img src="https://github.com/COSIMA/logo/blob/master/png/logo_word.png" width="300"/><img src="https://www.access-nri.org.au/wp-content/themes/accessnri/images/logos/access_logo_rgb.svg" width="200"/>
 <br/> <br/>
+[![Compilation Status](https://github.com/COSIMA/access-om3/actions/workflows/compilation.yml/badge.svg)](https://github.com/COSIMA/access-om3/actions/workflows/compilation.yml)
 
 # ACCESS-OM3
 
