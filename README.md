@@ -6,9 +6,9 @@
 
 ACCESS-OM3 is a global coupled ocean - sea ice - wave model being developed by [COSIMA](http://www.cosima.org.au) and [ACCESS-NRI](https://www.access-nri.org.au/). 
 
-# Downloading
-
 <i><b>WARNING:</b> this is a very early pre-release development version and doesn't yet work!</i>
+
+# Downloading
 
 This respository contains submodules, so you will need to clone it with the `--recursive` flag:
 ```
@@ -24,6 +24,24 @@ followed by
 git submodule update --init --recursive
 ```
 to update all the submodules.
+
+# Building
+
+Currently requires membership of the `access` project - apply at https://my.nci.org.au/mancini/project/access if needed.
+
+```
+git checkout add-build
+./build.sh
+```
+
+# Configurations
+
+These currently use different executables but will eventually be updated to use exes built from this repo.
+Also currently require membership of the `tm70` project - apply at https://my.nci.org.au/mancini/project/tm70 if needed.
+
+- https://github.com/COSIMA/MOM6-CICE6-WW3
+- https://github.com/COSIMA/MOM6-CICE6
+- https://github.com/COSIMA/CICE6-WW3
 
 # Where to find information
 
