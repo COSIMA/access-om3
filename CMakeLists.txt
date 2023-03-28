@@ -52,6 +52,9 @@ find_package(ESMF 8.3.0 MODULE REQUIRED)
 find_package(fms COMPONENTS R8 REQUIRED)
 find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran STATIC)
 
+# Some code shared by several components
+add_subdirectory(share)
+
 # Components
 
 # Ocean component (MOM6)

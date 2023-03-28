@@ -13,3 +13,6 @@
 [submodule "CDEPS/CDEPS"]
 	path = CDEPS/CDEPS
 	url = https://github.com/ESCOMP/CDEPS
+[submodule "share/CESM_share"]
+	path = share/CESM_share
+	url = https://github.com/ESCOMP/CESM_share.git
