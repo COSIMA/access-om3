@@ -69,8 +69,6 @@ list(APPEND _nuopc_cap_share_files
 ### Create target library
 add_library(cmeps STATIC ${_mediator_files} ${_nuopc_cap_share_files})
 
-add_compile_definitions(CESMCOUPLED)
-
 ### Set PUBLIC interfaces on the library
 set_target_properties(cmeps PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(cmeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>

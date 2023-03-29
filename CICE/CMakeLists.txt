@@ -58,7 +58,7 @@ target_compile_options(cice PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:
 target_compile_options(cice PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_compile_options(cice PRIVATE "$<$<COMPILE_LANGUAGE:C>:${c_compile_flags}>")
 target_compile_options(cice PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:C>>:${c_compile_flags_release}>")
-target_link_libraries(cice PUBLIC esmf)
+target_link_libraries(cice PUBLIC share cdeps esmf)
 
 if(CICE_IO MATCHES "^(NetCDF|PIO)$")
   target_link_libraries(cice PUBLIC NetCDF::NetCDF_Fortran)

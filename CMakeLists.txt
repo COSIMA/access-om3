@@ -13,7 +13,10 @@ message(STATUS "Build options")
 message(STATUS "  - OPENMP ${OPENMP}")
 
 # Common compiler flags and definitions
-add_compile_definitions($<$<CONFIG:Debug>:DEBUG>)
+add_compile_definitions(
+  $<$<CONFIG:Debug>:DEBUG>
+  CESMCOUPLED
+)
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fbacktrace")

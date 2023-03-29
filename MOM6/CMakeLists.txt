@@ -26,7 +26,8 @@ target_include_directories(mom6 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_
 target_compile_options(mom6 PUBLIC "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(mom6 PUBLIC "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(mom6 PUBLIC "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
-target_link_libraries(mom6 PUBLIC FMS::fms_r8
+target_link_libraries(mom6 PUBLIC share
+                                  FMS::fms_r8
                                   esmf
                                   NetCDF::NetCDF_Fortran)
 

@@ -49,8 +49,6 @@ list(APPEND cdeps_src_files
 
 add_library(cdeps STATIC ${cdeps_src_files})
 
-add_compile_definitions(CESMCOUPLED)
-
 set_target_properties(cdeps PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_compile_definitions(cdeps PRIVATE "DISABLE_FoX")
 target_include_directories(cdeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
