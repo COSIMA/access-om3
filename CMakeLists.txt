@@ -75,3 +75,19 @@ add_subdirectory(CMEPS)
 
 # Data component (CDEPS)
 add_subdirectory(CDEPS)
+
+
+# Driver
+
+# We use the CESM driver from CMEPS
+add_library(cesm_driver
+  CMEPS/CMEPS/cesm/driver/esm.F90
+  CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
+  CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
+)
+target_link_libraries(cesm_driver PUBLIC share mom6 cice WW3::WW3 cmeps cdeps esmf PIO::PIO_Fortran)
+
+set_target_properties(cesm_driver PROPERTIES Fortran_MODULE_DIRECTORY
+  ${CMAKE_CURRENT_BINARY_DIR}/mod)
+target_include_directories(cesm_driver PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
+                                         $<INSTALL_INTERFACE:mod>)
