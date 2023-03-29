@@ -17,14 +17,8 @@ endif()
 ### Source files
 ###############################################################################
 
-list(APPEND _nems_util_files
-  CMEPS/ufs/flux_atmocn_mod.F90
-  CMEPS/ufs/glc_elevclass_mod.F90
-  CMEPS/ufs/ufs_kind_mod.F90
-  CMEPS/ufs/perf_mod.F90
-  CMEPS/ufs/ufs_const_mod.F90)
-
 list(APPEND _mediator_files
+  CMEPS/cesm/flux_atmocn/shr_flux_mod.F90
   CMEPS/mediator/med_phases_restart_mod.F90
   CMEPS/mediator/med_map_mod.F90
   CMEPS/mediator/med_methods_mod.F90
@@ -61,12 +55,21 @@ list(APPEND _mediator_files
   CMEPS/mediator/med_phases_post_rof_mod.F90
   CMEPS/mediator/med_phases_post_wav_mod.F90)
 
+list(APPEND _nuopc_cap_share_files
+  CMEPS/cesm/nuopc_cap_share/driver_pio_mod.F90
+  CMEPS/cesm/nuopc_cap_share/esm_utils_mod.F90
+  CMEPS/cesm/nuopc_cap_share/glc_elevclass_mod.F90
+  CMEPS/cesm/nuopc_cap_share/nuopc_shr_methods.F90
+)
+
 ###############################################################################
 ### Libraries
 ###############################################################################
 
 ### Create target library
-add_library(cmeps STATIC ${_nems_util_files} ${_mediator_files})
+add_library(cmeps STATIC ${_mediator_files} ${_nuopc_cap_share_files})
+
+add_compile_definitions(CESMCOUPLED)
 
 ### Set PUBLIC interfaces on the library
 set_target_properties(cmeps PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
@@ -75,7 +78,8 @@ target_include_directories(cmeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY
 target_compile_options(cmeps PUBLIC "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(cmeps PUBLIC "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(cmeps PUBLIC "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
-target_link_libraries(cmeps PUBLIC FMS::fms_r8
+target_link_libraries(cmeps PUBLIC share
+                                   FMS::fms_r8
                                    esmf
                                    PIO::PIO_Fortran)
 if(OpenMP_Fortran_FOUND)
