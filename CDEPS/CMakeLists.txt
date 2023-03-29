@@ -53,7 +53,7 @@ set_target_properties(cdeps PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_
 target_compile_definitions(cdeps PRIVATE "DISABLE_FoX")
 target_include_directories(cdeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
   $<INSTALL_INTERFACE:mod>)
-target_compile_options(cdeps PUBLIC "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
-target_compile_options(cdeps PUBLIC "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
-target_compile_options(cdeps PUBLIC "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
+target_compile_options(cdeps PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
+target_compile_options(cdeps PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
+target_compile_options(cdeps PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_link_libraries(cdeps PUBLIC share cmeps esmf PIO::PIO_Fortran)
