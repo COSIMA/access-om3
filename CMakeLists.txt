@@ -91,3 +91,7 @@ set_target_properties(cesm_driver PROPERTIES Fortran_MODULE_DIRECTORY
   ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(cesm_driver PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
                                          $<INSTALL_INTERFACE:mod>)
+
+
+add_executable(access-om3 CMEPS/CMEPS/cesm/driver/esmApp.F90)
+target_link_libraries(access-om3 PRIVATE cesm_driver esmf PIO::PIO_Fortran NetCDF::NetCDF_Fortran)
