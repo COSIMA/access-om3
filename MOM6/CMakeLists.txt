@@ -30,16 +30,3 @@ target_link_libraries(mom6 PUBLIC share
                                   FMS::fms_r8
                                   esmf
                                   NetCDF::NetCDF_Fortran)
-
-### Create standalone MOM6 executable
-add_executable(mom6solo ${mom6_solo_src_files})
-add_dependencies(mom6solo mom6)
-set_target_properties(mom6solo PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod_solo)
-target_include_directories(mom6solo PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>)
-target_include_directories(mom6solo PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod_solo>)
-target_include_directories(mom6solo PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/config_src/memory/${MOM_memory}>
-                                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
-target_link_libraries(mom6solo PRIVATE mom6
-                                       FMS::fms_r8
-                                       esmf
-                                       NetCDF::NetCDF_Fortran)
