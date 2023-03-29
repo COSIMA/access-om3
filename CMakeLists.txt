@@ -53,7 +53,7 @@ endif()
 find_package(NetCDF 4.7.4 REQUIRED Fortran)
 find_package(ESMF 8.3.0 MODULE REQUIRED)
 find_package(fms COMPONENTS R8 REQUIRED)
-find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran STATIC)
+find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran)
 
 # Some code shared by several components
 add_subdirectory(share)
