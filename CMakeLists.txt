@@ -6,6 +6,11 @@ project(ACCESS-OM3
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+# Components to enable
+set(ENABLE_MOM6     ON  CACHE BOOL "Enable MOM6")
+set(ENABLE_CICE     ON  CACHE BOOL "Enable CICE6")
+set(ENABLE_WW3      OFF CACHE BOOL "Enable WW3")
+
 # Build options
 set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
 
@@ -61,14 +66,23 @@ add_subdirectory(share)
 # Components
 
 # Ocean component (MOM6)
-add_subdirectory(MOM6)
+if(ENABLE_MOM6)
+  add_subdirectory(MOM6)
+  list(APPEND COMPONENTS_TARGETS mom6)
+endif()
 
 # Sea-ice component (CICE6)
-add_subdirectory(CICE)
+if(ENABLE_CICE)
+  add_subdirectory(CICE)
+  list(APPEND COMPONENTS_TARGETS cice)
+endif()
 
 # Wave component (WW3)
-set(SWITCH "multi_esmf" CACHE STRING "NUOPC mesh cap")
-add_subdirectory(WW3)
+if(ENABLE_WW3)
+  set(SWITCH "multi_esmf" CACHE STRING "NUOPC mesh cap")
+  add_subdirectory(WW3)
+  list(APPEND COMPONENTS_TARGETS WW3::WW3)
+endif()
 
 # Mediator component (CMEPS)
 add_subdirectory(CMEPS)
@@ -85,13 +99,20 @@ add_library(cesm_driver
   CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
   CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
 )
-target_link_libraries(cesm_driver PUBLIC share mom6 cice WW3::WW3 cmeps cdeps esmf PIO::PIO_Fortran)
-
+target_link_libraries(cesm_driver PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps esmf PIO::PIO_Fortran)
 set_target_properties(cesm_driver PROPERTIES Fortran_MODULE_DIRECTORY
   ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(cesm_driver PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
-                                         $<INSTALL_INTERFACE:mod>)
+                                              $<INSTALL_INTERFACE:mod>)
 
+target_compile_definitions(cesm_driver PRIVATE MED_PRESENT
+                                               ATM_PRESENT
+                                               ICE_PRESENT
+                                               LND_PRESENT
+                                               OCN_PRESENT
+                                               WAV_PRESENT
+                                               ROF_PRESENT
+)
 
 add_executable(access-om3 CMEPS/CMEPS/cesm/driver/esmApp.F90)
 target_link_libraries(access-om3 PRIVATE cesm_driver esmf PIO::PIO_Fortran NetCDF::NetCDF_Fortran)

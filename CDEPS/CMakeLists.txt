@@ -30,22 +30,35 @@ list(APPEND cdeps_src_files
   CDEPS/datm/datm_datamode_gefs_mod.F90
   CDEPS/datm/datm_datamode_jra_mod.F90
 
-  CDEPS/dice/dice_datamode_ssmi_mod.F90
-  CDEPS/dice/dice_flux_atmice_mod.F90
-  CDEPS/dice/ice_comp_nuopc.F90
-
   CDEPS/dlnd/lnd_comp_nuopc.F90
 
-  CDEPS/docn/docn_datamode_aquaplanet_mod.F90
-  CDEPS/docn/docn_datamode_copyall_mod.F90
-  CDEPS/docn/docn_datamode_iaf_mod.F90
-  CDEPS/docn/docn_datamode_som_mod.F90
-  CDEPS/docn/ocn_comp_nuopc.F90
-
   CDEPS/drof/rof_comp_nuopc.F90
-
-  CDEPS/dwav/wav_comp_nuopc.F90
 )
+
+
+if(NOT ENABLE_MOM6)
+  list(APPEND cdeps_src_files
+    CDEPS/docn/docn_datamode_aquaplanet_mod.F90
+    CDEPS/docn/docn_datamode_copyall_mod.F90
+    CDEPS/docn/docn_datamode_iaf_mod.F90
+    CDEPS/docn/docn_datamode_som_mod.F90
+    CDEPS/docn/ocn_comp_nuopc.F90
+  )
+endif()
+
+if(NOT ENABLE_CICE)
+  list(APPEND cdeps_src_files
+    CDEPS/dice/dice_datamode_ssmi_mod.F90
+    CDEPS/dice/dice_flux_atmice_mod.F90
+    CDEPS/dice/ice_comp_nuopc.F90
+  )
+endif()
+
+if(NOT ENABLE_WW3)
+  list(APPEND cdeps_src_files
+    CDEPS/dwav/wav_comp_nuopc.F90
+  )
+endif()
 
 add_library(cdeps STATIC ${cdeps_src_files})
 

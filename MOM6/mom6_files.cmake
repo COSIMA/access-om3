@@ -293,6 +293,7 @@ list(APPEND mom6_src_files
   MOM6/config_src/infra/FMS2/MOM_time_manager.F90
 
   MOM6/config_src/drivers/nuopc_cap/mom_cap.F90
+  MOM6/config_src/drivers/nuopc_cap/ocn_comp_NUOPC.F90
   MOM6/config_src/drivers/nuopc_cap/time_utils.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_time.F90
