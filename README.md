@@ -30,7 +30,7 @@ to update all the submodules.
 Currently requires membership of the `access` project - apply at https://my.nci.org.au/mancini/project/access if needed.
 
 ```
-git checkout add-build
+git checkout add-components
 ./build.sh
 ```
 
