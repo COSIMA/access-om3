@@ -3,7 +3,7 @@
 	url = https://github.com/mom-ocean/MOM6
 [submodule "CICE6/CICE6"]
 	path = CICE/CICE
-	url = https://github.com/CICE-Consortium/CICE
+	url = https://github.com/ESCOMP/CICE
 [submodule "WW3"]
 	path = WW3
 	url = https://github.com/NOAA-EMC/WW3

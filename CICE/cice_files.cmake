@@ -49,8 +49,7 @@ list(APPEND cice_shared_files
   CICE/cicecore/cicedynB/infrastructure/ice_read_write.F90
   CICE/cicecore/cicedynB/infrastructure/ice_restart_driver.F90
   CICE/cicecore/cicedynB/infrastructure/ice_restoring.F90
-  CICE/cicecore/cicedynB/infrastructure/ice_memusage.F90
-  CICE/cicecore/cicedynB/infrastructure/ice_memusage_gptl.c)
+)
 
 
 #Icepack List:
@@ -87,6 +86,8 @@ list(APPEND icepack_files
   CICE/icepack/columnphysics/icepack_zbgc.F90
   CICE/icepack/columnphysics/icepack_zbgc_shared.F90
   CICE/icepack/columnphysics/icepack_zsalinity.F90
+  CICE/icepack/columnphysics/icepack_therm_0layer.F90
+  CICE/icepack/columnphysics/icepack_meltpond_cesm.F90
 )
 
 list(APPEND cice_shared_files_c
