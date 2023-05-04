@@ -84,5 +84,5 @@ module load parallelio-2.5.9-intel-${COMPILER_VERSION}-zqo4fh6  # use result of 
 
 rm -r build || true
 
-cmake --debug-find -S . -B build -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpif90"
+cmake --debug-find -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpif90"
 cmake --build build -j 4 -v
