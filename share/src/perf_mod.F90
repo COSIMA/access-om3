@@ -58,8 +58,10 @@ end module perf_mod
 ! add some stubs here.
 integer function GPTLget_memusage(size, rss, share, text, datastack)
   integer :: size, rss, share, text, datastack
+  GPTLget_memusage = 0
 end function GPTLget_memusage
 
 integer function GPTLprint_memusage(str)
   character(len=*) :: str
+  GPTLprint_memusage = 0
 end function GPTLprint_memusage
