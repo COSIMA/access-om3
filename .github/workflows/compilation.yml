@@ -2,9 +2,6 @@ name: compilation
 
 on:
   push:
-  pull_request:
-    branches:
-      - 'master'
 
 jobs:
   compilation:
@@ -13,11 +10,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [debian, fedora]
+        compiler: [gcc]
         build_type: [Debug, Release]
 
     container:
-      image: ghcr.io/cosima/access-om3-ci-images/${{matrix.os}}:0.2.0
+      image: ghcr.io/cosima/access-om3-ci-images/${{matrix.compiler}}:0.3.0
 
     steps:
       - name: Checkout
@@ -26,8 +23,8 @@ jobs:
           submodules: recursive
 
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpifort" -DCMAKE_Fortran_FLAGS="-I$MPI_FORTRAN_MOD_DIR" -DCMAKE_VERBOSE_MAKEFILE=ON
+        run: . /etc/profile && cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{matrix.build_type}} -DCMAKE_VERBOSE_MAKEFILE=ON
 
       - name: Build
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build --config ${{matrix.build_type}}
+        run: . /etc/profile && cmake --build ${{github.workspace}}/build --config ${{matrix.build_type}}
