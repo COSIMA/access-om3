@@ -25,24 +25,6 @@ git submodule update --init --recursive
 ```
 to update all the submodules.
 
-# Building
+# Further information (including building and running the model)
 
-Currently requires membership of the `access` project - apply at https://my.nci.org.au/mancini/project/access if needed.
-
-```
-git checkout add-components
-./build.sh
-```
-
-# Configurations
-
-These currently use different executables but will eventually be updated to use exes built from this repo.
-Also currently require membership of the `tm70` project - apply at https://my.nci.org.au/mancini/project/tm70 if needed.
-
-- https://github.com/COSIMA/MOM6-CICE6-WW3
-- https://github.com/COSIMA/MOM6-CICE6
-- https://github.com/COSIMA/CICE6-WW3
-
-# Where to find information
-
-For information on downloading, building and running the model, see the [ACCESS-OM3 wiki](https://github.com/COSIMA/access-om3/wiki).
+See the [ACCESS-OM3 wiki](https://github.com/COSIMA/access-om3/wiki), particularly the [quick start](https://github.com/COSIMA/access-om3/wiki/Quick-start).
