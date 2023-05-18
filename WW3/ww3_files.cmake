@@ -22,7 +22,6 @@ list(APPEND ww3_src_files
   WW3/model/src/w3iosfmd.F90
   WW3/model/src/w3iotrmd.F90
   WW3/model/src/w3meminfo.F90
-  WW3/model/src/w3nmlshelmd.F90
   WW3/model/src/w3odatmd.F90
   WW3/model/src/w3parall.F90
   WW3/model/src/w3partmd.F90
@@ -47,12 +46,10 @@ list(APPEND ww3_src_files
   WW3/model/src/w3wavemd.F90
   WW3/model/src/w3wdasmd.F90
   WW3/model/src/w3wdatmd.F90
-  WW3/model/src/wmmdatmd.F90
   WW3/model/src/wav_comp_nuopc.F90
   WW3/model/src/wav_grdout.F90
   WW3/model/src/wav_import_export.F90
   WW3/model/src/wav_kind_mod.F90
   WW3/model/src/wav_shel_inp.F90
-  WW3/model/src/wav_shr_flags.F90
   WW3/model/src/wav_shr_mod.F90
 )
