@@ -11,6 +11,8 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   set(fortran_compile_flags_debug -check "SHELL:-check noarg_temp_created" "SHELL:-check nopointer" -fpe0 -ftrapuv -init=snan,arrays)
 endif()
 
+add_subdirectory(fox)
+
 list(APPEND cdeps_src_files
   CDEPS/streams/dshr_methods_mod.F90
   CDEPS/streams/dshr_strdata_mod.F90
@@ -63,10 +65,12 @@ endif()
 add_library(cdeps STATIC ${cdeps_src_files})
 
 set_target_properties(cdeps PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
-target_compile_definitions(cdeps PRIVATE "DISABLE_FoX")
+#target_compile_definitions(cdeps PRIVATE "DISABLE_FoX")
 target_include_directories(cdeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
   $<INSTALL_INTERFACE:mod>)
+target_include_directories(cdeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+
 target_compile_options(cdeps PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(cdeps PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(cdeps PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
-target_link_libraries(cdeps PUBLIC share cmeps esmf PIO::PIO_Fortran)
+target_link_libraries(cdeps PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom)
