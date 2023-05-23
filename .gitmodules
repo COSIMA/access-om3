@@ -16,3 +16,6 @@
 [submodule "share/CESM_share"]
 	path = share/CESM_share
 	url = https://github.com/ESCOMP/CESM_share.git
+[submodule "CDEPS/fox"]
+	path = CDEPS/fox
+	url = https://github.com/ESMCI/fox/
