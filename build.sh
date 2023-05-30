@@ -28,3 +28,10 @@ rm -r build || true
 
 cmake --debug-find -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpif90" -DNetCDF_C_LIBRARY=$SPACK_NETCDF_C_ROOT/lib/libnetcdf.so -DNetCDF_Fortran_LIBRARY=$SPACK_NETCDF_FORTRAN_ROOT/lib/libnetcdff.so -DNetCDF_Fortran_INCLUDE_DIRS=$SPACK_NETCDF_FORTRAN_ROOT/include
 cmake --build build -j 4 -v
+
+hash=`git rev-parse --short=7 HEAD`
+test -z "$(git status --porcelain)" || hash=${hash}-modified # uncommitted changes or untracked files
+mkdir -p bin
+cp -p build/access-om3 bin/access-om3-${hash}
+
+echo "Successfully built bin/access-om3-${hash}"
