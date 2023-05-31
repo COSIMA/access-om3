@@ -11,6 +11,12 @@ set(ENABLE_MOM6     ON  CACHE BOOL "Enable MOM6")
 set(ENABLE_CICE     ON  CACHE BOOL "Enable CICE6")
 set(ENABLE_WW3      ON  CACHE BOOL "Enable WW3")
 
+message(STATUS "Components")
+message(STATUS "  - MOM6 ${ENABLE_MOM6}")
+message(STATUS "  - CICE ${ENABLE_CICE}")
+message(STATUS "  - WW3  ${ENABLE_WW3}")
+
+
 # Build options
 set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
 
