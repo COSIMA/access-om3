@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # Components to enable
 set(ENABLE_MOM6     ON  CACHE BOOL "Enable MOM6")
 set(ENABLE_CICE     ON  CACHE BOOL "Enable CICE6")
-set(ENABLE_WW3      OFF CACHE BOOL "Enable WW3")
+set(ENABLE_WW3      ON  CACHE BOOL "Enable WW3")
 
 # Build options
 set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
