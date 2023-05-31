@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # Components to enable
 set(ENABLE_MOM6     ON  CACHE BOOL "Enable MOM6")
 set(ENABLE_CICE     ON  CACHE BOOL "Enable CICE6")
-set(ENABLE_WW3      OFF CACHE BOOL "Enable WW3")
+set(ENABLE_WW3      ON  CACHE BOOL "Enable WW3")
 
 # Build options
 set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
@@ -19,7 +19,6 @@ message(STATUS "  - OPENMP ${OPENMP}")
 
 # Common compiler flags and definitions
 add_compile_definitions(
-  $<$<CONFIG:Debug>:DEBUG>
   CESMCOUPLED
 )
 
@@ -79,9 +78,8 @@ endif()
 
 # Wave component (WW3)
 if(ENABLE_WW3)
-  set(SWITCH "multi_esmf" CACHE STRING "NUOPC mesh cap")
   add_subdirectory(WW3)
-  list(APPEND COMPONENTS_TARGETS WW3::WW3)
+  list(APPEND COMPONENTS_TARGETS ww3)
 endif()
 
 # Mediator component (CMEPS)
@@ -94,7 +92,7 @@ add_subdirectory(CDEPS)
 # Driver
 
 # We use the CESM driver from CMEPS
-add_library(cesm_driver
+add_library(cesm_driver STATIC
   CMEPS/CMEPS/cesm/driver/esm.F90
   CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
   CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
@@ -112,6 +110,7 @@ target_compile_definitions(cesm_driver PRIVATE MED_PRESENT
                                                OCN_PRESENT
                                                WAV_PRESENT
                                                ROF_PRESENT
+                                               $<$<CONFIG:Debug>:DEBUG>
 )
 
 add_executable(access-om3 CMEPS/CMEPS/cesm/driver/esmApp.F90)
