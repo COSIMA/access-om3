@@ -16,3 +16,6 @@
 [submodule "CDEPS/fox"]
 	path = CDEPS/fox
 	url = https://github.com/ESMCI/fox/
+[submodule "WW3/WW3"]
+	path = WW3/WW3
+	url = https://github.com/ESCOMP/WW3
