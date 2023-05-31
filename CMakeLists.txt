@@ -19,7 +19,6 @@ message(STATUS "  - OPENMP ${OPENMP}")
 
 # Common compiler flags and definitions
 add_compile_definitions(
-  $<$<CONFIG:Debug>:DEBUG>
   CESMCOUPLED
 )
 
@@ -94,7 +93,7 @@ add_subdirectory(CDEPS)
 # Driver
 
 # We use the CESM driver from CMEPS
-add_library(cesm_driver
+add_library(cesm_driver STATIC
   CMEPS/CMEPS/cesm/driver/esm.F90
   CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
   CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
@@ -112,6 +111,7 @@ target_compile_definitions(cesm_driver PRIVATE MED_PRESENT
                                                OCN_PRESENT
                                                WAV_PRESENT
                                                ROF_PRESENT
+                                               $<$<CONFIG:Debug>:DEBUG>
 )
 
 add_executable(access-om3 CMEPS/CMEPS/cesm/driver/esmApp.F90)
