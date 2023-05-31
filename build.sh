@@ -32,15 +32,15 @@ rm -r build || true
 
 cmake --debug-find -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpif90" -DNetCDF_C_LIBRARY=$SPACK_NETCDF_C_ROOT/lib/libnetcdf.so -DNetCDF_Fortran_LIBRARY=$SPACK_NETCDF_FORTRAN_ROOT/lib/libnetcdff.so -DNetCDF_Fortran_INCLUDE_DIRS=$SPACK_NETCDF_FORTRAN_ROOT/include
 cmake --build build -j 4 -v
-cp -p build/access-om3 bin/access-om3-${hash}
-echo "Successfully built bin/access-om3-${hash}"
+cp -p build/access-om3 bin/access-om3-MOM6-CICE6-WW3-${hash}
+echo "Successfully built bin/access-om3-MOM6-CICE6-WW3-${hash}"
 
 cmake -DENABLE_WW3=OFF --debug-find -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpif90" -DNetCDF_C_LIBRARY=$SPACK_NETCDF_C_ROOT/lib/l$
 cmake --build build -j 4 -v
-cp -p build/access-om3 bin/access-om3-noWW3-${hash}
-echo "Successfully built bin/access-om3-noWW3-${hash}"
+cp -p build/access-om3 bin/access-om3-MOM6-CICE6-${hash}
+echo "Successfully built bin/access-om3-MOM6-CICE6-${hash}"
 
 cmake -DENABLE_MOM6=OFF --debug-find -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpif90" -DNetCDF_C_LIBRARY=$SPACK_NE$
 cmake --build build -j 4 -v
-cp -p build/access-om3 bin/access-om3-noMOM6-${hash}
-echo "Successfully built bin/access-om3-noMOM6-${hash}"
+cp -p build/access-om3 bin/access-om3-CICE6-WW3-${hash}
+echo "Successfully built bin/access-om3-CICE6-WW3-${hash}"
