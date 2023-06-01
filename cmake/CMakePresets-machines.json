@@ -1,0 +1,41 @@
+{
+  "version": 5,
+  "include": [
+    "CMakePresets-defaults.json",
+    "CMakePresets-compilers.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "gadi",
+      "displayName": "Configure preset for Gadi",
+      "inherits": [
+        "openmpi"
+      ],
+      "cacheVariables": {
+        "NetCDF_C_LIBRARY": {
+          "type": "FILEPATH",
+          "value": "$env{SPACK_NETCDF_C_ROOT}/lib/libnetcdf.so"
+        },
+        "NetCDF_Fortran_LIBRARY": {
+          "type": "FILEPATH",
+          "value": "$env{SPACK_NETCDF_FORTRAN_ROOT}/lib/libnetcdff.so"
+        },
+        "NetCDF_Fortran_INCLUDE_DIRS": {
+          "type": "FILEPATH",
+          "value": "$env{SPACK_NETCDF_FORTRAN_ROOT}/include"
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "gadi",
+      "displayName": "Build preset for Gadi",
+      "inherits": [
+        "openmpi"
+      ],
+      "cleanFirst": true,
+      "configurePreset": "gadi"
+    }
+  ]
+}

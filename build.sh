@@ -18,6 +18,7 @@ OPENMPI_VERSION=4.1.4
 # CMakeLists.txt requires ESMF v8.3.0 or higher, FMS, and ParallelIO, but NCI doesn't supply them, so we use our own installation via spack.
 
 module purge
+module load cmake/3.24.2
 module use /g/data/ik11/spack/0.19.0/share/modules/linux-rocky8-cascadelake  # requires membership of "ik11" group
 module load esmf/8.3.1-intel-${COMPILER_VERSION} fms/2020.04.03-intel-${COMPILER_VERSION} parallelio/2.5.9-intel-${COMPILER_VERSION}
 module load intel-compiler/${COMPILER_VERSION} openmpi/${OPENMPI_VERSION}
@@ -30,7 +31,7 @@ test -z "$(git status --porcelain)" || hash=${hash}-modified # uncommitted chang
 mkdir -p bin
 rm -r build || true
 
-cmake --debug-find -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_C_COMPILER="mpicc" -DCMAKE_Fortran_COMPILER="mpif90" -DNetCDF_C_LIBRARY=$SPACK_NETCDF_C_ROOT/lib/libnetcdf.so -DNetCDF_Fortran_LIBRARY=$SPACK_NETCDF_FORTRAN_ROOT/lib/libnetcdff.so -DNetCDF_Fortran_INCLUDE_DIRS=$SPACK_NETCDF_FORTRAN_ROOT/include
+cmake -S . -B build --preset=gadi -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON
 cmake --build build -j 4 -v
 
 for exec in build/access-om3*; do
