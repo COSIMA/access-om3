@@ -32,7 +32,7 @@ mkdir -p bin
 rm -r build || true
 
 cmake -S . -B build --preset=gadi -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON
-cmake --build build -j 4 -v
+cmake --build build -j 4
 
 for exec in build/access-om3*; do
   dest=bin/$(basename ${exec})-${hash}
