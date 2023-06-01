@@ -70,30 +70,35 @@ add_subdirectory(share)
 
 # Components
 
+# Data component (CDEPS)
+add_subdirectory(CDEPS)
+
 # Ocean component (MOM6)
 if(ENABLE_MOM6)
   add_subdirectory(MOM6)
   list(APPEND COMPONENTS_TARGETS mom6)
+else()
+  list(APPEND COMPONENTS_TARGETS cdeps_docn)
 endif()
 
 # Sea-ice component (CICE6)
 if(ENABLE_CICE)
   add_subdirectory(CICE)
   list(APPEND COMPONENTS_TARGETS cice)
+else()
+  list(APPEND COMPONENTS_TARGETS cdeps_dice)
 endif()
 
 # Wave component (WW3)
 if(ENABLE_WW3)
   add_subdirectory(WW3)
   list(APPEND COMPONENTS_TARGETS ww3)
+else()
+  list(APPEND COMPONENTS_TARGETS cdeps_dwav)
 endif()
 
 # Mediator component (CMEPS)
 add_subdirectory(CMEPS)
-
-# Data component (CDEPS)
-add_subdirectory(CDEPS)
-
 
 # Driver
 
@@ -103,7 +108,7 @@ add_library(cesm_driver STATIC
   CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
   CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
 )
-target_link_libraries(cesm_driver PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps esmf PIO::PIO_Fortran)
+target_link_libraries(cesm_driver PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common esmf PIO::PIO_Fortran)
 set_target_properties(cesm_driver PROPERTIES Fortran_MODULE_DIRECTORY
   ${CMAKE_CURRENT_BINARY_DIR}/mod)
 target_include_directories(cesm_driver PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
