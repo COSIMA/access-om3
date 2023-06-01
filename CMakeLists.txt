@@ -7,16 +7,42 @@ project(ACCESS-OM3
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/FortranLib.cmake)
 
-# Components to enable
-set(ENABLE_MOM6     ON  CACHE BOOL "Enable MOM6")
-set(ENABLE_CICE     ON  CACHE BOOL "Enable CICE6")
-set(ENABLE_WW3      ON  CACHE BOOL "Enable WW3")
+# Configurations to build
+list(APPEND KNOWN_CONFIGURATIONS MOM6 CICE6 WW3 MOM6-CICE6 CICE6-WW3 MOM6-WW3 MOM6-CICE6-WW3)
 
-message(STATUS "Components")
-message(STATUS "  - MOM6 ${ENABLE_MOM6}")
-message(STATUS "  - CICE ${ENABLE_CICE}")
-message(STATUS "  - WW3  ${ENABLE_WW3}")
+set(ENABLE_MOM6           OFF CACHE BOOL "Build MOM6 configuration")
+set(ENABLE_CICE6          OFF CACHE BOOL "Build CICE6 configuration")
+set(ENABLE_WW3            OFF CACHE BOOL "Build WW3 configuration")
+set(ENABLE_MOM6-CICE6     ON  CACHE BOOL "Build MOM6-CICE6 configuration")
+set(ENABLE_CICE6-WW3      ON  CACHE BOOL "Build CICE6-WW3 configuration")
+set(ENABLE_MOM6-WW3       OFF CACHE BOOL "Build MOM6-WW3 configuration")
+set(ENABLE_MOM6-CICE6-WW3 ON  CACHE BOOL "Build MOM6-CICE6-WW3 configuration")
 
+message(STATUS "Configurations")
+message(STATUS "  - MOM6           ${ENABLE_MOM6}")
+message(STATUS "  - CICE6          ${ENABLE_CICE6}")
+message(STATUS "  - WW3            ${ENABLE_WW3}")
+message(STATUS "  - MOM6-CICE6     ${ENABLE_MOM6-CICE6}")
+message(STATUS "  - CICE6-WW3      ${ENABLE_CICE6-WW3}")
+message(STATUS "  - MOM6-WW3       ${ENABLE_MOM6-WW3}")
+message(STATUS "  - MOM6-CICE6-WW3 ${ENABLE_MOM6-CICE6-WW3}")
+
+# Do not build components that are not going to be used
+if(ENABLE_MOM6 OR ENABLE_MOM6-CICE6 OR ENABLE_MOM6-WW3 OR ENABLE_MOM6-CICE6-WW3)
+  set(MOM6 ON FORCE)
+else()
+  set(MOM6 OFF FORCE)
+endif()
+if(ENABLE_CICE6 OR ENABLE_MOM6-CICE6 OR ENABLE_CICE6-WW3 OR ENABLE_MOM6-CICE6-WW3)
+  set(CICE6 ON FORCE)
+else()
+  set(CICE6 OFF FORCE)
+endif()
+if(ENABLE_WW3 OR ENABLE_MOM6-WW3 OR ENABLE_CICE6-WW3 OR ENABLE_MOM6-CICE6-WW3)
+  set(WW3 ON FORCE)
+else()
+  set(WW3 OFF FORCE)
+endif()
 
 # Build options
 set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
@@ -75,50 +101,63 @@ add_subdirectory(share)
 add_subdirectory(CDEPS)
 
 # Ocean component (MOM6)
-if(ENABLE_MOM6)
+if(MOM6)
   add_subdirectory(MOM6)
-  list(APPEND COMPONENTS_TARGETS mom6)
-else()
-  list(APPEND COMPONENTS_TARGETS cdeps_docn)
 endif()
 
 # Sea-ice component (CICE6)
-if(ENABLE_CICE)
+if(CICE6)
   add_subdirectory(CICE)
-  list(APPEND COMPONENTS_TARGETS cice)
-else()
-  list(APPEND COMPONENTS_TARGETS cdeps_dice)
 endif()
 
 # Wave component (WW3)
-if(ENABLE_WW3)
+if(WW3)
   add_subdirectory(WW3)
-  list(APPEND COMPONENTS_TARGETS ww3)
-else()
-  list(APPEND COMPONENTS_TARGETS cdeps_dwav)
 endif()
 
 # Mediator component (CMEPS)
 add_subdirectory(CMEPS)
 
-# Driver
+# Build executable for each enabled configuration
+foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
+  if(NOT ENABLE_${CONF})
+    continue()
+  endif()
 
-# We use the CESM driver from CMEPS
-add_fortran_library(cesm_driver mod STATIC
-  CMEPS/CMEPS/cesm/driver/esm.F90
-  CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
-  CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
-)
-target_link_libraries(cesm_driver PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common esmf PIO::PIO_Fortran)
-target_compile_definitions(cesm_driver PRIVATE MED_PRESENT
-                                               ATM_PRESENT
-                                               ICE_PRESENT
-                                               LND_PRESENT
-                                               OCN_PRESENT
-                                               WAV_PRESENT
-                                               ROF_PRESENT
-                                               $<$<CONFIG:Debug>:DEBUG>
-)
+  set(COMPONENTS_TARGETS "")
+  if(${CONF} MATCHES MOM6)
+    list(APPEND COMPONENTS_TARGETS mom6)
+  else()
+    list(APPEND COMPONENTS_TARGETS cdeps_docn)
+  endif()
+  if(${CONF} MATCHES CICE6)
+    list(APPEND COMPONENTS_TARGETS cice)
+  else()
+    list(APPEND COMPONENTS_TARGETS cdeps_dice)
+  endif()
+  if(${CONF} MATCHES WW3)
+    list(APPEND COMPONENTS_TARGETS ww3)
+  else()
+    list(APPEND COMPONENTS_TARGETS cdeps_dwav)
+  endif()
 
-add_executable(access-om3 CMEPS/CMEPS/cesm/driver/esmApp.F90)
-target_link_libraries(access-om3 PRIVATE cesm_driver esmf PIO::PIO_Fortran NetCDF::NetCDF_Fortran)
+  # We use the CESM driver from CMEPS
+  add_fortran_library(cesm_driver_${CONF} cesm_driver/${CONF}/mod STATIC
+    CMEPS/CMEPS/cesm/driver/esm.F90
+    CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
+    CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
+  )
+  target_link_libraries(cesm_driver_${CONF} PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common esmf PIO::PIO_Fortran)
+  target_compile_definitions(cesm_driver_${CONF} PRIVATE MED_PRESENT
+                                                         ATM_PRESENT
+                                                         ICE_PRESENT
+                                                         LND_PRESENT
+                                                         OCN_PRESENT
+                                                         WAV_PRESENT
+                                                         ROF_PRESENT
+                                                         $<$<CONFIG:Debug>:DEBUG>
+  )
+
+  add_executable(access-om3-${CONF} CMEPS/CMEPS/cesm/driver/esmApp.F90)
+  target_link_libraries(access-om3-${CONF} PRIVATE cesm_driver_${CONF} esmf PIO::PIO_Fortran NetCDF::NetCDF_Fortran)
+endforeach()
