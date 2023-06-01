@@ -13,7 +13,7 @@ endif()
 
 add_subdirectory(fox)
 
-list(APPEND cdeps_src_files
+list(APPEND cdeps_common_src_files
   CDEPS/streams/dshr_methods_mod.F90
   CDEPS/streams/dshr_strdata_mod.F90
   CDEPS/streams/dshr_stream_mod.F90
@@ -37,40 +37,36 @@ list(APPEND cdeps_src_files
   CDEPS/drof/rof_comp_nuopc.F90
 )
 
+list(APPEND cdeps_docn_src_files
+  CDEPS/docn/docn_datamode_aquaplanet_mod.F90
+  CDEPS/docn/docn_datamode_copyall_mod.F90
+  CDEPS/docn/docn_datamode_iaf_mod.F90
+  CDEPS/docn/docn_datamode_som_mod.F90
+  CDEPS/docn/ocn_comp_nuopc.F90
+)
 
-if(NOT ENABLE_MOM6)
-  list(APPEND cdeps_src_files
-    CDEPS/docn/docn_datamode_aquaplanet_mod.F90
-    CDEPS/docn/docn_datamode_copyall_mod.F90
-    CDEPS/docn/docn_datamode_iaf_mod.F90
-    CDEPS/docn/docn_datamode_som_mod.F90
-    CDEPS/docn/ocn_comp_nuopc.F90
-  )
-endif()
+list(APPEND cdeps_dice_src_files
+  CDEPS/dice/dice_datamode_ssmi_mod.F90
+  CDEPS/dice/dice_flux_atmice_mod.F90
+  CDEPS/dice/ice_comp_nuopc.F90
+)
 
-if(NOT ENABLE_CICE)
-  list(APPEND cdeps_src_files
-    CDEPS/dice/dice_datamode_ssmi_mod.F90
-    CDEPS/dice/dice_flux_atmice_mod.F90
-    CDEPS/dice/ice_comp_nuopc.F90
-  )
-endif()
+list(APPEND cdeps_dwav_src_files
+  CDEPS/dwav/wav_comp_nuopc.F90
+)
 
-if(NOT ENABLE_WW3)
-  list(APPEND cdeps_src_files
-    CDEPS/dwav/wav_comp_nuopc.F90
-  )
-endif()
+add_fortran_library(cdeps_common mod STATIC ${cdeps_common_src_files})
+target_include_directories(cdeps_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_compile_options(cdeps_common PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
+target_compile_options(cdeps_common PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
+target_compile_options(cdeps_common PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
+target_link_libraries(cdeps_common PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom)
 
-add_library(cdeps STATIC ${cdeps_src_files})
-
-set_target_properties(cdeps PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
-#target_compile_definitions(cdeps PRIVATE "DISABLE_FoX")
-target_include_directories(cdeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
-  $<INSTALL_INTERFACE:mod>)
-target_include_directories(cdeps PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-
-target_compile_options(cdeps PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
-target_compile_options(cdeps PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
-target_compile_options(cdeps PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
-target_link_libraries(cdeps PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom)
+foreach(LIB cdeps_docn cdeps_dice cdeps_dwav)
+  add_fortran_library(${LIB} ${LIB}/mod STATIC ${${LIB}_src_files})
+  target_include_directories(${LIB} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+  target_compile_options(${LIB} PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
+  target_compile_options(${LIB} PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
+  target_compile_options(${LIB} PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
+  target_link_libraries(${LIB} PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom cdeps_common)
+endforeach()

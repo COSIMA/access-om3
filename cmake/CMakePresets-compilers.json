@@ -1,0 +1,66 @@
+{
+  "version": 5,
+  "include": [
+    "CMakePresets-defaults.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "openmpi",
+      "displayName": "Configure preset for OpenMPI based toolchains",
+      "inherits": [
+        "default"
+      ],
+      "cacheVariables": {
+        "CMAKE_Fortran_COMPILER": {
+          "value": "mpif90"
+        },
+        "CMAKE_C_COMPILER": {
+          "value": "mpicc"
+        }
+      }
+    },
+    {
+      "name": "intel-mpi",
+      "displayName": "Configure preset for Intel-MPI based toolchain",
+      "inherits": [
+        "default"
+      ],
+      "cacheVariables": {
+        "CMAKE_Fortran_COMPILER": {
+          "type": "FILEPATH",
+          "value": "mpiifort"
+        },
+        "CMAKE_C_COMPILER": {
+          "type": "FILEPATH",
+          "value": "mpiicc"
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "toolchain-base",
+      "hidden": true,
+      "inherits": [
+        "default"
+      ],
+      "cleanFirst": true
+    },
+    {
+      "name": "openmpi",
+      "displayName": "Build preset for OpenMPI based toolchains",
+      "inherits": [
+        "toolchain-base"
+      ],
+      "configurePreset": "openmpi"
+    },
+    {
+      "name": "intel",
+      "displayName": "Build preset for Intel-MPI based toolchains",
+      "inherits": [
+        "toolchain-base"
+      ],
+      "configurePreset": "intel-mpi"
+    }
+  ]
+}

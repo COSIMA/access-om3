@@ -48,17 +48,14 @@ elseif(CICE_IO MATCHES "Binary")
 endif()
 
 ### Create target library and set PUBLIC interfaces on the library
-add_library(cice STATIC ${lib_src_files})
-set_target_properties(cice PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
+add_fortran_library(cice mod STATIC ${lib_src_files})
 target_compile_definitions(cice PUBLIC "${_cice_defs}")
-target_include_directories(cice PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
-                                       $<INSTALL_INTERFACE:mod>)
 target_compile_options(cice PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(cice PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(cice PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_compile_options(cice PRIVATE "$<$<COMPILE_LANGUAGE:C>:${c_compile_flags}>")
 target_compile_options(cice PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:C>>:${c_compile_flags_release}>")
-target_link_libraries(cice PUBLIC share cdeps esmf)
+target_link_libraries(cice PUBLIC share cdeps_common esmf)
 
 if(CICE_IO MATCHES "^(NetCDF|PIO)$")
   target_link_libraries(cice PUBLIC NetCDF::NetCDF_Fortran)

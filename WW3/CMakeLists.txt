@@ -64,9 +64,7 @@ set_property(SOURCE WW3/model/src/w3initmd.F90
 include("ww3_files.cmake")
 
 ### Create target library and set PUBLIC interfaces on the library
-add_library(ww3 STATIC ${ww3_src_files})
-set_target_properties(ww3 PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
-target_include_directories(ww3 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>)
+add_fortran_library(ww3 mod STATIC ${ww3_src_files})
 target_compile_options(ww3 PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(ww3 PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(ww3 PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
