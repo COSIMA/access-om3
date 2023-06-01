@@ -55,48 +55,30 @@ list(APPEND cdeps_dwav_src_files
   CDEPS/dwav/wav_comp_nuopc.F90
 )
 
-add_library(cdeps_common STATIC ${cdeps_common_src_files})
-
-set_target_properties(cdeps_common PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/common/mod)
-target_include_directories(cdeps_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/common/mod>)
+add_fortran_library(cdeps_common mod STATIC ${cdeps_common_src_files})
 target_include_directories(cdeps_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-
 target_compile_options(cdeps_common PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(cdeps_common PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(cdeps_common PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_link_libraries(cdeps_common PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom)
 
-
-add_library(cdeps_docn STATIC ${cdeps_docn_src_files})
-
-set_target_properties(cdeps_docn PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docn/mod)
-target_include_directories(cdeps_docn PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/docn/mod>)
+add_fortran_library(cdeps_docn docn/mod STATIC ${cdeps_docn_src_files})
 target_include_directories(cdeps_docn PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-
 target_compile_options(cdeps_docn PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(cdeps_docn PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(cdeps_docn PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_link_libraries(cdeps_docn PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom cdeps_common)
 
-
-add_library(cdeps_dice STATIC ${cdeps_dice_src_files})
-
-set_target_properties(cdeps_dice PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dice/mod)
-target_include_directories(cdeps_dice PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/dice/mod>)
+add_fortran_library(cdeps_dice dice/mod STATIC ${cdeps_dice_src_files})
 target_include_directories(cdeps_dice PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-
 target_compile_options(cdeps_dice PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(cdeps_dice PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(cdeps_dice PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_link_libraries(cdeps_dice PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom cdeps_common)
 
 
-add_library(cdeps_dwav STATIC ${cdeps_dwav_src_files})
-
-set_target_properties(cdeps_dwav PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dwav/mod)
-target_include_directories(cdeps_dwav PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/dwav/mod>)
+add_fortran_library(cdeps_dwav dwav/mod STATIC ${cdeps_dwav_src_files})
 target_include_directories(cdeps_dwav PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-
 target_compile_options(cdeps_dwav PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_compile_options(cdeps_dwav PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
 target_compile_options(cdeps_dwav PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")

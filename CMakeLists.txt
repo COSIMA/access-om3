@@ -5,6 +5,7 @@ project(ACCESS-OM3
         LANGUAGES C Fortran)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/FortranLib.cmake)
 
 # Components to enable
 set(ENABLE_MOM6     ON  CACHE BOOL "Enable MOM6")
@@ -103,17 +104,12 @@ add_subdirectory(CMEPS)
 # Driver
 
 # We use the CESM driver from CMEPS
-add_library(cesm_driver STATIC
+add_fortran_library(cesm_driver mod STATIC
   CMEPS/CMEPS/cesm/driver/esm.F90
   CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
   CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
 )
 target_link_libraries(cesm_driver PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common esmf PIO::PIO_Fortran)
-set_target_properties(cesm_driver PROPERTIES Fortran_MODULE_DIRECTORY
-  ${CMAKE_CURRENT_BINARY_DIR}/mod)
-target_include_directories(cesm_driver PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
-                                              $<INSTALL_INTERFACE:mod>)
-
 target_compile_definitions(cesm_driver PRIVATE MED_PRESENT
                                                ATM_PRESENT
                                                ICE_PRESENT
