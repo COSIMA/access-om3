@@ -7,10 +7,10 @@
 # NB: Requires membership of the "ik11" project - apply at https://my.nci.org.au/mancini/project/ik11 if needed
 
 set -e
-set -x
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"  # dir of this script
 
+BUILD_TYPES=('Debug' 'Release')
 COMPILER_VERSION=2021.6.0
 OPENMPI_VERSION=4.1.4
 
@@ -29,13 +29,19 @@ hash=`git rev-parse --short=7 HEAD`
 test -z "$(git status --porcelain)" || hash=${hash}-modified # uncommitted changes or untracked files
 
 mkdir -p bin
-rm -r build || true
 
-cmake -S . -B build --preset=gadi -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=ON
-cmake --build build -j 4
+for BUILD_TYPE in "${BUILD_TYPES[@]}"; do
+  echo "BUILD_TYPE = "${BUILD_TYPE}
+  rm -r build || true
 
-for exec in build/access-om3*; do
-  dest=bin/$(basename ${exec})-${hash}
-  cp -p ${exec} ${dest}
-  echo "Successfully built ${dest}"
+  cmake -S . -B build --preset=gadi -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_VERBOSE_MAKEFILE=ON
+  cmake --build build -j 4
+
+  for exec in build/access-om3*; do
+    dest=bin/$(basename ${exec})
+    if [[ ${BUILD_TYPE} != "Release" ]] ; then dest=${dest}-${BUILD_TYPE}; fi
+    dest=${dest}-${hash}
+    cp -p ${exec} ${dest}
+    echo "Successfully built ${dest}"
+  done
 done
