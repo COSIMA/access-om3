@@ -16,6 +16,7 @@ OPENMPI_VERSION=4.1.4
 
 
 # CMakeLists.txt requires ESMF v8.3.0 or higher, FMS, and ParallelIO, but NCI doesn't supply them, so we use our own installation via spack.
+# This is in /g/data/ik11/spack/ which uses https://github.com/COSIMA/spack-config
 
 module purge
 module load cmake/3.24.2
