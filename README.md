@@ -10,6 +10,8 @@ ACCESS-OM3 is a global coupled ocean - sea ice - wave model being developed by [
 
 # Downloading
 
+NCI-based users of ACCESS-OM3 typically won't need to download this repository, as there are pre-built executables available on NCI (see the [quick start](https://github.com/COSIMA/access-om3/wiki/Quick-start)).
+
 This respository contains submodules, so you will need to clone it with the `--recursive` flag:
 ```
 git clone --recursive https://github.com/COSIMA/access-om3.git
