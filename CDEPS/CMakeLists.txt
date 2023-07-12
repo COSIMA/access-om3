@@ -16,7 +16,7 @@ list(APPEND cdeps_drof_src_files
 )
   
 list(APPEND cdeps_datm_src_files
-  CDEPS/datm/atm_comp_nuopc.F90
+  extra_sources/atm_comp_nuopc.F90
   CDEPS/datm/datm_datamode_cfsr_mod.F90
   CDEPS/datm/datm_datamode_clmncep_mod.F90
   CDEPS/datm/datm_datamode_core2_mod.F90
