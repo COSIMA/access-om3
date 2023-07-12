@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<file id="stream" version="2.0">
+
+  <stream_info name="rof.iaf_jra">
+   <taxmode>cycle</taxmode>
+   <tintalgo>upper</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>3.0</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/JRA.v1.4.runoff.1958_ESMFmesh_cdf5_20201020.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.1.runoff.1990.170807.nc</file>
+   </datafiles>
+   <datavars>
+      <var>friver Forr_rofl</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+   <stream_info name="rof.iaf_jra">
+   <taxmode>cycle</taxmode>
+   <tintalgo>upper</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>3.0</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/JRA.v1.4.runoff.1958_ESMFmesh_cdf5_20201020.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.1.runoff.1990.170807.nc</file>
+   </datafiles>
+   <datavars>
+      <var>licalvf Forr_rofi</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+</file>

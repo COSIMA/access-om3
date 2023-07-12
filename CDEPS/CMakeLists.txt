@@ -23,7 +23,7 @@ list(APPEND cdeps_datm_src_files
   CDEPS/datm/datm_datamode_cplhist_mod.F90
   CDEPS/datm/datm_datamode_era5_mod.F90
   CDEPS/datm/datm_datamode_gefs_mod.F90
-  CDEPS/datm/datm_datamode_jra_mod.F90
+  extra_sources/datm_datamode_jra_mod.F90
 )
 
 

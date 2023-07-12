@@ -1,0 +1,257 @@
+<?xml version="1.0"?>
+<file id="stream" version="2.0">
+
+  <stream_info name="CORE_IAF_JRA.PRSN">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.prec.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>prsn  Faxa_prsn</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+  <stream_info name="CORE_IAF_JRA.PRRN">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.prec.TL319.1958.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>prra  Faxa_prrn</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+  <stream_info name="CORE_IAF_JRA.LWDN">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.lwdn.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>rlds  Faxa_lwdn</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="CORE_IAF_JRA.SWDN">
+   <taxmode>cycle</taxmode>
+   <tintalgo>coszen</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.swdn.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>rsds  Faxa_swdn</var>
+   </datavars>
+   <offset>-5400</offset>
+  </stream_info>
+
+
+  <stream_info name="CORE_IAF_JRA.Q_10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.q_10.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>huss  Sa_shum</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="CORE_IAF_JRA.SLP_10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.slp.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>psl  Sa_pslv</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="CORE_IAF_JRA.T_10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.t_10.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>tas Sa_tbot</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="CORE_IAF_JRA.U_10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.u_10.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>uas Sa_u</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="CORE_IAF_JRA.V_10">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>1990</year_first>
+   <year_last>1990</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/JRA.v1.3.v_10.TL319.1990.171019.nc</file>
+   </datafiles>
+   <datavars>
+      <var>vas Sa_v</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="presaero.clim_2000">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>2000</year_first>
+   <year_last>2000</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/fv0.9x1.25_141008_polemod_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/aerosoldep_WACCM.ensmean_monthly_hist_1849-2015_0.9x1.25_CMIP6_c180926.nc</file>
+   </datafiles>
+   <datavars>
+      <var>BCDEPWET   Faxa_bcphiwet</var>
+      <var>BCPHODRY   Faxa_bcphodry</var>
+      <var>BCPHIDRY   Faxa_bcphidry</var>
+      <var>OCDEPWET   Faxa_ocphiwet</var>
+      <var>OCPHIDRY   Faxa_ocphidry</var>
+      <var>OCPHODRY   Faxa_ocphodry</var>
+      <var>DSTX01WD   Faxa_dstwet1</var>
+      <var>DSTX01DD   Faxa_dstdry1</var>
+      <var>DSTX02WD   Faxa_dstwet2</var>
+      <var>DSTX02DD   Faxa_dstdry2</var>
+      <var>DSTX03WD   Faxa_dstwet3</var>
+      <var>DSTX03DD   Faxa_dstdry3</var>
+      <var>DSTX04WD   Faxa_dstwet4</var>
+      <var>DSTX04DD   Faxa_dstdry4</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+
+  <stream_info name="presndep.clim_2000">
+   <taxmode>cycle</taxmode>
+   <tintalgo>linear</tintalgo>
+   <readmode>single</readmode>
+   <mapalgo>bilinear</mapalgo>
+   <dtlimit>1.5</dtlimit>
+   <year_first>2000</year_first>
+   <year_last>2000</year_last>
+   <year_align>1</year_align>
+   <vectors>null</vectors>
+   <meshfile>./input/fv0.9x1.25_141008_polemod_ESMFmesh.nc</meshfile>
+   <lev_dimname>null</lev_dimname>
+   <datafiles>
+      <file>./input/fndep_clm_hist_b.e21.BWHIST.f09_g17.CMIP6-historical-WACCM.ensmean_1849-2015_monthly_0.9x1.25_c180926.nc</file>
+   </datafiles>
+   <datavars>
+      <var>NDEP_NHx_month  Faxa_ndep_nhx</var>
+      <var>NDEP_NOy_month  Faxa_ndep_noy</var>
+   </datavars>
+   <offset>0</offset>
+  </stream_info>
+
+</file>
