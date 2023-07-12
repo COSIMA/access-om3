@@ -17,11 +17,11 @@ module datm_datamode_jra55do_mod
   implicit none
   private ! except
 
-  public  :: datm_datamode_jra_advertise
-  public  :: datm_datamode_jra_init_pointers
-  public  :: datm_datamode_jra_advance
-  public  :: datm_datamode_jra_restart_write
-  public  :: datm_datamode_jra_restart_read
+  public  :: datm_datamode_jra55do_advertise
+  public  :: datm_datamode_jra55do_init_pointers
+  public  :: datm_datamode_jra55do_advance
+  public  :: datm_datamode_jra55do_restart_write
+  public  :: datm_datamode_jra55do_restart_read
 
   ! export state pointers
   real(r8), pointer :: Sa_z(:)       => null()
