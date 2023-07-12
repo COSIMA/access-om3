@@ -14,7 +14,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.prec.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.prsn.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>prsn  Faxa_prsn</var>
@@ -35,7 +35,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.prec.TL319.1958.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.prra.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>prra  Faxa_prrn</var>
@@ -56,7 +56,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.lwdn.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.rlds.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>rlds  Faxa_lwdn</var>
@@ -78,7 +78,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.swdn.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.rsds.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>rsds  Faxa_swdn</var>
@@ -100,7 +100,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.q_10.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.huss.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>huss  Sa_shum</var>
@@ -122,7 +122,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.slp.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.psl.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>psl  Sa_pslv</var>
@@ -144,7 +144,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.t_10.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.tas.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>tas Sa_tbot</var>
@@ -166,7 +166,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.u_10.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.uas.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>uas Sa_u</var>
@@ -188,7 +188,7 @@
    <meshfile>./input/TL319_151007_ESMFmesh.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.3.v_10.TL319.1990.171019.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.vas.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>vas Sa_v</var>
