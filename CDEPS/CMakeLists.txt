@@ -23,7 +23,7 @@ list(APPEND cdeps_common_src_files
   CDEPS/dshr/dshr_fldlist_mod.F90
   CDEPS/dshr/dshr_mod.F90
 
-  CDEPS/datm/atm_comp_nuopc.F90
+  extra_sources/atm_comp_nuopc.F90
   CDEPS/datm/datm_datamode_cfsr_mod.F90
   CDEPS/datm/datm_datamode_clmncep_mod.F90
   CDEPS/datm/datm_datamode_core2_mod.F90
