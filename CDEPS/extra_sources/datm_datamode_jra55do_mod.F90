@@ -1,4 +1,4 @@
-module datm_datamode_jra_mod
+module datm_datamode_jra55do_mod
 
   use ESMF             , only : ESMF_State, ESMF_StateGet, ESMF_SUCCESS, ESMF_LogWrite, ESMF_LOGMSG_INFO
   use ESMF             , only : ESMF_MeshGet
@@ -67,7 +67,7 @@ module datm_datamode_jra_mod
 contains
 !===============================================================================
 
-  subroutine datm_datamode_jra_advertise(exportState, fldsexport, flds_scalar_name, &
+  subroutine datm_datamode_jra55do_advertise(exportState, fldsexport, flds_scalar_name, &
        flds_co2, flds_wiso, flds_presaero, flds_presndep, rc)
 
     ! input/output variables
@@ -137,10 +137,10 @@ contains
        fldList => fldList%next
     enddo
 
-  end subroutine datm_datamode_jra_advertise
+  end subroutine datm_datamode_jra55do_advertise
 
   !===============================================================================
-  subroutine datm_datamode_jra_init_pointers(exportState, sdat, rc)
+  subroutine datm_datamode_jra55do_init_pointers(exportState, sdat, rc)
 
     ! input/output variables
     type(ESMF_State)       , intent(inout) :: exportState
@@ -223,10 +223,10 @@ contains
        call shr_sys_abort(trim(subname)//'ERROR: prec and swdn must be in streams for CORE_IAF_JRA')
     endif
 
-  end subroutine datm_datamode_jra_init_pointers
+  end subroutine datm_datamode_jra55do_init_pointers
 
   !===============================================================================
-  subroutine datm_datamode_jra_advance(exportstate, target_ymd, target_tod, model_calendar, rc)
+  subroutine datm_datamode_jra55do_advance(exportstate, target_ymd, target_tod, model_calendar, rc)
 
     ! input/output variables
     type(ESMF_State)       , intent(inout) :: exportState
@@ -283,10 +283,10 @@ contains
        Faxa_ndep(:,:) = Faxa_ndep(:,:) / 1000._r8
     end if
 
-  end subroutine datm_datamode_jra_advance
+  end subroutine datm_datamode_jra55do_advance
 
   !===============================================================================
-  subroutine datm_datamode_jra_restart_write(case_name, inst_suffix, ymd, tod, &
+  subroutine datm_datamode_jra55do_restart_write(case_name, inst_suffix, ymd, tod, &
        logunit, my_task, sdat)
 
     ! input/output variables
@@ -302,10 +302,10 @@ contains
     call dshr_restart_write(rpfile, case_name, 'datm', inst_suffix, ymd, tod, &
          logunit, my_task, sdat)
 
-  end subroutine datm_datamode_jra_restart_write
+  end subroutine datm_datamode_jra55do_restart_write
 
   !===============================================================================
-  subroutine datm_datamode_jra_restart_read(rest_filem, inst_suffix, logunit, my_task, mpicom, sdat)
+  subroutine datm_datamode_jra55do_restart_read(rest_filem, inst_suffix, logunit, my_task, mpicom, sdat)
 
     ! input/output arguments
     character(len=*)            , intent(inout) :: rest_filem
@@ -318,6 +318,6 @@ contains
 
     call dshr_restart_read(rest_filem, rpfile, inst_suffix, nullstr, logunit, my_task, mpicom, sdat)
 
-  end subroutine datm_datamode_jra_restart_read
+  end subroutine datm_datamode_jra55do_restart_read
 
-end module datm_datamode_jra_mod
+end module datm_datamode_jra55do_mod
