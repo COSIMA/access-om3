@@ -14,7 +14,7 @@
    <meshfile>./input/JRA.v1.4.runoff.1958_ESMFmesh_cdf5_20201020.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.1.runoff.1990.170807.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.friver.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>friver Forr_rofl</var>
@@ -35,7 +35,7 @@
    <meshfile>./input/JRA.v1.4.runoff.1958_ESMFmesh_cdf5_20201020.nc</meshfile>
    <lev_dimname>null</lev_dimname>
    <datafiles>
-      <file>./input/JRA.v1.1.runoff.1990.170807.nc</file>
+      <file>/g/data/ik11/inputs/JRA-55/RYF/v1-4/RYF.licalvf.1990_1991.nc</file>
    </datafiles>
    <datavars>
       <var>licalvf Forr_rofi</var>
