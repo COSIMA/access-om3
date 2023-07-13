@@ -43,7 +43,6 @@ module datm_datamode_jra55do_mod
   real(r8), pointer :: Faxa_ndep(:,:) => null()
 
   ! stream data
-  real(r8), pointer :: strm_prec(:)  => null()
   real(r8), pointer :: strm_prrn(:)  => null()   ! Rainfall flux
   real(r8), pointer :: strm_prsn(:)  => null()   ! Snowfall flux
   real(r8), pointer :: strm_swdn(:)  => null()
@@ -154,7 +153,7 @@ contains
     integer           :: numOwnedElements   ! size of mesh
     real(r8), pointer :: ownedElemCoords(:) ! mesh lat and lons
     type(ESMF_StateItem_Flag) :: itemFlag
-    character(len=*), parameter :: subname='(datm_init_pointers): '
+    character(len=*), parameter :: subname='(datm_datamode_jra55do_init_pointers): '
     !-------------------------------------------------------------------------------
 
     rc = ESMF_SUCCESS
@@ -219,8 +218,8 @@ contains
     end if
 
     ! erro check
-    if (.not. associated(strm_prsn) .or. .not. associated(strm_swdn)) then
-       call shr_sys_abort(trim(subname)//'ERROR: prec and swdn must be in streams for CORE_IAF_JRA')
+    if (.not. associated(strm_prrn) .or. .not. associated(strm_prsn) .or. .not. associated(strm_swdn)) then
+       call shr_sys_abort(trim(subname)//'ERROR: prrn, prsn and swdn must be in streams for JRA55-do')
     endif
 
   end subroutine datm_datamode_jra55do_init_pointers
@@ -241,7 +240,7 @@ contains
     real(R8)          :: avg_alb            ! average albedo
     real(R8)          :: rday               ! elapsed day
     real(R8)          :: cosFactor          ! cosine factor
-    character(len=*), parameter :: subname='(datm_datamode_jra): '
+    character(len=*), parameter :: subname='(datm_datamode_jra55do_advance): '
     !-------------------------------------------------------------------------------
 
     rc = ESMF_SUCCESS
@@ -257,13 +256,12 @@ contains
        Sa_pbot(n) = Sa_pslv(n)
        Sa_ptem(n) = Sa_tbot(n)
 
-       ! density computation for JRA55 forcing
+       ! density computation for JRA55-do forcing
        Sa_dens(n) = Sa_pbot(n)/(rdair*Sa_tbot(n)*(1 + 0.608*Sa_shum(n)))
 
        ! precipitation data
        Faxa_rainc(n) = 0.0_R8               ! default zero
        Faxa_snowc(n) = 0.0_R8
-
        Faxa_snowl(n) = strm_prsn(n)         ! Snowfall flux
        Faxa_rainl(n) = strm_prrn(n)         ! Rainfall flux
 
