@@ -52,11 +52,11 @@ module cdeps_datm_comp
   use datm_datamode_jra_mod     , only : datm_datamode_jra_restart_write
   use datm_datamode_jra_mod     , only : datm_datamode_jra_restart_read
 
-  use datm_datamode_jra55do_mod     , only : datm_datamode_jra55do_advertise
-  use datm_datamode_jra55do_mod     , only : datm_datamode_jra55do_init_pointers
-  use datm_datamode_jra55do_mod     , only : datm_datamode_jra55do_advance
-  use datm_datamode_jra55do_mod     , only : datm_datamode_jra55do_restart_write
-  use datm_datamode_jra55do_mod     , only : datm_datamode_jra55do_restart_read
+  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_advertise
+  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_init_pointers
+  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_advance
+  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_restart_write
+  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_restart_read
 
   use datm_datamode_clmncep_mod , only : datm_datamode_clmncep_advertise
   use datm_datamode_clmncep_mod , only : datm_datamode_clmncep_init_pointers
