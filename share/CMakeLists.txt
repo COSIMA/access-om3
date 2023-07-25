@@ -1,18 +1,12 @@
 ###  Fortran compiler flags
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  add_compile_definitions(CPRGNU
+  add_compile_definitions(
+    CPRGNU
     NAMING=_ADD_UNDERSCORE)
-  set(fortran_compile_flags -ffree-line-length-none)
-  if(${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 10)
-    list(APPEND fortran_compile_flags -fallow-argument-mismatch -fallow-invalid-boz)
-  endif()
-  set(fortran_compile_flags_debug -fcheck=bounds -ffpe-trap=invalid,zero,overflow,underflow)
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  add_compile_definitions(CPRINTEL
+  add_compile_definitions(
+    CPRINTEL
     NAMING=_ADD_UNDERSCORE)
-  set(fortran_compile_flags -O -assume realloc_lhs)
-  set(fortran_compile_flags_release -fp-model precise)
-  set(fortran_compile_flags_debug -check "SHELL:-check noarg_temp_created" "SHELL:-check nopointer" -fpe0 -ftrapuv -init=snan,arrays)
 endif()
 
 # The following files are generated with a script acting on templates
@@ -69,7 +63,4 @@ target_include_directories(share PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY
   $<INSTALL_INTERFACE:mod>
   CESM_share/include
 )
-target_compile_options(share PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
-target_compile_options(share PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
-target_compile_options(share PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_link_libraries(share PUBLIC esmf PIO::PIO_Fortran)

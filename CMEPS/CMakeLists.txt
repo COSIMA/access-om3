@@ -1,19 +1,4 @@
 ###############################################################################
-### CMEPS compiler flags
-###############################################################################
-if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  set(fortran_compile_flags -ffree-line-length-none)
-  if(${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 10)
-    list(APPEND fortran_compile_flags -fallow-argument-mismatch -fallow-invalid-boz)
-  endif()
-  set(fortran_compile_flags_debug -fcheck=bounds -ffpe-trap=invalid,zero,overflow,underflow)
-elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  set(fortran_compile_flags -O -assume realloc_lhs)
-  set(fortran_compile_flags_release -fp-model precise)
-  set(fortran_compile_flags_debug -check "SHELL:-check noarg_temp_created" "SHELL:-check nopointer" -fpe0 -ftrapuv -init=snan,arrays)
-endif()
-
-###############################################################################
 ### Source files
 ###############################################################################
 
@@ -68,9 +53,6 @@ list(APPEND _nuopc_cap_share_files
 
 ### Create target library
 add_fortran_library(cmeps mod STATIC ${_mediator_files} ${_nuopc_cap_share_files})
-target_compile_options(cmeps PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
-target_compile_options(cmeps PRIVATE "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_debug}>")
-target_compile_options(cmeps PRIVATE "$<$<AND:$<CONFIG:Release>,$<COMPILE_LANGUAGE:Fortran>>:${fortran_compile_flags_release}>")
 target_link_libraries(cmeps PUBLIC share
                                    FMS::fms_r8
                                    esmf
