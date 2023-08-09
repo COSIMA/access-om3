@@ -9,7 +9,13 @@ list(APPEND cdeps_common_src_files
   CDEPS/dshr/dshr_dfield_mod.F90
   CDEPS/dshr/dshr_fldlist_mod.F90
   CDEPS/dshr/dshr_mod.F90
+)
 
+list(APPEND cdeps_drof_src_files
+  CDEPS/drof/rof_comp_nuopc.F90
+)
+  
+list(APPEND cdeps_datm_src_files
   CDEPS/datm/atm_comp_nuopc.F90
   CDEPS/datm/datm_datamode_cfsr_mod.F90
   CDEPS/datm/datm_datamode_clmncep_mod.F90
@@ -18,11 +24,8 @@ list(APPEND cdeps_common_src_files
   CDEPS/datm/datm_datamode_era5_mod.F90
   CDEPS/datm/datm_datamode_gefs_mod.F90
   CDEPS/datm/datm_datamode_jra_mod.F90
-
-  CDEPS/dlnd/lnd_comp_nuopc.F90
-
-  CDEPS/drof/rof_comp_nuopc.F90
 )
+
 
 list(APPEND cdeps_docn_src_files
   CDEPS/docn/docn_datamode_aquaplanet_mod.F90
@@ -46,7 +49,7 @@ add_fortran_library(cdeps_common mod STATIC ${cdeps_common_src_files})
 target_include_directories(cdeps_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
 target_link_libraries(cdeps_common PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom)
 
-foreach(LIB cdeps_docn cdeps_dice cdeps_dwav)
+foreach(LIB cdeps_docn cdeps_dice cdeps_dwav cdeps_drof cdeps_datm)
   add_fortran_library(${LIB} ${LIB}/mod STATIC ${${LIB}_src_files})
   target_include_directories(${LIB} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
   target_link_libraries(${LIB} PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom cdeps_common)

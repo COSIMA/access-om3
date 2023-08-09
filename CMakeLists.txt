@@ -148,11 +148,10 @@ foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
     CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
     CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
   )
-  target_link_libraries(cesm_driver_${CONF} PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common esmf PIO::PIO_Fortran)
+  target_link_libraries(cesm_driver_${CONF} PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common cdeps_drof cdeps_datm esmf PIO::PIO_Fortran)
   target_compile_definitions(cesm_driver_${CONF} PRIVATE MED_PRESENT
                                                          ATM_PRESENT
                                                          ICE_PRESENT
-                                                         LND_PRESENT
                                                          OCN_PRESENT
                                                          WAV_PRESENT
                                                          ROF_PRESENT
