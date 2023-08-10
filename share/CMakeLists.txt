@@ -49,6 +49,12 @@ list(APPEND stubs_src_files
   src/mct_mod.F90
 )
 
+if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
+  # CESM reduces the precision and increases speed for the following file
+  set_source_files_properties(CESM_share/src/shr_wv_sat_mod.F90 PROPERTIES COMPILE_FLAGS "-fimf-precision=low -fp-model fast")
+endif()
+
+
 # Collect source files for library
 add_library(share STATIC ${stubs_src_files} ${cesm_share_generated_files} ${cesm_share_src_files})
 
