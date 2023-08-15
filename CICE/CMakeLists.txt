@@ -14,7 +14,7 @@ list(APPEND lib_src_files
   ${cice_nuopc_cmeps_driver_files})
 
 list(APPEND _cice_defs FORTRANUNDERSCORE
-                       coupled)
+                       ncdf)
 
 # Select IO source files based on CICE_IO
 if(CICE_IO MATCHES "NetCDF")
