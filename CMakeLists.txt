@@ -45,7 +45,7 @@ else()
 endif()
 
 # Build options
-set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
+set(OPENMP          OFF  CACHE BOOL "Enable OpenMP threading")
 
 message(STATUS "Build options")
 message(STATUS "  - OPENMP ${OPENMP}")
