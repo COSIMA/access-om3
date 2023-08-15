@@ -5,7 +5,7 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   set(fortran_compile_flags -r8)
 endif()
 
-option(SYMMETRIC "Use symmetric memory" ON)
+option(SYMMETRIC "Use symmetric memory" OFF)
 if(SYMMETRIC)
   set(MOM_memory "dynamic_symmetric")
 else()
