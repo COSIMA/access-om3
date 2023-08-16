@@ -45,7 +45,7 @@ else()
 endif()
 
 # Build options
-set(OPENMP          ON  CACHE BOOL "Enable OpenMP threading")
+set(OPENMP          OFF  CACHE BOOL "Enable OpenMP threading")
 
 message(STATUS "Build options")
 message(STATUS "  - OPENMP ${OPENMP}")
@@ -56,27 +56,28 @@ add_compile_definitions(
 )
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fbacktrace -ffree-line-length-none")
-  set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-g -O0")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fbacktrace -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none")
+  if(${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 10)
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fallow-argument-mismatch")
+  endif()
+  set(CMAKE_Fortran_FLAGS_RELEASE "-O")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-g -Wall -Og -ffpe-trap=zero,overflow -fcheck=bounds")
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -traceback")
-  set(CMAKE_Fortran_FLAGS_RELEASE "-O2")
-  set(CMAKE_Fortran_FLAGS_DEBUG "-g -O0")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -qno-opt-dynamic-align  -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -debug minimal")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -check uninit -check bounds -check pointers -fpe0 -check noarg_temp_created")
 else()
   message(WARNING "Fortran compiler with ID ${CMAKE_Fortran_COMPILER_ID} will be used with CMake default options")
 endif()
 
 if(CMAKE_C_COMPILER_ID MATCHES "GNU")
-  set(CMAKE_C_FLAGS_RELEASE "")
-  set(CMAKE_C_FLAGS_DEBUG "-g -O0")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
+  set(CMAKE_C_FLAGS_RELEASE "-O")
+  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -Og -fbacktrace -ffpe-trap=invalid,zero,overflow -fcheck=bounds")
 elseif(CMAKE_C_COMPILER_ID MATCHES "Intel")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -traceback")
-  set(CMAKE_C_FLAGS_RELEASE "")
-  set(CMAKE_C_FLAGS_DEBUG "-g -O0 -ftrapuv")
-elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_C_FLAGS_RELEASE "")
-  set(CMAKE_C_FLAGS_DEBUG "-g -O0")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -traceback -qno-opt-dynamic-align -fp-model precise -std=gnu99")
+  set(CMAKE_C_FLAGS_RELEASE "-O2 -debug minimal")
+  set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 else()
   message(WARNING "C compiler with ID ${CMAKE_C_COMPILER_ID} will be used with CMake default options")
 endif()
@@ -87,7 +88,7 @@ find_package(MPI REQUIRED)
 if(OPENMP)
   find_package(OpenMP REQUIRED)
 endif()
-find_package(NetCDF 4.7.4 REQUIRED Fortran)
+find_package(NetCDF 4.7.3 REQUIRED Fortran)
 find_package(ESMF 8.3.0 MODULE REQUIRED)
 find_package(fms COMPONENTS R8 REQUIRED)
 find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran)
@@ -147,11 +148,10 @@ foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
     CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
     CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
   )
-  target_link_libraries(cesm_driver_${CONF} PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common esmf PIO::PIO_Fortran)
+  target_link_libraries(cesm_driver_${CONF} PUBLIC share ${COMPONENTS_TARGETS} cmeps cdeps_common cdeps_drof cdeps_datm esmf PIO::PIO_Fortran)
   target_compile_definitions(cesm_driver_${CONF} PRIVATE MED_PRESENT
                                                          ATM_PRESENT
                                                          ICE_PRESENT
-                                                         LND_PRESENT
                                                          OCN_PRESENT
                                                          WAV_PRESENT
                                                          ROF_PRESENT
