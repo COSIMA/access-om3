@@ -20,6 +20,7 @@ target_include_directories(mom6 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_
                                        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
 target_compile_options(mom6 PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_link_libraries(mom6 PUBLIC share
+                                  cmeps
                                   FMS::fms_r8
                                   esmf
                                   NetCDF::NetCDF_Fortran)

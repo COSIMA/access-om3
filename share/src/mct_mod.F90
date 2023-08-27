@@ -1,13 +1,13 @@
-module mct_mod
+module m_MCTWorld
   implicit none
 
 contains
 
-  subroutine mct_world_init(ncomps, globalcomm, mycomms, myids)
+  subroutine init(ncomps, globalcomm, mycomms, myids)
     integer, intent(in) :: ncomps
     integer, intent(in) :: globalcomm
     integer, dimension(:), pointer :: mycomms
     integer, dimension(:), pointer :: myids
-  end subroutine mct_world_init
+  end subroutine init
 
-end module mct_mod
+end module m_MCTWorld

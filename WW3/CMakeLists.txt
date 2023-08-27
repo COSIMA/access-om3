@@ -3,8 +3,6 @@ add_compile_definitions(W3_CESMCOUPLED)
 add_compile_definitions(W3_NCO)
 add_compile_definitions(W3_DIST)
 add_compile_definitions(W3_MPI)
-add_compile_definitions(W3_OMPG)
-add_compile_definitions(W3_OMPH)
 add_compile_definitions(W3_PR3)
 add_compile_definitions(W3_UQ)
 add_compile_definitions(W3_FLX0)
@@ -33,9 +31,12 @@ add_compile_definitions(W3_O6)
 add_compile_definitions(W3_O7)
 add_compile_definitions(W3_O14)
 add_compile_definitions(W3_O15)
-add_compile_definitions(W3_IC4)
 add_compile_definitions(W3_IS0)
 add_compile_definitions(W3_REF0)
+add_compile_definitions(W3_NOGRB)
+add_compile_definitions(W3_IC0)
+
+add_compile_definitions(ENDIANNESS="big_endian")
 
 set_property(SOURCE WW3/model/src/w3initmd.F90
   APPEND
