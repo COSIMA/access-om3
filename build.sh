@@ -20,7 +20,7 @@ OPENMPI_VERSION=4.1.4
 
 module purge
 module load cmake/3.24.2
-module use /g/data/ik11/spack/0.20.1/modules/access-om3/cesm-0.2.0/linux-rocky8-x86_64  # requires membership of "ik11" group
+module use /g/data/ik11/spack/0.20.1/modules/access-om3/0.2.0/linux-rocky8-x86_64  # requires membership of "ik11" group
 module load esmf/8.4.2 fms/git.2021.03.01=2021.03.01 parallelio/2.5.10
 module load intel-compiler/${COMPILER_VERSION} openmpi/${OPENMPI_VERSION}
 
