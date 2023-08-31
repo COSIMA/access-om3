@@ -291,7 +291,6 @@ list(APPEND mom6_src_files
   MOM6/config_src/infra/FMS1/MOM_io_infra.F90
   MOM6/config_src/infra/FMS1/MOM_time_manager.F90
 
-  extra_sources/mom_cap.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_time.F90
   MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90

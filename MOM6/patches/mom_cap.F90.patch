@@ -1,0 +1,11 @@
+--- MOM6/config_src/drivers/nuopc_cap/mom_cap.F90	2023-08-31 10:49:33.115826000 +1000
++++ MOM6/config_src/drivers/nuopc_cap/mom_cap.F90.new	2023-08-31 10:50:34.446781000 +1000
+@@ -1672,7 +1672,7 @@
+       ! determine restart filename
+       call ESMF_ClockGetNextTime(clock, MyTime, rc=rc)
+       if (ChkErr(rc,__LINE__,u_FILE_u)) return
+-      call ESMF_TimeGet (MyTime, yy=year, mm=month, dd=day, h=hour, m=minute, s=seconds, rc=rc )
++      call ESMF_TimeGet (MyTime, yy=year, mm=month, dd=day, s=seconds, rc=rc )
+       if (ChkErr(rc,__LINE__,u_FILE_u)) return
+ 
+       if (cesm_coupled) then
