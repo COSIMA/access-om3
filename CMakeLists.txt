@@ -6,6 +6,7 @@ project(ACCESS-OM3
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/FortranLib.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/AddPatchedSource.cmake)
 
 # Configurations to build
 list(APPEND KNOWN_CONFIGURATIONS MOM6 CICE6 WW3 MOM6-CICE6 CICE6-WW3 MOM6-WW3 MOM6-CICE6-WW3)

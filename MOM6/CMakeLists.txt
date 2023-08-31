@@ -24,3 +24,4 @@ target_link_libraries(mom6 PUBLIC share
                                   FMS::fms_r8
                                   esmf
                                   NetCDF::NetCDF_Fortran)
+add_patched_source(mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap.F90)
