@@ -148,5 +148,4 @@ list(APPEND cice_nuopc_cmeps_driver_files
   CICE/cicecore/drivers/nuopc/cmeps/ice_prescribed_mod.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_scam.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_shr_methods.F90
-  CICE/cicecore/drivers/nuopc/cmeps/ice_mesh_mod.F90
 )
