@@ -31,6 +31,7 @@ endif()
 add_fortran_library(cice mod STATIC ${lib_src_files})
 target_compile_definitions(cice PUBLIC "${_cice_defs}")
 target_link_libraries(cice PUBLIC share cdeps_common esmf)
+add_patched_source(cice CICE/cicecore/drivers/nuopc/cmeps/ice_mesh_mod.F90)
 
 if(CICE_IO MATCHES "^(NetCDF|PIO)$")
   target_link_libraries(cice PUBLIC NetCDF::NetCDF_Fortran)
