@@ -1,14 +1,3 @@
-###  Fortran compiler flags
-if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  add_compile_definitions(
-    CPRGNU
-    NAMING=_ADD_UNDERSCORE)
-elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  add_compile_definitions(
-    CPRINTEL
-    NAMING=_ADD_UNDERSCORE)
-endif()
-
 # The following files are generated with a script acting on templates
 # We include pre-generated files that are committed to the repository
 list(APPEND cesm_share_generated_files
@@ -43,10 +32,23 @@ list(APPEND cesm_share_src_files
   CESM_share/src/water_isotopes/water_isotopes.F90
 )
 
-# The following files are mostly stubs.
+# GPTL timing library srcs
+list(APPEND timing_src_files
+  timing/f_wrappers.c
+  timing/gptl.c
+  timing/GPTLget_memusage.c
+  timing/gptl.h
+  timing/gptl.inc
+  timing/gptl_papi.c
+  timing/GPTLprint_memusage.c
+  timing/GPTLutil.c
+  timing/perf_mod.F90
+  timing/perf_utils.F90
+)
+
+# The following file is a stub.
 list(APPEND stubs_src_files
-  src/perf_mod.F90
-  src/mct_mod.F90
+  stubs/mct_mod.F90
 )
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
@@ -56,12 +58,13 @@ endif()
 
 
 # Collect source files for library
-add_library(share STATIC ${stubs_src_files} ${cesm_share_generated_files} ${cesm_share_src_files})
+add_library(share STATIC ${timing_src_files} ${stubs_src_files} ${cesm_share_generated_files} ${cesm_share_src_files})
 
+add_compile_definitions(NUOPC_INTERFACE HAVE_MPI)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  target_compile_definitions(share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE)
+  target_compile_definitions(share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  target_compile_definitions(share PRIVATE CPRINTEL NAMING=_ADD_UNDERSCORE)
+  target_compile_definitions(share PRIVATE CPRINTEL NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
 endif()
 
 set_target_properties(share PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
