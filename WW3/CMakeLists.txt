@@ -51,3 +51,9 @@ include("ww3_files.cmake")
 add_fortran_library(ww3 mod STATIC ${ww3_src_files})
 target_link_libraries(ww3 PUBLIC  esmf
                                   NetCDF::NetCDF_Fortran)
+
+# WW3 executables
+foreach(EXE ww3_grid ww3_strt ww3_ounf ww3_outf ww3_outp)
+    add_executable(${EXE} WW3/model/src/${EXE}.F90)
+    target_link_libraries(${EXE} PRIVATE ww3)
+endforeach()

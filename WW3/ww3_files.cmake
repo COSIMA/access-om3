@@ -32,6 +32,7 @@ list(APPEND ww3_src_files
   WW3/model/src/w3nmltrncmd.F90
   WW3/model/src/w3nmluprstrmd.F90
   WW3/model/src/w3odatmd.F90
+  WW3/model/src/w3ounfmetamd.F90
   WW3/model/src/w3parall.F90
   WW3/model/src/w3partmd.F90
   WW3/model/src/w3servmd.F90
