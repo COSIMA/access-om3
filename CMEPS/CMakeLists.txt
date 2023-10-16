@@ -52,11 +52,11 @@ list(APPEND _nuopc_cap_share_files
 ###############################################################################
 
 ### Create target library
-add_fortran_library(cmeps mod STATIC ${_mediator_files} ${_nuopc_cap_share_files})
-target_link_libraries(cmeps PUBLIC share
-                                   FMS::fms_r8
-                                   esmf
-                                   PIO::PIO_Fortran)
+add_fortran_library(OM3_cmeps mod STATIC ${_mediator_files} ${_nuopc_cap_share_files})
+target_link_libraries(OM3_cmeps PUBLIC OM3_share
+                                       FMS::fms_r8
+                                       esmf
+                                       PIO::PIO_Fortran)
 if(OpenMP_Fortran_FOUND)
   target_link_libraries(cmeps PRIVATE OpenMP::OpenMP_Fortran)
 endif()

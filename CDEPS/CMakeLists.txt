@@ -47,14 +47,14 @@ list(APPEND cdeps_dwav_src_files
   CDEPS/dwav/wav_comp_nuopc.F90
 )
 
-add_fortran_library(cdeps_common mod STATIC ${cdeps_common_src_files})
-target_include_directories(cdeps_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-target_link_libraries(cdeps_common PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom)
+add_fortran_library(OM3_cdeps_common mod STATIC ${cdeps_common_src_files})
+target_include_directories(OM3_cdeps_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_link_libraries(OM3_cdeps_common PUBLIC OM3_share OM3_cmeps esmf PIO::PIO_Fortran FoX_dom)
 
 foreach(LIB cdeps_docn cdeps_dice cdeps_dwav cdeps_drof cdeps_datm)
-  add_fortran_library(${LIB} ${LIB}/mod STATIC ${${LIB}_src_files})
-  target_include_directories(${LIB} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-  target_link_libraries(${LIB} PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom cdeps_common)
+  add_fortran_library(OM3_${LIB} OM3_${LIB}/mod STATIC ${${LIB}_src_files})
+  target_include_directories(OM3_${LIB} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+  target_link_libraries(OM3_${LIB} PUBLIC OM3_share OM3_cmeps esmf PIO::PIO_Fortran FoX_dom OM3_cdeps_common)
 endforeach()
 
-add_patched_source(cdeps_datm CDEPS/datm/atm_comp_nuopc.F90)
+add_patched_source(OM3_cdeps_datm CDEPS/datm/atm_comp_nuopc.F90)

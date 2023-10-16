@@ -25,12 +25,12 @@ message(VERBOSE "WW3 common source files : ${ww3_src_files}")
 message(VERBOSE "WW3 switch files: ${switch_files}")
 
 ### Create target library and set PUBLIC interfaces on the library
-add_fortran_library(ww3 mod STATIC ${ww3_src_files} ${switch_files})
-target_link_libraries(ww3 PUBLIC  esmf
-                                  NetCDF::NetCDF_Fortran)
+add_fortran_library(OM3_ww3 mod STATIC ${ww3_src_files} ${switch_files})
+target_link_libraries(OM3_ww3 PUBLIC esmf
+                                     NetCDF::NetCDF_Fortran)
 
 # WW3 executables
 foreach(EXE ww3_grid ww3_strt ww3_ounf ww3_outf ww3_outp)
   add_executable(${EXE} ${${EXE}_src_files})
-  target_link_libraries(${EXE} PRIVATE ww3)
+  target_link_libraries(${EXE} PRIVATE OM3_ww3)
 endforeach()

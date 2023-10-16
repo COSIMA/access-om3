@@ -58,18 +58,18 @@ endif()
 
 
 # Collect source files for library
-add_library(share STATIC ${timing_src_files} ${stubs_src_files} ${cesm_share_generated_files} ${cesm_share_src_files})
+add_library(OM3_share STATIC ${timing_src_files} ${stubs_src_files} ${cesm_share_generated_files} ${cesm_share_src_files})
 
 add_compile_definitions(NUOPC_INTERFACE HAVE_MPI)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  target_compile_definitions(share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
+  target_compile_definitions(OM3_share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
 elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  target_compile_definitions(share PRIVATE CPRINTEL NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
+  target_compile_definitions(OM3_share PRIVATE CPRINTEL NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
 endif()
 
-set_target_properties(share PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
-target_include_directories(share PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
+set_target_properties(OM3_share PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
+target_include_directories(OM3_share PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
   $<INSTALL_INTERFACE:mod>
   CESM_share/include
 )
-target_link_libraries(share PUBLIC esmf PIO::PIO_Fortran)
+target_link_libraries(OM3_share PUBLIC esmf PIO::PIO_Fortran)
