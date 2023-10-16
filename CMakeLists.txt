@@ -1,12 +1,18 @@
 cmake_minimum_required(VERSION 3.18)
+# CMake version compatibility
 
-project(ACCESS-OM3
-        VERSION 0.1
-        LANGUAGES C Fortran)
+#[==============================================================================[
+#                         Basic project definition                              #
+#]==============================================================================]
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-include(${CMAKE_SOURCE_DIR}/cmake/FortranLib.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake/AddPatchedSource.cmake)
+project(ACCESS-OM3 VERSION 0.2.0
+                  HOMEPAGE_URL https://github.com/COSIMA/access-om3
+                  DESCRIPTION "Global coupled ocean - sea ice - wave model"
+                  LANGUAGES C Fortran)
+
+#[==============================================================================[
+#                                   Options                                     #
+#]==============================================================================]
 
 # Configurations to build
 list(APPEND KNOWN_CONFIGURATIONS MOM6 CICE6 WW3 MOM6-CICE6 CICE6-WW3 MOM6-WW3 MOM6-CICE6-WW3)
@@ -28,6 +34,25 @@ message(STATUS "  - CICE6-WW3      ${ENABLE_CICE6-WW3}")
 message(STATUS "  - MOM6-WW3       ${ENABLE_MOM6-WW3}")
 message(STATUS "  - MOM6-CICE6-WW3 ${ENABLE_MOM6-CICE6-WW3}")
 
+# Build options
+set(OPENMP          OFF  CACHE BOOL "Enable OpenMP threading")
+
+message(STATUS "Build options")
+message(STATUS "  - OPENMP ${OPENMP}")
+
+#[==============================================================================[
+#                           Project configuration                               #
+#]==============================================================================]
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+include(GNUInstallDirs)
+
+# Include some custom cmake modules
+include(FortranLib)
+include(AddPatchedSource)
+
+## Configure project variables
+
 # Do not build components that are not going to be used
 if(ENABLE_MOM6 OR ENABLE_MOM6-CICE6 OR ENABLE_MOM6-WW3 OR ENABLE_MOM6-CICE6-WW3)
   set(MOM6 ON FORCE)
@@ -45,17 +70,7 @@ else()
   set(WW3 OFF FORCE)
 endif()
 
-# Build options
-set(OPENMP          OFF  CACHE BOOL "Enable OpenMP threading")
-
-message(STATUS "Build options")
-message(STATUS "  - OPENMP ${OPENMP}")
-
 # Common compiler flags and definitions
-add_compile_definitions(
-  CESMCOUPLED
-)
-
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fbacktrace -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none")
   if(${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 10)
@@ -83,6 +98,13 @@ else()
   message(WARNING "C compiler with ID ${CMAKE_C_COMPILER_ID} will be used with CMake default options")
 endif()
 
+add_compile_definitions(
+  CESMCOUPLED
+)
+
+#[==============================================================================[
+#                              External packages                                #
+#]==============================================================================]
 
 # Find dependencies
 find_package(MPI REQUIRED)
@@ -93,6 +115,10 @@ find_package(NetCDF 4.7.3 REQUIRED Fortran)
 find_package(ESMF 8.3.0 MODULE REQUIRED)
 find_package(fms COMPONENTS R8 REQUIRED)
 find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran)
+
+#[==============================================================================[
+#                             Main definitions                                  #
+#]==============================================================================]
 
 # Some code shared by several components
 add_subdirectory(share)
@@ -120,7 +146,7 @@ endif()
 # Mediator component (CMEPS)
 add_subdirectory(CMEPS)
 
-# Build executable for each enabled configuration
+# Add executable for each enabled configuration
 foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
   if(NOT ENABLE_${CONF})
     continue()
@@ -162,3 +188,9 @@ foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
   add_executable(access-om3-${CONF} CMEPS/CMEPS/cesm/driver/esmApp.F90)
   target_link_libraries(access-om3-${CONF} PRIVATE cesm_driver_${CONF} esmf PIO::PIO_Fortran NetCDF::NetCDF_Fortran)
 endforeach()
+
+#[==============================================================================[
+#                             Install or Export                                 #
+#]==============================================================================]
+
+# TODO
