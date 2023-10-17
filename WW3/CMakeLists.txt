@@ -138,3 +138,10 @@ set_target_properties(OM3_ww3_outp PROPERTIES
   OUTPUT_NAME ww3_outp
 )
 target_link_libraries(OM3_ww3_outp PRIVATE OM3_ww3)
+
+
+## Installs
+if(OM3_BIN_INSTALL)
+  install(TARGETS OM3_ww3_grid OM3_ww3_strt OM3_ww3_ounf OM3_ww3_outp
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()

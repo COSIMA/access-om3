@@ -35,12 +35,14 @@ message(STATUS "  - CICE6-WW3         ${OM3_ENABLE_CICE6-WW3}")
 message(STATUS "  - MOM6-CICE6-WW3    ${OM3_ENABLE_MOM6-CICE6-WW3}")
 
 # Build options
+option(OM3_BIN_INSTALL   "Instal ACCESS-OM3 executables" ${PROJECT_IS_TOP_LEVEL})
 option(OM3_OPENMP        "Enable OpenMP threading" OFF)
 option(OM3_MOM_SYMMETRIC "Use symmetric memory" OFF)
 set(OM3_CICE_IO   "PIO" CACHE STRING "CICE OPTIONS: Choose IO options.")
 set_property(CACHE OM3_CICE_IO PROPERTY STRINGS "NetCDF" "PIO" "Binary")
 
 message(STATUS "Build options")
+message(STATUS "  - OM3_BIN_INSTALL   ${OM3_BIN_INSTALL}")
 message(STATUS "  - OM3_OPENMP        ${OM3_OPENMP}")
 message(STATUS "  - OM3_MOM_SYMMETRIC ${OM3_MOM_SYMMETRIC}")
 message(STATUS "  - OM3_CICE_IO       ${OM3_CICE_IO}")
@@ -207,4 +209,15 @@ endforeach()
 #                             Install or Export                                 #
 #]==============================================================================]
 
-# TODO
+## Installs
+if(OM3_BIN_INSTALL)
+  foreach(CONF IN LISTS KnownConfigurations)
+    if(NOT OM3_ENABLE_${CONF})
+      continue()
+    endif()
+
+    install(TARGETS OM3_${CONF}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+  endforeach()
+endif()
