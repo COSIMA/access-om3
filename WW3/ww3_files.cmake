@@ -1,5 +1,5 @@
+# Common sources
 list(APPEND ww3_src_files
-  # Common sources
   WW3/model/src/constants.F90
   WW3/model/src/w3adatmd.F90
   WW3/model/src/w3arrymd.F90
@@ -57,21 +57,32 @@ list(APPEND ww3_src_files
   WW3/model/src/w3iogoncdmd.F90
   WW3/model/src/wav_shr_flags.F90
 
-  # Sources needed for switches
-  WW3/model/src/w3profsmd.F90
-  WW3/model/src/w3pro3md.F90
-  WW3/model/src/w3uqckmd.F90
-  WW3/model/src/w3fld1md.F90
-  WW3/model/src/w3fld2md.F90
-  WW3/model/src/w3src4md.F90
-  WW3/model/src/w3snl1md.F90
-  WW3/model/src/w3sbt1md.F90
-  WW3/model/src/w3sdb1md.F90
-  
   # NUOPC cap sources
   WW3/model/src/wav_kind_mod.F90
   WW3/model/src/wav_shr_mod.F90
   WW3/model/src/wav_shel_inp.F90
   WW3/model/src/wav_comp_nuopc.F90
   WW3/model/src/wav_import_export.F90
+)
+
+# Utilities sources
+list(APPEND ww3_grid_src_files
+  WW3/model/src/ww3_grid.F90
+)
+
+list(APPEND ww3_strt_src_files
+  WW3/model/src/ww3_strt.F90
+)
+
+list(APPEND ww3_outf_src_files
+  WW3/model/src/ww3_outf.F90
+)
+
+list(APPEND ww3_ounf_src_files
+  WW3/model/src/ww3_ounf.F90
+  WW3/model/src/w3ounfmetamd.F90
+)
+
+list(APPEND ww3_outp_src_files
+  WW3/model/src/ww3_outp.F90
 )
