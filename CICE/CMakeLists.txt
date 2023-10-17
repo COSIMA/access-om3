@@ -1,9 +1,3 @@
-### Global definitions, flags, etc
-
-## Configuration Options
-set(OM3_CICE_IO "PIO" CACHE STRING "CICE OPTIONS: Choose IO options.")
-set_property(CACHE OM3_CICE_IO PROPERTY STRINGS "NetCDF" "PIO" "Binary")
-
 ### Targets
 
 ## CICE library

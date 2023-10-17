@@ -17,28 +17,34 @@ project(ACCESS-OM3 VERSION "0.2.0"
 # Configurations to build
 list(APPEND KnownConfigurations MOM6 CICE6 WW3 MOM6-CICE6 CICE6-WW3 MOM6-WW3 MOM6-CICE6-WW3)
 
-set(OM3_ENABLE_MOM6           OFF CACHE BOOL "Build MOM6 configuration")
-set(OM3_ENABLE_CICE6          OFF CACHE BOOL "Build CICE6 configuration")
-set(OM3_ENABLE_WW3            OFF CACHE BOOL "Build WW3 configuration")
-set(OM3_ENABLE_MOM6-CICE6     ON  CACHE BOOL "Build MOM6-CICE6 configuration")
-set(OM3_ENABLE_CICE6-WW3      ON  CACHE BOOL "Build CICE6-WW3 configuration")
-set(OM3_ENABLE_MOM6-WW3       OFF CACHE BOOL "Build MOM6-WW3 configuration")
-set(OM3_ENABLE_MOM6-CICE6-WW3 ON  CACHE BOOL "Build MOM6-CICE6-WW3 configuration")
+option(OM3_ENABLE_MOM6           "Build MOM6 configuration" OFF)
+option(OM3_ENABLE_CICE6          "Build CICE6 configuration" OFF)
+option(OM3_ENABLE_WW3            "Build WW3 configuration" OFF)
+option(OM3_ENABLE_MOM6-WW3       "Build MOM6-WW3 configuration" OFF)
+option(OM3_ENABLE_MOM6-CICE6     "Build MOM6-CICE6 configuration" ON)
+option(OM3_ENABLE_CICE6-WW3      "Build CICE6-WW3 configuration" ON)
+option(OM3_ENABLE_MOM6-CICE6-WW3 "Build MOM6-CICE6-WW3 configuration" ON)
 
 message(STATUS "Configurations")
-message(STATUS "  - MOM6           ${OM3_ENABLE_MOM6}")
-message(STATUS "  - CICE6          ${OM3_ENABLE_CICE6}")
-message(STATUS "  - WW3            ${OM3_ENABLE_WW3}")
-message(STATUS "  - MOM6-CICE6     ${OM3_ENABLE_MOM6-CICE6}")
-message(STATUS "  - CICE6-WW3      ${OM3_ENABLE_CICE6-WW3}")
-message(STATUS "  - MOM6-WW3       ${OM3_ENABLE_MOM6-WW3}")
-message(STATUS "  - MOM6-CICE6-WW3 ${OM3_ENABLE_MOM6-CICE6-WW3}")
+message(STATUS "  - MOM6              ${OM3_ENABLE_MOM6}")
+message(STATUS "  - CICE6             ${OM3_ENABLE_CICE6}")
+message(STATUS "  - WW3               ${OM3_ENABLE_WW3}")
+message(STATUS "  - MOM6-WW3          ${OM3_ENABLE_MOM6-WW3}")
+message(STATUS "  - MOM6-CICE6        ${OM3_ENABLE_MOM6-CICE6}")
+message(STATUS "  - CICE6-WW3         ${OM3_ENABLE_CICE6-WW3}")
+message(STATUS "  - MOM6-CICE6-WW3    ${OM3_ENABLE_MOM6-CICE6-WW3}")
 
 # Build options
-set(OM3_OPENMP          OFF  CACHE BOOL "Enable OpenMP threading")
+option(OM3_OPENMP        "Enable OpenMP threading" OFF)
+option(OM3_MOM_SYMMETRIC "Use symmetric memory" OFF)
+set(OM3_CICE_IO   "PIO" CACHE STRING "CICE OPTIONS: Choose IO options.")
+set_property(CACHE OM3_CICE_IO PROPERTY STRINGS "NetCDF" "PIO" "Binary")
 
 message(STATUS "Build options")
-message(STATUS "  - OPENMP ${OM3_OPENMP}")
+message(STATUS "  - OM3_OPENMP        ${OM3_OPENMP}")
+message(STATUS "  - OM3_MOM_SYMMETRIC ${OM3_MOM_SYMMETRIC}")
+message(STATUS "  - OM3_CICE_IO       ${OM3_CICE_IO}")
+
 
 #[==============================================================================[
 #                           Project configuration                               #

@@ -7,20 +7,16 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   set(fortran_compile_flags -r8)
 endif()
 
-## Configuration options
-option(OM3_MOM_SYMMETRIC "Use symmetric memory" OFF)
-if(OM3_MOM_SYMMETRIC)
-  set(MOM_memory "dynamic_symmetric")
-else()
-  set(MOM_memory "dynamic_nonsymmetric")
-endif()
-
 ### Targets
 
 ## MOM6 library
 add_fortran_library(OM3_mom6 mod STATIC)
-target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/config_src/memory/${MOM_memory}>
-                                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
+target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
+if(OM3_MOM_SYMMETRIC)
+  target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/config_src/memory/dynamic_symmetric>)
+else()
+  target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/config_src/memory/dynamic_nonsymmetric>)
+endif()
 target_compile_options(OM3_mom6 PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_link_libraries(OM3_mom6
   PUBLIC esmf
