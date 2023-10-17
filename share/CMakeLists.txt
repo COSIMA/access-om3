@@ -1,14 +1,26 @@
-# The following files are generated with a script acting on templates
-# We include pre-generated files that are committed to the repository
-list(APPEND cesm_share_generated_files
+### Targets
+
+## share library
+add_fortran_library(OM3_share mod/share STATIC)
+target_include_directories(OM3_share PUBLIC CESM_share/include)
+if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
+  target_compile_definitions(OM3_share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
+  target_compile_definitions(OM3_share PRIVATE CPRINTEL NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
+endif()
+target_link_libraries(OM3_share
+  PUBLIC esmf PIO::PIO_Fortran
+  PRIVATE OM3_timing
+)
+target_sources(OM3_share PRIVATE
+  # The following files are generated with a script acting on templates
+  # We include pre-generated files that are committed to the repository
   src/shr_assert_mod.F90
   src/shr_frz_mod.F90
   src/shr_infnan_mod.F90
   src/dtypes.h
-)
 
-# Modules shared among several components
-list(APPEND cesm_share_src_files
+  # Modules shared among several components
   CESM_share/include/shr_assert.h
   CESM_share/src/shr_abort_mod.F90
   CESM_share/src/shr_cal_mod.F90
@@ -30,10 +42,25 @@ list(APPEND cesm_share_src_files
   CESM_share/src/shr_timer_mod.F90
   CESM_share/src/shr_wv_sat_mod.F90
   CESM_share/src/water_isotopes/water_isotopes.F90
-)
 
-# GPTL timing library srcs
-list(APPEND timing_src_files
+  # The following file is a stub.
+  stubs/mct_mod.F90
+)
+if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
+  # CESM reduces the precision and increases speed for the following file
+  set_source_files_properties(CESM_share/src/shr_wv_sat_mod.F90 PROPERTIES COMPILE_FLAGS "-fimf-precision=low -fp-model fast")
+endif()
+
+## GPTL timing library
+add_fortran_library(OM3_timing mod/timing STATIC)
+target_compile_definitions(OM3_timing PRIVATE NUOPC_INTERFACE HAVE_MPI)
+if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
+  target_compile_definitions(OM3_timing PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
+elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
+  target_compile_definitions(OM3_timing PRIVATE CPRINTEL NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
+endif()
+target_link_libraries(OM3_timing PRIVATE esmf)
+target_sources(OM3_timing PRIVATE
   timing/f_wrappers.c
   timing/gptl.c
   timing/GPTLget_memusage.c
@@ -45,31 +72,3 @@ list(APPEND timing_src_files
   timing/perf_mod.F90
   timing/perf_utils.F90
 )
-
-# The following file is a stub.
-list(APPEND stubs_src_files
-  stubs/mct_mod.F90
-)
-
-if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  # CESM reduces the precision and increases speed for the following file
-  set_source_files_properties(CESM_share/src/shr_wv_sat_mod.F90 PROPERTIES COMPILE_FLAGS "-fimf-precision=low -fp-model fast")
-endif()
-
-
-# Collect source files for library
-add_library(OM3_share STATIC ${timing_src_files} ${stubs_src_files} ${cesm_share_generated_files} ${cesm_share_src_files})
-
-add_compile_definitions(NUOPC_INTERFACE HAVE_MPI)
-if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  target_compile_definitions(OM3_share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
-elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
-  target_compile_definitions(OM3_share PRIVATE CPRINTEL NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
-endif()
-
-set_target_properties(OM3_share PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mod)
-target_include_directories(OM3_share PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/mod>
-  $<INSTALL_INTERFACE:mod>
-  CESM_share/include
-)
-target_link_libraries(OM3_share PUBLIC esmf PIO::PIO_Fortran)

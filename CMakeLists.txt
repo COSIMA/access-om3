@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.18)
 #                         Basic project definition                              #
 #]==============================================================================]
 
-project(ACCESS-OM3 VERSION 0.2.0
+project(ACCESS-OM3 VERSION "0.2.0"
                   HOMEPAGE_URL https://github.com/COSIMA/access-om3
                   DESCRIPTION "Global coupled ocean - sea ice - wave model"
                   LANGUAGES C Fortran)
@@ -15,7 +15,7 @@ project(ACCESS-OM3 VERSION 0.2.0
 #]==============================================================================]
 
 # Configurations to build
-list(APPEND KNOWN_CONFIGURATIONS MOM6 CICE6 WW3 MOM6-CICE6 CICE6-WW3 MOM6-WW3 MOM6-CICE6-WW3)
+list(APPEND KnownConfigurations MOM6 CICE6 WW3 MOM6-CICE6 CICE6-WW3 MOM6-WW3 MOM6-CICE6-WW3)
 
 set(OM3_ENABLE_MOM6           OFF CACHE BOOL "Build MOM6 configuration")
 set(OM3_ENABLE_CICE6          OFF CACHE BOOL "Build CICE6 configuration")
@@ -123,7 +123,7 @@ find_package(PIO 2.5.3 REQUIRED COMPONENTS C Fortran)
 # Some code shared by several components
 add_subdirectory(share)
 
-# Components
+## Components
 
 # Data component (CDEPS)
 add_subdirectory(CDEPS)
@@ -147,26 +147,26 @@ endif()
 add_subdirectory(CMEPS)
 
 # Add executable for each enabled configuration
-foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
+foreach(CONF IN LISTS KnownConfigurations)
   if(NOT OM3_ENABLE_${CONF})
     continue()
   endif()
 
-  set(COMPONENTS_TARGETS "")
+  set(ComponentsTargets "")
   if(OM3_${CONF} MATCHES MOM6)
-    list(APPEND COMPONENTS_TARGETS OM3_mom6)
+    list(APPEND ComponentsTargets OM3_mom6)
   else()
-    list(APPEND COMPONENTS_TARGETS OM3_cdeps_docn)
+    list(APPEND ComponentsTargets OM3_cdeps_docn)
   endif()
   if(OM3_${CONF} MATCHES CICE6)
-    list(APPEND COMPONENTS_TARGETS OM3_cice)
+    list(APPEND ComponentsTargets OM3_cice)
   else()
-    list(APPEND COMPONENTS_TARGETS OM3_cdeps_dice)
+    list(APPEND ComponentsTargets OM3_cdeps_dice)
   endif()
   if(OM3_${CONF} MATCHES WW3)
-    list(APPEND COMPONENTS_TARGETS OM3_ww3)
+    list(APPEND ComponentsTargets OM3_ww3)
   else()
-    list(APPEND COMPONENTS_TARGETS OM3_cdeps_dwav)
+    list(APPEND ComponentsTargets OM3_cdeps_dwav)
   endif()
 
   # We use the CESM driver from CMEPS
@@ -175,7 +175,10 @@ foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
     CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
     CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
   )
-  target_link_libraries(OM3_cesm_driver_${CONF} PUBLIC OM3_share ${COMPONENTS_TARGETS} OM3_cmeps OM3_cdeps_common OM3_cdeps_drof OM3_cdeps_datm esmf PIO::PIO_Fortran)
+  target_link_libraries(OM3_cesm_driver_${CONF}
+    PUBLIC esmf
+    PRIVATE OM3_share OM3_timing ${ComponentsTargets} OM3_cmeps OM3_cdeps_common OM3_cdeps_drof OM3_cdeps_datm PIO::PIO_Fortran
+  )
   target_compile_definitions(OM3_cesm_driver_${CONF} PRIVATE MED_PRESENT
                                                              ATM_PRESENT
                                                              ICE_PRESENT
@@ -186,11 +189,12 @@ foreach(CONF IN LISTS KNOWN_CONFIGURATIONS)
   )
 
   add_executable(OM3_${CONF} CMEPS/CMEPS/cesm/driver/esmApp.F90)
-  target_link_libraries(OM3_${CONF} PRIVATE OM3_cesm_driver_${CONF} esmf PIO::PIO_Fortran NetCDF::NetCDF_Fortran)
+  target_link_libraries(OM3_${CONF} PRIVATE OM3_cesm_driver_${CONF} OM3_share esmf)
 
   set_target_properties(OM3_${CONF} PROPERTIES
-                                    OUTPUT_NAME access-om3-${CONF}
-		                  )
+    LINKER_LANGUAGE Fortran
+    OUTPUT_NAME access-om3-${CONF}
+  )
 endforeach()
 
 #[==============================================================================[
