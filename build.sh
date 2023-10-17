@@ -38,7 +38,7 @@ for BUILD_TYPE in "${BUILD_TYPES[@]}"; do
   cmake -S . -B build --preset=gadi -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_VERBOSE_MAKEFILE=ON
   cmake --build build -j 4
 
-  for exec in build/access-om3*; do
+  for exec in build/access-om3* build/WW3/ww3_????; do
     dest=bin/$(basename ${exec})
     if [[ ${BUILD_TYPE} != "Release" ]] ; then dest=${dest}-${BUILD_TYPE}; fi
     dest=${dest}-${hash}
