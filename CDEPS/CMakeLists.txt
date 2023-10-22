@@ -1,6 +1,13 @@
-add_subdirectory(fox)
+### Targets
 
-list(APPEND cdeps_common_src_files
+## Common library
+add_fortran_library(OM3_cdeps_common mod/common STATIC)
+target_include_directories(OM3_cdeps_common PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_link_libraries(OM3_cdeps_common
+  PUBLIC esmf
+  PRIVATE OM3_share OM3_cmeps FoX_dom PIO::PIO_Fortran
+)
+target_sources(OM3_cdeps_common PRIVATE
   CDEPS/streams/dshr_methods_mod.F90
   CDEPS/streams/dshr_strdata_mod.F90
   CDEPS/streams/dshr_stream_mod.F90
@@ -11,11 +18,14 @@ list(APPEND cdeps_common_src_files
   CDEPS/dshr/dshr_mod.F90
 )
 
-list(APPEND cdeps_drof_src_files
-  CDEPS/drof/rof_comp_nuopc.F90
+## DATM
+add_fortran_library(OM3_cdeps_datm mod/datm STATIC)
+target_include_directories(OM3_cdeps_datm PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_link_libraries(OM3_cdeps_datm
+  PUBLIC esmf
+  PRIVATE OM3_share OM3_cmeps FoX_dom OM3_cdeps_common PIO::PIO_Fortran
 )
-  
-list(APPEND cdeps_datm_src_files
+target_sources(OM3_cdeps_datm PRIVATE
   CDEPS/datm/datm_datamode_cfsr_mod.F90
   CDEPS/datm/datm_datamode_clmncep_mod.F90
   CDEPS/datm/datm_datamode_core2_mod.F90
@@ -25,9 +35,16 @@ list(APPEND cdeps_datm_src_files
   CDEPS/datm/datm_datamode_jra_mod.F90
   extra_sources/datm_datamode_jra55do_mod.F90
 )
+add_patched_source(OM3_cdeps_datm CDEPS/datm/atm_comp_nuopc.F90)
 
-
-list(APPEND cdeps_docn_src_files
+## DOCN
+add_fortran_library(OM3_cdeps_docn mod/docn STATIC)
+target_include_directories(OM3_cdeps_docn PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_link_libraries(OM3_cdeps_docn
+  PUBLIC esmf
+  PRIVATE OM3_share OM3_cmeps FoX_dom OM3_cdeps_common PIO::PIO_Fortran
+)
+target_sources(OM3_cdeps_docn PRIVATE
   CDEPS/docn/docn_datamode_aquaplanet_mod.F90
   CDEPS/docn/docn_datamode_copyall_mod.F90
   CDEPS/docn/docn_datamode_cplhist_mod.F90
@@ -37,24 +54,42 @@ list(APPEND cdeps_docn_src_files
   CDEPS/docn/ocn_comp_nuopc.F90
 )
 
-list(APPEND cdeps_dice_src_files
+## DICE
+add_fortran_library(OM3_cdeps_dice mod/dice STATIC)
+target_include_directories(OM3_cdeps_dice PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_link_libraries(OM3_cdeps_dice
+  PUBLIC esmf
+  PRIVATE OM3_share OM3_cmeps FoX_dom OM3_cdeps_common PIO::PIO_Fortran
+)
+target_sources(OM3_cdeps_dice PRIVATE
   CDEPS/dice/dice_datamode_ssmi_mod.F90
   CDEPS/dice/dice_flux_atmice_mod.F90
   CDEPS/dice/ice_comp_nuopc.F90
 )
 
-list(APPEND cdeps_dwav_src_files
+## DWAV
+add_fortran_library(OM3_cdeps_dwav mod/dwav STATIC)
+target_include_directories(OM3_cdeps_dwav PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_link_libraries(OM3_cdeps_dwav
+  PUBLIC esmf
+  PRIVATE OM3_share OM3_cmeps FoX_dom OM3_cdeps_common PIO::PIO_Fortran
+)
+target_sources(OM3_cdeps_dwav PRIVATE
   CDEPS/dwav/wav_comp_nuopc.F90
 )
 
-add_fortran_library(cdeps_common mod STATIC ${cdeps_common_src_files})
-target_include_directories(cdeps_common PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-target_link_libraries(cdeps_common PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom)
+## DROF
+add_fortran_library(OM3_cdeps_drof mod/drof STATIC)
+target_include_directories(OM3_cdeps_drof PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
+target_link_libraries(OM3_cdeps_drof
+  PUBLIC esmf
+  PRIVATE OM3_share OM3_cmeps FoX_dom OM3_cdeps_common PIO::PIO_Fortran
+)
+target_sources(OM3_cdeps_drof PRIVATE
+  CDEPS/drof/rof_comp_nuopc.F90
+)
 
-foreach(LIB cdeps_docn cdeps_dice cdeps_dwav cdeps_drof cdeps_datm)
-  add_fortran_library(${LIB} ${LIB}/mod STATIC ${${LIB}_src_files})
-  target_include_directories(${LIB} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
-  target_link_libraries(${LIB} PUBLIC share cmeps esmf PIO::PIO_Fortran FoX_dom cdeps_common)
-endforeach()
+### Subdirectories
 
-add_patched_source(cdeps_datm CDEPS/datm/atm_comp_nuopc.F90)
+## Build FoX
+add_subdirectory(fox)
