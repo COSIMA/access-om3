@@ -1,0 +1,14 @@
+diff --git a/src/shr_const_mod.F90 b/src/shr_const_mod.F90
+index 8437190..9696c81 100644
+--- shr_const_mod.F90.old
++++ shr_const_mod.F90.new
+@@ -87,9 +87,8 @@ contains
+ !-----------------------------------------------------------------------------
+ 
+   elemental logical function shr_const_isspval(rval)
+-!$omp declare simd(shr_const_isspval)
+ 
+      real(r8), intent(in) :: rval
+ 
+      if (rval > SHR_CONST_SPVAL_TOLMIN .and. &
+          rval < SHR_CONST_SPVAL_TOLMAX) then
