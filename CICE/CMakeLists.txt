@@ -8,7 +8,7 @@ if(OM3_CICE_IO MATCHES "^(NetCDF|PIO)$")
 endif()
 target_link_libraries(OM3_cice
   PUBLIC esmf
-  PRIVATE OM3_share OM3_timing OM3_cdeps_common OM3_cmeps
+  PRIVATE OM3_cdeps_common OM3_nuopc_cap_share OM3_share OM3_timing
 )
 if(OM3_CICE_IO MATCHES "^(NetCDF|PIO)$")
   target_link_libraries(OM3_cice PRIVATE NetCDF::NetCDF_Fortran)

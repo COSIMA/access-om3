@@ -20,7 +20,7 @@ endif()
 target_compile_options(OM3_mom6 PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_link_libraries(OM3_mom6
   PUBLIC esmf
-  PRIVATE OM3_share OM3_cmeps FMS::fms_r8 NetCDF::NetCDF_Fortran
+  PRIVATE OM3_nuopc_cap_share OM3_share FMS::fms_r8
 )
 target_sources(OM3_mom6 PRIVATE
   MOM6/src/ALE/coord_adapt.F90
