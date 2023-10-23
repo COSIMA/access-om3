@@ -20,7 +20,6 @@ set_property(SOURCE WW3/model/src/w3initmd.F90
 )
 target_link_libraries(OM3_ww3
   PUBLIC esmf
-  PRIVATE NetCDF::NetCDF_Fortran
 )
 # Process switches and get list of extra source files
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/check_switches.cmake)

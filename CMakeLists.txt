@@ -36,6 +36,7 @@ message(STATUS "  - MOM6-CICE6-WW3    ${OM3_ENABLE_MOM6-CICE6-WW3}")
 
 # Build options
 option(OM3_BIN_INSTALL   "Instal ACCESS-OM3 executables" ${PROJECT_IS_TOP_LEVEL})
+option(OM3_LIB_INSTALL   "Instal ACCESS-OM3 libraries" OFF)
 option(OM3_OPENMP        "Enable OpenMP threading" OFF)
 option(OM3_MOM_SYMMETRIC "Use symmetric memory" OFF)
 set(OM3_CICE_IO   "PIO" CACHE STRING "CICE OPTIONS: Choose IO options.")
@@ -43,6 +44,7 @@ set_property(CACHE OM3_CICE_IO PROPERTY STRINGS "NetCDF" "PIO" "Binary")
 
 message(STATUS "Build options")
 message(STATUS "  - OM3_BIN_INSTALL   ${OM3_BIN_INSTALL}")
+message(STATUS "  - OM3_LIB_INSTALL   ${OM3_LIB_INSTALL}")
 message(STATUS "  - OM3_OPENMP        ${OM3_OPENMP}")
 message(STATUS "  - OM3_MOM_SYMMETRIC ${OM3_MOM_SYMMETRIC}")
 message(STATUS "  - OM3_CICE_IO       ${OM3_CICE_IO}")
@@ -185,7 +187,7 @@ foreach(CONF IN LISTS KnownConfigurations)
   )
   target_link_libraries(OM3_cesm_driver_${CONF}
     PUBLIC esmf
-    PRIVATE OM3_share OM3_timing ${ComponentsTargets} OM3_cmeps OM3_cdeps_common OM3_cdeps_drof OM3_cdeps_datm PIO::PIO_Fortran
+    PRIVATE ${ComponentsTargets} OM3_cdeps_drof OM3_cdeps_datm OM3_cmeps OM3_nuopc_cap_share OM3_share OM3_timing
   )
   target_compile_definitions(OM3_cesm_driver_${CONF} PRIVATE MED_PRESENT
                                                              ATM_PRESENT
