@@ -180,7 +180,7 @@ foreach(CONF IN LISTS KnownConfigurations)
   endif()
 
   # We use the CESM driver from CMEPS
-  add_fortran_library(OM3_cesm_driver_${CONF} OM3_cesm_driver_${CONF}/mod STATIC
+  add_fortran_library(OM3_cesm_driver_${CONF} mod/OM3_cesm_driver_${CONF} STATIC
     CMEPS/CMEPS/cesm/driver/esm.F90
     CMEPS/CMEPS/cesm/driver/ensemble_driver.F90
     CMEPS/CMEPS/cesm/driver/esm_time_mod.F90
