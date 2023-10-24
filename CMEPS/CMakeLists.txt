@@ -49,7 +49,7 @@ target_sources(OM3_cmeps PRIVATE
 )
 
 ## NUOPC cap share
-add_fortran_library(OM3_nuopc_cap_share mod/nuopc_cap_share STATIC)
+add_fortran_library(OM3_nuopc_cap_share mod/nuopc_cap_share OBJECT)
 target_link_libraries(OM3_nuopc_cap_share
   PUBLIC esmf
   PRIVATE OM3_share

@@ -112,6 +112,12 @@ add_compile_definitions(
   CESMCOUPLED
 )
 
+## Fortran modules path; currently this is simply set to be the include dir
+set(CMAKE_INSTALL_MODULEDIR ${CMAKE_INSTALL_INCLUDEDIR}
+  CACHE STRING
+  "Fortran module installation path (Not a cmake native variable)"
+)
+
 #[==============================================================================[
 #                              External packages                                #
 #]==============================================================================]
@@ -212,6 +218,8 @@ endforeach()
 #]==============================================================================]
 
 ## Installs
+
+# OM3 executables
 if(OM3_BIN_INSTALL)
   foreach(CONF IN LISTS KnownConfigurations)
     if(NOT OM3_ENABLE_${CONF})
@@ -222,4 +230,29 @@ if(OM3_BIN_INSTALL)
       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
   endforeach()
+endif()
+
+# Libraries
+if(OM3_LIB_INSTALL)
+  # Library of common stuff
+  add_library(OM3_libcommon STATIC
+    $<TARGET_OBJECTS:OM3_nuopc_cap_share>
+    $<TARGET_OBJECTS:OM3_share>
+    $<TARGET_OBJECTS:OM3_timing>
+  )
+  set_target_properties(OM3_libcommon PROPERTIES
+    OUTPUT_NAME access-common
+  )
+  install(TARGETS OM3_libcommon
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  get_target_property(timing_moddir OM3_timing Fortran_MODULE_DIRECTORY)
+  get_target_property(share_moddir OM3_share Fortran_MODULE_DIRECTORY)
+  get_target_property(nuopc_cap_share_moddir OM3_nuopc_cap_share Fortran_MODULE_DIRECTORY)
+  install(DIRECTORY ${timing_moddir}/ ${share_moddir}/ ${nuopc_cap_share_moddir}/ DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-common)
+
 endif()

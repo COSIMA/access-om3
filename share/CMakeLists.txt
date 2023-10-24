@@ -1,7 +1,7 @@
 ### Targets
 
 ## share library
-add_fortran_library(OM3_share mod/share STATIC)
+add_fortran_library(OM3_share mod/share OBJECT)
 target_include_directories(OM3_share PUBLIC CESM_share/include)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   target_compile_definitions(OM3_share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
@@ -52,7 +52,7 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
 endif()
 
 ## GPTL timing library
-add_fortran_library(OM3_timing mod/timing STATIC)
+add_fortran_library(OM3_timing mod/timing OBJECT)
 target_compile_definitions(OM3_timing PRIVATE NUOPC_INTERFACE HAVE_MPI)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   target_compile_definitions(OM3_timing PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
