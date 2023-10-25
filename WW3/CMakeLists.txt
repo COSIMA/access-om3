@@ -138,8 +138,25 @@ set_target_properties(OM3_ww3_outp PROPERTIES
 )
 target_link_libraries(OM3_ww3_outp PRIVATE OM3_ww3)
 
+### Install and Export
 
-## Installs
+## Library
+if(OM3_LIB_INSTALL)
+  set_target_properties(OM3_ww3 PROPERTIES
+    OUTPUT_NAME access-ww3
+  )
+  install(TARGETS OM3_ww3
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  get_target_property(ww3_moddir OM3_ww3 Fortran_MODULE_DIRECTORY)
+  install(FILES ${ww3_moddir}/wav_comp_nuopc.mod DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-ww3)
+endif()
+
+## Utilities
 if(OM3_BIN_INSTALL)
   install(TARGETS OM3_ww3_grid OM3_ww3_strt OM3_ww3_ounf OM3_ww3_outp
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

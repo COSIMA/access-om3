@@ -323,3 +323,21 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/config_src/drivers/nuopc_cap/time_utils.F90
 )
 add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap.F90)
+
+### Install and Export
+
+## Library
+if(OM3_LIB_INSTALL)
+  set_target_properties(OM3_mom6 PROPERTIES
+    OUTPUT_NAME access-mom6
+  )
+  install(TARGETS OM3_mom6
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  get_target_property(mom_moddir OM3_mom6 Fortran_MODULE_DIRECTORY)
+  install(FILES ${mom_moddir}/ocn_comp_nuopc.mod DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-mom6)
+endif()

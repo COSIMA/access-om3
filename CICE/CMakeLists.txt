@@ -151,3 +151,21 @@ elseif(OM3_CICE_IO MATCHES "Binary")
     CICE/cicecore/cicedynB/infrastructure/io/io_binary/ice_restart.F90
   )
 endif()
+
+### Install and Export
+
+## Library
+if(OM3_LIB_INSTALL)
+  set_target_properties(OM3_cice PROPERTIES
+    OUTPUT_NAME access-cice
+  )
+  install(TARGETS OM3_cice
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  get_target_property(cice_moddir OM3_cice Fortran_MODULE_DIRECTORY)
+  install(FILES ${cice_moddir}/ice_comp_nuopc.mod DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-cice)
+endif()

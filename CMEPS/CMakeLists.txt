@@ -60,3 +60,23 @@ target_sources(OM3_nuopc_cap_share PRIVATE
   CMEPS/cesm/nuopc_cap_share/glc_elevclass_mod.F90
   CMEPS/cesm/nuopc_cap_share/nuopc_shr_methods.F90
 )
+
+### Install and Export
+
+## Library
+if(OM3_LIB_INSTALL)
+  set_target_properties(OM3_cmeps PROPERTIES
+    OUTPUT_NAME access-cmeps
+  )
+  install(TARGETS OM3_cmeps
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  get_target_property(cmeps_moddir OM3_cmeps Fortran_MODULE_DIRECTORY)
+  foreach(MOD med med_time_mod med_internalstate_mod)
+    install(FILES ${cmeps_moddir}/${MOD}.mod ${} DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-cmeps)
+  endforeach()
+endif()

@@ -219,6 +219,8 @@ endforeach()
 
 ## Installs
 
+# Note that the installation of some components is done in the corresponding subdirectory
+
 # OM3 executables
 if(OM3_BIN_INSTALL)
   foreach(CONF IN LISTS KnownConfigurations)
