@@ -116,6 +116,12 @@ add_compile_definitions(
   CESMCOUPLED
 )
 
+## Fortran modules path; currently this is simply set to be the include dir
+set(CMAKE_INSTALL_MODULEDIR ${CMAKE_INSTALL_INCLUDEDIR}
+  CACHE STRING
+  "Fortran module installation path (Not a cmake native variable)"
+)
+
 #[==============================================================================[
 #                              External packages                                #
 #]==============================================================================]
@@ -217,6 +223,10 @@ endforeach()
 #]==============================================================================]
 
 ## Installs
+
+# Note that the installation of some components is done in the corresponding subdirectory
+
+# OM3 executables
 if(OM3_BIN_INSTALL)
   foreach(CONF IN LISTS KnownConfigurations)
     if(NOT OM3_ENABLE_${CONF})

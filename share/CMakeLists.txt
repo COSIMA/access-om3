@@ -74,3 +74,41 @@ target_sources(OM3_timing PRIVATE
   timing/perf_mod.F90
   timing/perf_utils.F90
 )
+
+### Install and Export
+
+if(OM3_LIB_INSTALL)
+  ## share library
+  set_target_properties(OM3_share PROPERTIES
+    OUTPUT_NAME access-share
+  )
+  install(TARGETS OM3_share
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  target_include_directories(OM3_share PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-share>")
+  get_target_property(share_moddir OM3_share Fortran_MODULE_DIRECTORY)
+  install(DIRECTORY ${share_moddir}/
+    DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-share
+    COMPONENT AccessOM3_Development
+  )
+
+  ## timing library
+  set_target_properties(OM3_timing PROPERTIES
+    OUTPUT_NAME access-timing
+  )
+  install(TARGETS OM3_timing
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  target_include_directories(OM3_timing PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-timing>")
+  get_target_property(timing_moddir OM3_timing Fortran_MODULE_DIRECTORY)
+  install(DIRECTORY ${timing_moddir}/
+    DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-timing
+    COMPONENT AccessOM3_Development
+  )
+endif()

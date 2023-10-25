@@ -62,3 +62,41 @@ target_sources(OM3_nuopc_cap_share PRIVATE
   CMEPS/cesm/nuopc_cap_share/glc_elevclass_mod.F90
   CMEPS/cesm/nuopc_cap_share/nuopc_shr_methods.F90
 )
+
+### Install and Export
+
+if(OM3_LIB_INSTALL)
+  ## CMEPS library
+  set_target_properties(OM3_cmeps PROPERTIES
+    OUTPUT_NAME access-cmeps
+  )
+  install(TARGETS OM3_cmeps
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  target_include_directories(OM3_cmeps PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-cmeps>")
+  get_target_property(cmeps_moddir OM3_cmeps Fortran_MODULE_DIRECTORY)
+  install(FILES ${cmeps_moddir}/med.mod ${cmeps_moddir}/med_time_mod.mod ${cmeps_moddir}/med_internalstate_mod.mod
+    DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-cmeps
+    COMPONENT AccessOM3_Development
+  )
+
+  ## NUOPC cap share
+  set_target_properties(OM3_nuopc_cap_share PROPERTIES
+    OUTPUT_NAME access-nuopc_cap_share
+  )
+  install(TARGETS OM3_nuopc_cap_share
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  target_include_directories(OM3_nuopc_cap_share PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-nuopc_cap_share>")
+  get_target_property(nuopc_cap_share_moddir OM3_nuopc_cap_share Fortran_MODULE_DIRECTORY)
+  install(DIRECTORY ${nuopc_cap_share_moddir}/
+    DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-nuopc_cap_share
+    COMPONENT AccessOM3_Development
+  )
+endif()
