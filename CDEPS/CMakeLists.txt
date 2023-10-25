@@ -1,3 +1,8 @@
+### Subdirectories
+
+## Build FoX
+add_subdirectory(fox)
+
 ### Targets
 
 ## Common library
@@ -6,11 +11,7 @@ add_library(AccessOM3::cdeps_common ALIAS OM3_cdeps_common)
 target_include_directories(OM3_cdeps_common PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
 target_link_libraries(OM3_cdeps_common
   PUBLIC esmf
-<<<<<<< HEAD
   PRIVATE AccessOM3::share AccessOM3::cmeps AccessOM3::nuopc_cap_share FoX::FoX PIO::PIO_Fortran
-=======
-  PRIVATE OM3_nuopc_cap_share OM3_share FoX_dom
->>>>>>> cda37a0 (Split CMEPS library into CMEPS proper and the NUOPC cap share stuff. Cleanup the target link libraries declarations to only include the ones that are really necessary.)
 )
 target_sources(OM3_cdeps_common PRIVATE
   CDEPS/streams/dshr_methods_mod.F90
@@ -29,11 +30,7 @@ add_library(AccessOM3::cdeps_datm ALIAS OM3_cdeps_datm)
 target_include_directories(OM3_cdeps_datm PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
 target_link_libraries(OM3_cdeps_datm
   PUBLIC esmf
-<<<<<<< HEAD
   PRIVATE AccessOM3::cdeps_common AccessOM3::share
-=======
-  PRIVATE OM3_cdeps_common OM3_share
->>>>>>> cda37a0 (Split CMEPS library into CMEPS proper and the NUOPC cap share stuff. Cleanup the target link libraries declarations to only include the ones that are really necessary.)
 )
 target_sources(OM3_cdeps_datm PRIVATE
   CDEPS/datm/datm_datamode_cfsr_mod.F90
@@ -54,11 +51,7 @@ add_library(AccessOM3::cdeps_docn ALIAS OM3_cdeps_docn)
 target_include_directories(OM3_cdeps_docn PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
 target_link_libraries(OM3_cdeps_docn
   PUBLIC esmf
-<<<<<<< HEAD
   PRIVATE AccessOM3::cdeps_common AccessOM3::share
-=======
-  PRIVATE OM3_cdeps_common OM3_share
->>>>>>> cda37a0 (Split CMEPS library into CMEPS proper and the NUOPC cap share stuff. Cleanup the target link libraries declarations to only include the ones that are really necessary.)
 )
 target_sources(OM3_cdeps_docn PRIVATE
   CDEPS/docn/docn_datamode_aquaplanet_mod.F90
@@ -78,11 +71,7 @@ add_library(AccessOM3::cdeps_dice ALIAS OM3_cdeps_dice)
 target_include_directories(OM3_cdeps_dice PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/fox/include>)
 target_link_libraries(OM3_cdeps_dice
   PUBLIC esmf
-<<<<<<< HEAD
   PRIVATE AccessOM3::cdeps_common AccessOM3::share
-=======
-  PRIVATE OM3_cdeps_common OM3_share
->>>>>>> cda37a0 (Split CMEPS library into CMEPS proper and the NUOPC cap share stuff. Cleanup the target link libraries declarations to only include the ones that are really necessary.)
 )
 target_sources(OM3_cdeps_dice PRIVATE
   CDEPS/dice/dice_datamode_ssmi_mod.F90
