@@ -16,3 +16,6 @@
 [submodule "WW3/WW3"]
 	path = WW3/WW3
 	url = https://github.com/ESCOMP/WW3
+[submodule "MOM6/GFDL_generic_tracers"]
+	path = MOM6/GFDL_generic_tracers
+	url = https://github.com/ACCESS-NRI/GFDL-generic-tracers.git
