@@ -1,10 +1,10 @@
 diff --git a/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90 b/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90.new
-index 9c81a67..38fface 100644
+index 04b60b0..9855c24 100644
 --- a/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90
 +++ b/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90.new
 @@ -19,6 +19,7 @@ use MOM_coms,                only : field_chksum
  use MOM_constants,           only : CELSIUS_KELVIN_OFFSET, hlf
- use MOM_diag_mediator,       only : diag_ctrl, enable_averaging, disable_averaging
+ use MOM_diag_mediator,       only : diag_ctrl, enable_averages, disable_averaging
  use MOM_diag_mediator,       only : diag_mediator_close_registration, diag_mediator_end
 +use MOM_domains,             only : MOM_domain_type, domain2d, clone_MOM_domain, get_domain_extent
  use MOM_domains,             only : pass_var, pass_vector, AGRID, BGRID_NE, CGRID_NE
@@ -28,7 +28,7 @@ index 9c81a67..38fface 100644
                      !! Following MOM5, stagger is BGRID_NE by default when the
                      !! ocean is initialized, but here it is set to -999 so that
                      !! a global max across ocean and non-ocean processors can be
-@@ -409,14 +408,8 @@ subroutine ocean_model_init(Ocean_sfc, OS, Time_init, Time_in, gas_fields_ocn, i
+@@ -410,14 +409,7 @@ subroutine ocean_model_init(Ocean_sfc, OS, Time_init, Time_in, gas_fields_ocn, i
    ! it also initializes statistical waves.
    call MOM_wave_interface_init(OS%Time, OS%grid, OS%GV, OS%US, param_file, OS%Waves, OS%diag, OS%restart_CSp)
  
@@ -40,12 +40,11 @@ index 9c81a67..38fface 100644
 -    call initialize_ocean_public_type(OS%grid%Domain%mpp_domain, Ocean_sfc, &
 -                                      OS%diag, gas_fields_ocn=gas_fields_ocn)
 -  endif
-+  call initialize_ocean_public_type(OS%grid%Domain, Ocean_sfc, OS%diag, &
-+                                    gas_fields_ocn=gas_fields_ocn)
++  call initialize_ocean_public_type(OS%grid%Domain, Ocean_sfc, OS%diag, gas_fields_ocn=gas_fields_ocn)
  
    ! This call can only occur here if the coupler_bc_type variables have been
    ! initialized already using the information from gas_fields_ocn.
-@@ -531,8 +524,7 @@ subroutine update_ocean_model(Ice_ocean_boundary, OS, Ocean_sfc, &
+@@ -532,8 +524,7 @@ subroutine update_ocean_model(Ice_ocean_boundary, OS, Ocean_sfc, &
                            (/is,is,ie,ie/), (/js,js,je,je/), as_needed=.true.)
  
    ! Translate Ice_ocean_boundary into fluxes.
@@ -55,7 +54,7 @@ index 9c81a67..38fface 100644
  
    weight = 1.0
  
-@@ -794,7 +786,7 @@ end subroutine ocean_model_end
+@@ -795,7 +786,7 @@ end subroutine ocean_model_end
  subroutine ocean_model_save_restart(OS, Time, directory, filename_suffix)
    type(ocean_state_type),     pointer    :: OS  !< A pointer to the structure containing the
                                                  !! internal ocean state (in).
@@ -64,7 +63,7 @@ index 9c81a67..38fface 100644
    character(len=*), optional, intent(in) :: directory  !<  An optional directory into which to
                                                  !! write these restart files.
    character(len=*), optional, intent(in) :: filename_suffix !< An optional suffix (e.g., a time-stamp)
-@@ -826,16 +818,12 @@ subroutine ocean_model_save_restart(OS, Time, directory, filename_suffix)
+@@ -827,16 +818,12 @@ subroutine ocean_model_save_restart(OS, Time, directory, filename_suffix)
  end subroutine ocean_model_save_restart
  
  !> Initialize the public ocean type
@@ -86,7 +85,7 @@ index 9c81a67..38fface 100644
    type(coupler_1d_bc_type), &
                   optional, intent(in)    :: gas_fields_ocn !< If present, this type describes the
                                                !! ocean and surface-ice fields that will participate
-@@ -847,14 +835,9 @@ subroutine initialize_ocean_public_type(input_domain, Ocean_sfc, diag, maskmap,
+@@ -848,14 +835,9 @@ subroutine initialize_ocean_public_type(input_domain, Ocean_sfc, diag, maskmap,
    ! and have no halos.
    integer :: isc, iec, jsc, jec
  
@@ -104,7 +103,7 @@ index 9c81a67..38fface 100644
  
    allocate ( Ocean_sfc%t_surf (isc:iec,jsc:jec), &
               Ocean_sfc%s_surf (isc:iec,jsc:jec), &
-@@ -910,8 +893,7 @@ subroutine convert_state_to_ocean_type(sfc_state, Ocean_sfc, G, US, patm, press_
+@@ -911,8 +893,7 @@ subroutine convert_state_to_ocean_type(sfc_state, Ocean_sfc, G, US, patm, press_
    is = G%isc ; ie = G%iec ; js = G%jsc ; je = G%jec
    call pass_vector(sfc_state%u, sfc_state%v, G%Domain)
  
