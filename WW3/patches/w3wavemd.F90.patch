@@ -1,0 +1,31 @@
+--- WW3/model/src/w3wavemd.F90	2023-10-31 16:49:44.000000000 +1100
++++ WW3/model/src/w3wavemd_modified.F90	2023-11-02 11:18:38.000000000 +1100
+@@ -2413,6 +2413,7 @@
+         end IF
+ 
+         do_w3outg = .false.
++        
+         if (w3_cesmcoupled_flag .and. histwr) then
+           do_w3outg = .true.
+         else if ( LOCAL .AND. (FLOUTG .OR. FLOUTG2) ) then
+@@ -2562,11 +2563,7 @@
+             if (w3_sbs_flag) then
+               do_gridded_output = ( j .eq. 1 )  .or. ( j .eq. 7 )
+             else
+-              if (w3_cesmcoupled_flag) then
+-                do_gridded_output = ( j .eq. 1 ) .and. histwr
+-              else
+-                do_gridded_output = ( j .eq. 1 )
+-              end if
++              do_gridded_output = ( j .eq. 1 )
+             end if
+             do_point_output                = (j .eq. 2)
+             do_track_output                = (j .eq. 3)
+@@ -2587,6 +2584,7 @@
+             TOUT(:) = TONEXT(:,J)
+             DTTST   = DSEC21 ( TIME, TOUT )
+             !
++
+             IF ( DTTST .EQ. 0. ) THEN
+               if (do_gridded_output) then
+                 if (user_netcdf_grdout) then
