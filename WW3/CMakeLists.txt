@@ -1,7 +1,7 @@
 ### Global definitions, flags, etc
 
 ## List of switches
-list(APPEND switches "CESMCOUPLED" "NCO" "DIST" "MPI" "PR3" "UQ" "FLX4" "SEED" "ST6" "STAB0" "NL1" "BT1" "DB1" "MLIM" "TR0" "BS0" "RWND" "WNX1" "WNT1" "CRX1" "CRT1" "O0" "O1" "O2" "O3" "O4" "O5" "O6" "O7" "O14" "O15" "IS0" "REF0" "NOGRB" "IC0")
+list(APPEND switches "CESMCOUPLED" "NCO" "DIST" "MPI" "PR1" "FLX4" "ST6" "STAB0" "LN1" "NL1" "BT1" "DB1" "MLIM" "TR0" "BS0" "RWND" "WNX1" "WNT1" "CRX1" "CRT1" "O0" "O1" "O2" "O3" "O4" "O5" "O6" "O7" "O14" "O15" "IS0" "REF0" "NOGRB" "IC0")
 
 ## Global compile definitions
 foreach(switch ${switches})
@@ -76,9 +76,9 @@ target_sources(OM3_ww3 PRIVATE
   WW3/model/src/wminitmd.F90
   WW3/model/src/wmiopomd.F90
   WW3/model/src/wmmdatmd.F90
+  WW3/model/src/w3wavemd.F90
   WW3/model/src/wmunitmd.F90
   WW3/model/src/wmupdtmd.F90
-  WW3/model/src/wmwavemd.F90
   WW3/model/src/w3tidemd.F90
   WW3/model/src/wav_grdout.F90
   WW3/model/src/w3iogoncdmd.F90
@@ -131,17 +131,17 @@ set_target_properties(OM3_ww3_ounf PROPERTIES
 )
 target_link_libraries(OM3_ww3_ounf PRIVATE OM3_ww3)
 
-# ww3_outp
-add_executable(OM3_ww3_outp WW3/model/src/ww3_outp.F90)
-set_target_properties(OM3_ww3_outp PROPERTIES
+# ww3_ounp
+add_executable(OM3_ww3_ounp WW3/model/src/ww3_ounp.F90)
+set_target_properties(OM3_ww3_ounp PROPERTIES
   LINKER_LANGUAGE Fortran
-  OUTPUT_NAME ww3_outp
+  OUTPUT_NAME ww3_ounp
 )
-target_link_libraries(OM3_ww3_outp PRIVATE OM3_ww3)
+target_link_libraries(OM3_ww3_ounp PRIVATE OM3_ww3)
 
 
 ## Installs
 if(OM3_BIN_INSTALL)
-  install(TARGETS OM3_ww3_grid OM3_ww3_strt OM3_ww3_ounf OM3_ww3_outp
+  install(TARGETS OM3_ww3_grid OM3_ww3_strt OM3_ww3_ounf OM3_ww3_ounp
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif()
