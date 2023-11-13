@@ -76,6 +76,7 @@ target_sources(OM3_ww3 PRIVATE
   WW3/model/src/wminitmd.F90
   WW3/model/src/wmiopomd.F90
   WW3/model/src/wmmdatmd.F90
+  WW3/model/src/w3wavemd.F90
   WW3/model/src/wmunitmd.F90
   WW3/model/src/wmupdtmd.F90
   WW3/model/src/w3tidemd.F90
@@ -91,11 +92,6 @@ target_sources(OM3_ww3 PRIVATE
 
   ${switch_files}
 )
-
-target_include_directories(OM3_ww3 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/WW3/model/src)
-
-#patched source
-add_patched_source(OM3_ww3 WW3/model/src/w3wavemd.F90)
 
 ## Utilities
 
