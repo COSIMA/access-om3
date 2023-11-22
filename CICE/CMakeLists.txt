@@ -159,8 +159,10 @@ endif()
 if(OM3_LIB_INSTALL)
   set_target_properties(OM3_cice PROPERTIES
     OUTPUT_NAME access-cice
+    EXPORT_NAME cice
   )
   install(TARGETS OM3_cice
+    EXPORT AccessOM3cice_Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
   )
@@ -172,4 +174,10 @@ if(OM3_LIB_INSTALL)
     DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-cice
     COMPONENT AccessOM3_Development
   )
+  install(EXPORT AccessOM3cice_Targets
+    FILE AccessOM3ciceTargets.cmake
+    NAMESPACE AccessOM3::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+  )
+
 endif()

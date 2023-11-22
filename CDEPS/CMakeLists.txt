@@ -102,8 +102,10 @@ if(OM3_LIB_INSTALL)
   # cdeps_common
   set_target_properties(OM3_cdeps_common PROPERTIES
     OUTPUT_NAME access-cdeps-common
+    EXPORT_NAME cdeps-common
   )
   install(TARGETS OM3_cdeps_common
+    EXPORT AccessOM3cdeps_Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
   )
@@ -111,18 +113,25 @@ if(OM3_LIB_INSTALL)
   foreach(LIB atm ocn ice wav rof)
     set_target_properties(OM3_cdeps_d${LIB} PROPERTIES
       OUTPUT_NAME access-cdeps-d${LIB}
+      EXPORT_NAME cdeps-d${LIB}
     )
     install(TARGETS OM3_cdeps_d${LIB}
+      EXPORT AccessOM3cdeps_Targets
       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
     )
     # Fortran module files are a special case, as currently there is no standard
     # way of handling them in CMake
-    target_include_directories(OM3_cdeps_d${LIB} PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-d${LIB}>")
+    target_include_directories(OM3_cdeps_d${LIB} PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-cdeps-d${LIB}>")
     get_target_property(d${LIB}_moddir OM3_cdeps_d${LIB} Fortran_MODULE_DIRECTORY)
     install(FILES ${d${LIB}_moddir}/${LIB}_comp_nuopc.mod
       DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-cdeps-d${LIB}
       COMPONENT AccessOM3_Development
     )
   endforeach()
+  install(EXPORT AccessOM3cdeps_Targets
+    FILE AccessOM3cdepsTargets.cmake
+    NAMESPACE AccessOM3::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+  )
 endif()

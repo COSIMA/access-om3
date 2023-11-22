@@ -69,8 +69,10 @@ if(OM3_LIB_INSTALL)
   ## CMEPS library
   set_target_properties(OM3_cmeps PROPERTIES
     OUTPUT_NAME access-cmeps
+    EXPORT_NAME cmeps
   )
   install(TARGETS OM3_cmeps
+    EXPORT AccessOM3cmeps_Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
   )
@@ -82,12 +84,19 @@ if(OM3_LIB_INSTALL)
     DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-cmeps
     COMPONENT AccessOM3_Development
   )
+  install(EXPORT AccessOM3cmeps_Targets
+    FILE AccessOM3cmepsTargets.cmake
+    NAMESPACE AccessOM3::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+  )
 
   ## NUOPC cap share
   set_target_properties(OM3_nuopc_cap_share PROPERTIES
     OUTPUT_NAME access-nuopc_cap_share
+    EXPORT_NAME nuopc_cap_share
   )
   install(TARGETS OM3_nuopc_cap_share
+    EXPORT AccessOM3nuopc_cap_share_Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
   )
@@ -98,5 +107,10 @@ if(OM3_LIB_INSTALL)
   install(DIRECTORY ${nuopc_cap_share_moddir}/
     DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-nuopc_cap_share
     COMPONENT AccessOM3_Development
+  )
+  install(EXPORT AccessOM3nuopc_cap_share_Targets
+    FILE AccessOM3nuopc_cap_shareTargets.cmake
+    NAMESPACE AccessOM3::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
   )
 endif()

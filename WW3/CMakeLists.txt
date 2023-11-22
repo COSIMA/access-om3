@@ -145,8 +145,10 @@ target_link_libraries(OM3_ww3_ounp PRIVATE AccessOM3::ww3)
 if(OM3_LIB_INSTALL)
   set_target_properties(OM3_ww3 PROPERTIES
     OUTPUT_NAME access-ww3
+    EXPORT_NAME ww3
   )
   install(TARGETS OM3_ww3
+    EXPORT AccessOM3ww3_Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
   )
@@ -157,6 +159,11 @@ if(OM3_LIB_INSTALL)
   install(FILES ${ww3_moddir}/wav_comp_nuopc.mod
     DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-ww3
     COMPONENT AccessOM3_Development
+  )
+  install(EXPORT AccessOM3ww3_Targets
+    FILE AccessOM3ww3Targets.cmake
+    NAMESPACE AccessOM3::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
   )
 endif()
 
