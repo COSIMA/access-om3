@@ -14,7 +14,7 @@ jobs:
         build_type: [Debug, Release]
 
     container:
-      image: ghcr.io/cosima/access-om3-ci-images/${{matrix.compiler}}:0.4.1
+      image: ghcr.io/cosima/access-om3-ci-images/${{matrix.compiler}}:main
 
     steps:
       - name: Checkout
