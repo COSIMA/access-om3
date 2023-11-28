@@ -142,6 +142,6 @@ target_link_libraries(OM3_ww3_ounp PRIVATE OM3_ww3)
 
 ## Installs
 if(OM3_BIN_INSTALL)
-  install(TARGETS OM3_ww3_grid OM3_ww3_strt OM3_ww3_ounf OM3_ww3_ounp
+  install(TARGETS OM3_ww3_grid OM3_ww3_strt OM3_ww3_outf OM3_ww3_ounf OM3_ww3_ounp
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif()
