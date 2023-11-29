@@ -2,6 +2,7 @@
 
 ## share library
 add_fortran_library(OM3_share mod/share STATIC)
+add_library(AccessOM3::share ALIAS OM3_share)
 target_include_directories(OM3_share PUBLIC CESM_share/include)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   target_compile_definitions(OM3_share PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)
@@ -10,7 +11,7 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
 endif()
 target_link_libraries(OM3_share
   PUBLIC esmf PIO::PIO_Fortran
-  PRIVATE OM3_timing
+  PRIVATE AccessOM3::timing
 )
 target_sources(OM3_share PRIVATE
   # The following files are generated with a script acting on templates
@@ -53,6 +54,7 @@ endif()
 
 ## GPTL timing library
 add_fortran_library(OM3_timing mod/timing STATIC)
+add_library(AccessOM3::timing ALIAS OM3_timing)
 target_compile_definitions(OM3_timing PRIVATE NUOPC_INTERFACE HAVE_MPI)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   target_compile_definitions(OM3_timing PRIVATE CPRGNU NAMING=_ADD_UNDERSCORE FORTRANUNDERSCORE)

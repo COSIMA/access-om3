@@ -2,13 +2,14 @@
 
 ## CICE library
 add_fortran_library(OM3_cice mod STATIC)
+add_library(AccessOM3::cice ALIAS OM3_cice)
 target_compile_definitions(OM3_cice PRIVATE FORTRANUNDERSCORE ncdf)
 if(OM3_CICE_IO MATCHES "^(NetCDF|PIO)$")
   target_compile_definitions(OM3_cice PRIVATE USE_NETCDF)
 endif()
 target_link_libraries(OM3_cice
   PUBLIC esmf
-  PRIVATE OM3_cdeps_common OM3_nuopc_cap_share OM3_share OM3_timing
+  PRIVATE AccessOM3::cdeps_common AccessOM3::nuopc_cap_share AccessOM3::share AccessOM3::timing
 )
 if(OM3_CICE_IO MATCHES "^(NetCDF|PIO)$")
   target_link_libraries(OM3_cice PRIVATE NetCDF::NetCDF_Fortran)

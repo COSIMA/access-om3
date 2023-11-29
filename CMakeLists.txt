@@ -169,19 +169,19 @@ foreach(CONF IN LISTS KnownConfigurations)
 
   set(ComponentsTargets "")
   if(OM3_${CONF} MATCHES MOM6)
-    list(APPEND ComponentsTargets OM3_mom6)
+    list(APPEND ComponentsTargets AccessOM3::mom6)
   else()
-    list(APPEND ComponentsTargets OM3_cdeps_docn)
+    list(APPEND ComponentsTargets AccessOM3::cdeps_docn)
   endif()
   if(OM3_${CONF} MATCHES CICE6)
-    list(APPEND ComponentsTargets OM3_cice)
+    list(APPEND ComponentsTargets AccessOM3::cice)
   else()
-    list(APPEND ComponentsTargets OM3_cdeps_dice)
+    list(APPEND ComponentsTargets AccessOM3::cdeps_dice)
   endif()
   if(OM3_${CONF} MATCHES WW3)
-    list(APPEND ComponentsTargets OM3_ww3)
+    list(APPEND ComponentsTargets AccessOM3::ww3)
   else()
-    list(APPEND ComponentsTargets OM3_cdeps_dwav)
+    list(APPEND ComponentsTargets AccessOM3::cdeps_dwav)
   endif()
 
   # We use the CESM driver from CMEPS
@@ -192,7 +192,7 @@ foreach(CONF IN LISTS KnownConfigurations)
   )
   target_link_libraries(OM3_cesm_driver_${CONF}
     PUBLIC esmf
-    PRIVATE ${ComponentsTargets} OM3_cdeps_drof OM3_cdeps_datm OM3_cmeps OM3_nuopc_cap_share OM3_share OM3_timing
+    PRIVATE ${ComponentsTargets} AccessOM3::cdeps_drof AccessOM3::cdeps_datm AccessOM3::cmeps AccessOM3::nuopc_cap_share AccessOM3::share AccessOM3::timing
   )
   target_compile_definitions(OM3_cesm_driver_${CONF} PRIVATE MED_PRESENT
                                                              ATM_PRESENT
@@ -204,7 +204,7 @@ foreach(CONF IN LISTS KnownConfigurations)
   )
 
   add_executable(OM3_${CONF} CMEPS/CMEPS/cesm/driver/esmApp.F90)
-  target_link_libraries(OM3_${CONF} PRIVATE OM3_cesm_driver_${CONF} OM3_share esmf)
+  target_link_libraries(OM3_${CONF} PRIVATE OM3_cesm_driver_${CONF} AccessOM3::share esmf)
 
   set_target_properties(OM3_${CONF} PROPERTIES
     LINKER_LANGUAGE Fortran

@@ -12,6 +12,7 @@ endforeach()
 
 ## WW3 library
 add_fortran_library(OM3_ww3 mod STATIC)
+add_library(AccessOM3::ww3 ALIAS OM3_ww3)
 target_compile_definitions(OM3_ww3 PRIVATE ENDIANNESS="big_endian")
 set_property(SOURCE WW3/model/src/w3initmd.F90
   APPEND
@@ -100,7 +101,7 @@ set_target_properties(OM3_ww3_grid PROPERTIES
   LINKER_LANGUAGE Fortran
   OUTPUT_NAME ww3_grid
 )
-target_link_libraries(OM3_ww3_grid PRIVATE OM3_ww3)
+target_link_libraries(OM3_ww3_grid PRIVATE AccessOM3::ww3)
 
 # ww3_strt
 add_executable(OM3_ww3_strt WW3/model/src/ww3_strt.F90)
@@ -108,7 +109,7 @@ set_target_properties(OM3_ww3_strt PROPERTIES
   LINKER_LANGUAGE Fortran
   OUTPUT_NAME ww3_strt
 )
-target_link_libraries(OM3_ww3_strt PRIVATE OM3_ww3)
+target_link_libraries(OM3_ww3_strt PRIVATE AccessOM3::ww3)
 
 # ww3_outf
 add_executable(OM3_ww3_outf WW3/model/src/ww3_outf.F90)
@@ -116,7 +117,7 @@ set_target_properties(OM3_ww3_outf PROPERTIES
   LINKER_LANGUAGE Fortran
   OUTPUT_NAME ww3_outf
 )
-target_link_libraries(OM3_ww3_outf PRIVATE OM3_ww3)
+target_link_libraries(OM3_ww3_outf PRIVATE AccessOM3::ww3)
 
 # ww3_ounf
 add_executable(OM3_ww3_ounf)
@@ -128,7 +129,7 @@ set_target_properties(OM3_ww3_ounf PROPERTIES
   LINKER_LANGUAGE Fortran
   OUTPUT_NAME ww3_ounf
 )
-target_link_libraries(OM3_ww3_ounf PRIVATE OM3_ww3)
+target_link_libraries(OM3_ww3_ounf PRIVATE AccessOM3::ww3)
 
 # ww3_ounp
 add_executable(OM3_ww3_ounp WW3/model/src/ww3_ounp.F90)
@@ -136,7 +137,7 @@ set_target_properties(OM3_ww3_ounp PROPERTIES
   LINKER_LANGUAGE Fortran
   OUTPUT_NAME ww3_ounp
 )
-target_link_libraries(OM3_ww3_ounp PRIVATE OM3_ww3)
+target_link_libraries(OM3_ww3_ounp PRIVATE AccessOM3::ww3)
 
 
 ## Installs

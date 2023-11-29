@@ -2,9 +2,10 @@
 
 ## CMEPS library
 add_fortran_library(OM3_cmeps mod/cmeps STATIC)
+add_library(AccessOM3::cmeps ALIAS OM3_cmeps)
 target_link_libraries(OM3_cmeps
   PUBLIC esmf
-  PRIVATE OM3_nuopc_cap_share OM3_share OM3_timing
+  PRIVATE AccessOM3::nuopc_cap_share AccessOM3::share AccessOM3::timing
 )
 if(OpenMP_Fortran_FOUND)
   target_link_libraries(OM3_cmeps PRIVATE OpenMP::OpenMP_Fortran)
@@ -50,9 +51,10 @@ target_sources(OM3_cmeps PRIVATE
 
 ## NUOPC cap share
 add_fortran_library(OM3_nuopc_cap_share mod/nuopc_cap_share STATIC)
+add_library(AccessOM3::nuopc_cap_share ALIAS OM3_nuopc_cap_share)
 target_link_libraries(OM3_nuopc_cap_share
   PUBLIC esmf
-  PRIVATE OM3_share
+  PRIVATE AccessOM3::share
 )
 target_sources(OM3_nuopc_cap_share PRIVATE
   CMEPS/cesm/nuopc_cap_share/driver_pio_mod.F90

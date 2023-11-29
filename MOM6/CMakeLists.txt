@@ -11,6 +11,7 @@ endif()
 
 ## MOM6 library
 add_fortran_library(OM3_mom6 mod STATIC)
+add_library(AccessOM3::mom6 ALIAS OM3_mom6)
 target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
 if(OM3_MOM_SYMMETRIC)
   target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/config_src/memory/dynamic_symmetric>)
@@ -20,7 +21,7 @@ endif()
 target_compile_options(OM3_mom6 PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_link_libraries(OM3_mom6
   PUBLIC esmf
-  PRIVATE OM3_nuopc_cap_share OM3_share FMS::fms_r8
+  PRIVATE AccessOM3::nuopc_cap_share AccessOM3::share FMS::fms_r8
 )
 target_sources(OM3_mom6 PRIVATE
   MOM6/src/ALE/coord_adapt.F90
