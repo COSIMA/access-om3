@@ -139,8 +139,35 @@ set_target_properties(OM3_ww3_ounp PROPERTIES
 )
 target_link_libraries(OM3_ww3_ounp PRIVATE AccessOM3::ww3)
 
+### Install and Export
 
-## Installs
+## Library
+if(OM3_LIB_INSTALL)
+  set_target_properties(OM3_ww3 PROPERTIES
+    OUTPUT_NAME access-ww3
+    EXPORT_NAME ww3
+  )
+  install(TARGETS OM3_ww3
+    EXPORT AccessOM3ww3_Targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
+  )
+  # Fortran module files are a special case, as currently there is no standard
+  # way of handling them in CMake
+  target_include_directories(OM3_ww3 PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-ww3>")
+  get_target_property(ww3_moddir OM3_ww3 Fortran_MODULE_DIRECTORY)
+  install(FILES ${ww3_moddir}/wav_comp_nuopc.mod
+    DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-ww3
+    COMPONENT AccessOM3_Development
+  )
+  install(EXPORT AccessOM3ww3_Targets
+    FILE AccessOM3ww3Targets.cmake
+    NAMESPACE AccessOM3::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+  )
+endif()
+
+## Utilities
 if(OM3_BIN_INSTALL)
   install(TARGETS OM3_ww3_grid OM3_ww3_strt OM3_ww3_outf OM3_ww3_ounf OM3_ww3_ounp
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

@@ -56,6 +56,9 @@ message(STATUS "  - OM3_CICE_IO       ${OM3_CICE_IO}")
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(GNUInstallDirs)
+if(OM3_LIB_INSTALL)
+  include(CMakePackageConfigHelpers)
+endif()
 
 # Include some custom cmake modules
 include(FortranLib)
@@ -114,6 +117,12 @@ endif()
 
 add_compile_definitions(
   CESMCOUPLED
+)
+
+## Fortran modules path; currently this is simply set to be the include dir
+set(CMAKE_INSTALL_MODULEDIR ${CMAKE_INSTALL_INCLUDEDIR}
+  CACHE STRING
+  "Fortran module installation path (Not a cmake native variable)"
 )
 
 #[==============================================================================[
@@ -217,6 +226,10 @@ endforeach()
 #]==============================================================================]
 
 ## Installs
+
+# Note that the installation of some components is done in the corresponding subdirectory
+
+# OM3 executables
 if(OM3_BIN_INSTALL)
   foreach(CONF IN LISTS KnownConfigurations)
     if(NOT OM3_ENABLE_${CONF})
@@ -227,4 +240,17 @@ if(OM3_BIN_INSTALL)
       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
   endforeach()
+endif()
+
+# Libraries
+if(OM3_LIB_INSTALL)
+  configure_package_config_file(
+    cmake/AccessOM3Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/AccessOM3Config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+  )
+  install(FILES ${CMAKE_SOURCE_DIR}/cmake/FindFoX.cmake ${CMAKE_CURRENT_BINARY_DIR}/AccessOM3Config.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+    COMPONENT AccessOM3_Development
+  )
 endif()
