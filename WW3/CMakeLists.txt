@@ -87,11 +87,12 @@ target_sources(OM3_ww3 PRIVATE
   WW3/model/src/wav_kind_mod.F90
   WW3/model/src/wav_shr_mod.F90
   WW3/model/src/wav_shel_inp.F90
-  WW3/model/src/wav_comp_nuopc.F90
   WW3/model/src/wav_import_export.F90
 
   ${switch_files}
 )
+
+add_patched_source(OM3_ww3 WW3/model/src/wav_comp_nuopc.F90)
 
 ## Utilities
 
