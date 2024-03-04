@@ -127,13 +127,15 @@ target_sources(OM3_cice PRIVATE
   CICE/cicecore/drivers/nuopc/cmeps/CICE_InitMod.F90
   CICE/cicecore/drivers/nuopc/cmeps/CICE_RunMod.F90
   CICE/cicecore/drivers/nuopc/cmeps/cice_wrapper_mod.F90
-  CICE/cicecore/drivers/nuopc/cmeps/ice_comp_nuopc.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_import_export.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_prescribed_mod.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_scam.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_shr_methods.F90
 )
+
 add_patched_source(OM3_cice CICE/cicecore/drivers/nuopc/cmeps/ice_mesh_mod.F90)
+add_patched_source(OM3_cice CICE/cicecore/drivers/nuopc/cmeps/ice_comp_nuopc.F90)
+
 # Select IO source files based on CICE_IO
 if(OM3_CICE_IO MATCHES "NetCDF")
   target_sources(OM3_cice PRIVATE
