@@ -317,6 +317,7 @@ target_sources(OM3_mom6 PRIVATE
   GFDL_generic_tracers/generic_tracers/generic_miniBLING.F90
   GFDL_generic_tracers/generic_tracers/generic_SF6.F90
   GFDL_generic_tracers/generic_tracers/generic_TOPAZ.F90
+  GFDL_generic_tracers/generic_tracers/generic_WOMBATlite.F90
 
   GFDL_generic_tracers/mocsy/src/mocsy_buffesm.F90
   GFDL_generic_tracers/mocsy/src/mocsy_constants.F90

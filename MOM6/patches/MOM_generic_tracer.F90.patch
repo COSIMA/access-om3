@@ -1,0 +1,15 @@
+diff --git a/MOM6/src/tracer/MOM_generic_tracer.F90 b/MOM6/src/tracer/MOM_generic_tracer.F90.new
+index 131110e..7334a56 100644
+--- a/MOM6/src/tracer/MOM_generic_tracer.F90
++++ b/MOM6/src/tracer/MOM_generic_tracer.F90.new
+@@ -352,7 +352,9 @@ contains
+           enddo ; enddo ; enddo
+ 
+           !jgj: Reset CASED to 0 below K=1
+-          if ( (trim(g_tracer_name) == 'cased') .or. (trim(g_tracer_name) == 'ca13csed') ) then
++          ! dts: also WOMBAT sediment tracers
++          if ( (trim(g_tracer_name) == 'cased') .or. (trim(g_tracer_name) == 'ca13csed') .or. &
++            (trim(g_tracer_name) == 'det_sediment') .or. (trim(g_tracer_name) == 'caco3_sediment')) then
+             do k=2,nk ; do j=jsc,jec ; do i=isc,iec
+               if (tr_ptr(i,j,k) /= CS%tracer_land_val) then
+                 tr_ptr(i,j,k) = 0.0
