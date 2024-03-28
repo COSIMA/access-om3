@@ -7,6 +7,11 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   set(fortran_compile_flags -r8)
 endif()
 
+add_compile_definitions(
+  _USE_GENERIC_TRACER
+  _USE_MOM6_DIAG
+)
+
 ### Targets
 
 ## MOM6 library
@@ -129,7 +134,6 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/framework/MOM_array_transform.F90
   MOM6/src/framework/MOM_checksums.F90
   MOM6/src/framework/MOM_coms.F90
-  MOM6/src/framework/MOM_coupler_types.F90
   MOM6/src/framework/MOM_cpu_clock.F90
   MOM6/src/framework/MOM_data_override.F90
   MOM6/src/framework/MOM_diag_mediator.F90
@@ -292,9 +296,47 @@ target_sources(OM3_mom6 PRIVATE
 
   MOM6/config_src/external/drifters/MOM_particles.F90
   MOM6/config_src/external/drifters/MOM_particles_types.F90
-  MOM6/config_src/external/GFDL_ocean_BGC/FMS_coupler_util.F90
-  MOM6/config_src/external/GFDL_ocean_BGC/generic_tracer.F90
-  MOM6/config_src/external/GFDL_ocean_BGC/generic_tracer_utils.F90
+
+  GFDL_generic_tracers/generic_tracers/FMS_coupler_util.F90
+  GFDL_generic_tracers/generic_tracers/generic_tracer.F90
+  GFDL_generic_tracers/generic_tracers/generic_tracer_utils.F90
+  GFDL_generic_tracers/generic_tracers/FMS_ocmip2_co2calc.F90
+  GFDL_generic_tracers/generic_tracers/generic_abiotic.F90
+  GFDL_generic_tracers/generic_tracers/generic_age.F90
+  GFDL_generic_tracers/generic_tracers/generic_argon.F90
+  GFDL_generic_tracers/generic_tracers/generic_BLING.F90
+  GFDL_generic_tracers/generic_tracers/generic_blres.F90
+  GFDL_generic_tracers/generic_tracers/generic_CFC.F90
+  GFDL_generic_tracers/generic_tracers/generic_COBALT.F90
+  GFDL_generic_tracers/generic_tracers/generic_ERGOM.F90
+  GFDL_generic_tracers/generic_tracers/generic_miniBLING.F90
+  GFDL_generic_tracers/generic_tracers/generic_SF6.F90
+  GFDL_generic_tracers/generic_tracers/generic_TOPAZ.F90
+  GFDL_generic_tracers/generic_tracers/generic_WOMBAT.F90
+
+  GFDL_generic_tracers/mocsy/src/mocsy_buffesm.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_constants.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_depth2press.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_derivauto.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_derivnum.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_DNAD.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_errors.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_f2pCO2.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_gasx.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_p2fCO2.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_p80.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_phsolvers.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_rho.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_rhoinsitu.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_singledouble.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_sw_adtg.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_sw_ptmp.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_sw_temp.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_tis.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_tpot.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_vars.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_varsolver.F90
+
   MOM6/config_src/external/ODA_hooks/kdtree.f90
   MOM6/config_src/external/ODA_hooks/ocean_da_core.F90
   MOM6/config_src/external/ODA_hooks/ocean_da_types.F90
@@ -305,7 +347,6 @@ target_sources(OM3_mom6 PRIVATE
 
   MOM6/config_src/infra/FMS1/MOM_coms_infra.F90
   MOM6/config_src/infra/FMS1/MOM_constants.F90
-  MOM6/config_src/infra/FMS1/MOM_couplertype_infra.F90
   MOM6/config_src/infra/FMS1/MOM_cpu_clock_infra.F90
   MOM6/config_src/infra/FMS1/MOM_data_override_infra.F90
   MOM6/config_src/infra/FMS1/MOM_diag_manager_infra.F90
@@ -316,14 +357,18 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/config_src/infra/FMS1/MOM_io_infra.F90
   MOM6/config_src/infra/FMS1/MOM_time_manager.F90
 
-  MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_time.F90
-  MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90
   MOM6/config_src/drivers/nuopc_cap/mom_surface_forcing_nuopc.F90
   MOM6/config_src/drivers/nuopc_cap/ocn_comp_NUOPC.F90
   MOM6/config_src/drivers/nuopc_cap/time_utils.F90
+
+  extra_sources/mom_cap_gtracer_flux.F90
 )
 add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap.F90)
+add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90)
+add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90)
+add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS1/MOM_couplertype_infra.F90)
+add_patched_source(OM3_mom6 MOM6/src/framework/MOM_coupler_types.F90)
 
 ### Install and Export
 

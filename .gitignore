@@ -1,3 +1,7 @@
 build/*
 bin/*
+Debug/*
+Release/*
 CMakeUserPresets.json
+**/make_patches.sh
+.fortls
