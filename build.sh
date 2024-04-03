@@ -28,7 +28,7 @@ for BUILD_TYPE in "${BUILD_TYPES[@]}"; do
   INSTALL_DIR=${SCRIPT_DIR}/${BUILD_TYPE}
 
   cmake -S . -B build --preset=gadi -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_VERBOSE_MAKEFILE=ON
-  cmake --build build -j 4
+  cmake --build build -j 8
   cmake --install build --prefix=${INSTALL_DIR}
 
   echo "Successfully built ${INSTALL_DIR}"
