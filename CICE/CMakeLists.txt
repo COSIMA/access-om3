@@ -127,7 +127,7 @@ target_sources(OM3_cice PRIVATE
   CICE/cicecore/drivers/nuopc/cmeps/CICE_RunMod.F90
   CICE/cicecore/drivers/nuopc/cmeps/cice_wrapper_mod.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_comp_nuopc.F90
-  CICE/cicecore/drivers/nuopc/cmeps/ice_import_export.F90
+  CICE/cicecore/drivers/access/cmeps/ice_import_export.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_prescribed_mod.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_scam.F90
   CICE/cicecore/drivers/nuopc/cmeps/ice_shr_methods.F90

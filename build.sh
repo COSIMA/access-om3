@@ -10,7 +10,7 @@ set -e
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"  # dir of this script
 
-BUILD_TYPES=('Debug' 'Release')
+BUILD_TYPES=('Release')
 COMPILER_VERSION=2021.6.0
 OPENMPI_VERSION=4.1.4
 
@@ -35,7 +35,7 @@ for BUILD_TYPE in "${BUILD_TYPES[@]}"; do
   rm -r build || true
 
   cmake -S . -B build --preset=gadi -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_VERBOSE_MAKEFILE=ON
-  cmake --build build -j 4
+  cmake --build build -j 8
   cmake --install build --prefix=${INSTALL_DIR}
 
   for exec in ${INSTALL_DIR}/bin/*; do

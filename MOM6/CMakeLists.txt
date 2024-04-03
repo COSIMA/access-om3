@@ -340,4 +340,5 @@ if(OM3_LIB_INSTALL)
   # way of handling them in CMake
   get_target_property(mom_moddir OM3_mom6 Fortran_MODULE_DIRECTORY)
   install(FILES ${mom_moddir}/ocn_comp_nuopc.mod DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-mom6)
+  install(FILES ${mom_moddir}/mom_cap_mod.mod DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-mom6)
 endif()
