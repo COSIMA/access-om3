@@ -11,18 +11,15 @@ set -e
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"  # dir of this script
 
 BUILD_TYPES=('Debug' 'Release')
-COMPILER_VERSION=2021.6.0
-OPENMPI_VERSION=4.1.4
-
 
 # CMakeLists.txt requires ESMF v8.3.0 or higher, FMS, and ParallelIO, but NCI doesn't supply them, so we use our own installation via spack.
 # This is in /g/data/ik11/spack/ which uses https://github.com/COSIMA/spack-config
 
 module purge
 module load cmake/3.24.2
-module use /g/data/ik11/spack/0.20.1/modules/access-om3/0.x.0/linux-rocky8-cascadelake  # requires membership of "ik11" group
-module load esmf/8.4.2 fms/git.2021.03.01=2021.03.01 parallelio/2.5.10 fortranxml/4.1.2
-module load intel-compiler/${COMPILER_VERSION} openmpi/${OPENMPI_VERSION}
+module use /g/data/ik11/spack/0.21.2/modules/access-om3/0.x.0/linux-rocky8-cascadelake  # requires membership of "ik11" group
+module load esmf/8.5.0 fms/2023.02 parallelio/2.6.2 fortranxml/4.1.2
+module load intel-compiler/2021.10.0 openmpi/4.1.5
 
 cd ${SCRIPT_DIR}
 for BUILD_TYPE in "${BUILD_TYPES[@]}"; do
