@@ -28,7 +28,6 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/ALE/coord_hycom.F90
   MOM6/src/ALE/coord_rho.F90
   MOM6/src/ALE/coord_sigma.F90
-  MOM6/src/ALE/coord_slight.F90
   MOM6/src/ALE/coord_zlike.F90
   MOM6/src/ALE/MOM_ALE.F90
   MOM6/src/ALE/MOM_hybgen_regrid.F90
@@ -47,6 +46,7 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/ALE/regrid_edge_values.F90
   MOM6/src/ALE/regrid_interp.F90
   MOM6/src/ALE/regrid_solvers.F90
+  MOM6/src/ALE/remapping_attic.F90
 
   MOM6/src/core/MOM_barotropic.F90
   MOM6/src/core/MOM_boundary_update.F90
@@ -83,14 +83,18 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/diagnostics/MOM_spatial_means.F90
   MOM6/src/diagnostics/MOM_sum_output.F90
   MOM6/src/diagnostics/MOM_wave_speed.F90
-  MOM6/src/diagnostics/MOM_wave_structure.F90
 
   MOM6/src/equation_of_state/MOM_EOS.F90
+  MOM6/src/equation_of_state/MOM_EOS_Jackett06.F90
   MOM6/src/equation_of_state/MOM_EOS_linear.F90
-  MOM6/src/equation_of_state/MOM_EOS_NEMO.F90
+  MOM6/src/equation_of_state/MOM_EOS_Roquet_rho.F90
+  MOM6/src/equation_of_state/MOM_EOS_Roquet_SpV.F90
   MOM6/src/equation_of_state/MOM_EOS_TEOS10.F90
   MOM6/src/equation_of_state/MOM_EOS_UNESCO.F90
   MOM6/src/equation_of_state/MOM_EOS_Wright.F90
+  MOM6/src/equation_of_state/MOM_EOS_Wright_full.F90
+  MOM6/src/equation_of_state/MOM_EOS_Wright_red.F90
+  MOM6/src/equation_of_state/MOM_temperature_convert.F90
   MOM6/src/equation_of_state/MOM_TFreeze.F90
 
   MOM6/src/equation_of_state/TEOS10/gsw_chem_potential_water_t_exact.f90
@@ -134,7 +138,6 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/framework/MOM_data_override.F90
   MOM6/src/framework/MOM_diag_mediator.F90
   MOM6/src/framework/MOM_diag_remap.F90
-  MOM6/src/framework/MOM_diag_vkernels.F90
   MOM6/src/framework/MOM_document.F90
   MOM6/src/framework/MOM_domains.F90
   MOM6/src/framework/MOM_dyn_horgrid.F90
@@ -147,7 +150,9 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/framework/MOM_interpolate.F90
   MOM6/src/framework/MOM_intrinsic_functions.F90
   MOM6/src/framework/MOM_io.F90
+  MOM6/src/framework/MOM_io_file.F90
   MOM6/src/framework/MOM_memory_macros.h
+  MOM6/src/framework/MOM_netcdf.F90
   MOM6/src/framework/MOM_random.F90
   MOM6/src/framework/MOM_restart.F90
   MOM6/src/framework/MOM_safe_alloc.F90
@@ -197,6 +202,7 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/parameterizations/lateral/MOM_spherical_harmonics.F90
   MOM6/src/parameterizations/lateral/MOM_thickness_diffuse.F90
   MOM6/src/parameterizations/lateral/MOM_tidal_forcing.F90
+  MOM6/src/parameterizations/lateral/MOM_Zanna_Bolton.F90
 
   MOM6/src/parameterizations/stochastic/MOM_stochastics.F90
 
@@ -303,18 +309,18 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/config_src/external/stochastic_physics/get_stochy_pattern.F90
   MOM6/config_src/external/stochastic_physics/stochastic_physics.F90
 
-  MOM6/config_src/infra/FMS1/MOM_coms_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_constants.F90
-  MOM6/config_src/infra/FMS1/MOM_couplertype_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_cpu_clock_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_data_override_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_diag_manager_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_domain_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_ensemble_manager_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_error_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_interp_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_io_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_time_manager.F90
+  MOM6/config_src/infra/FMS2/MOM_coms_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_constants.F90
+  MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_cpu_clock_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_data_override_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_diag_manager_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_domain_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_ensemble_manager_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_error_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_interp_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_io_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_time_manager.F90
 
   MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_time.F90

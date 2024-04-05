@@ -35,6 +35,7 @@ target_sources(OM3_cdeps_datm PRIVATE
   CDEPS/datm/datm_datamode_era5_mod.F90
   CDEPS/datm/datm_datamode_gefs_mod.F90
   CDEPS/datm/datm_datamode_jra_mod.F90
+  CDEPS/datm/datm_datamode_simple_mod.F90
   extra_sources/datm_datamode_jra55do_mod.F90
 )
 add_patched_source(OM3_cdeps_datm CDEPS/datm/atm_comp_nuopc.F90)
