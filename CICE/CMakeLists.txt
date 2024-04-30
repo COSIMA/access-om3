@@ -26,7 +26,6 @@ target_sources(OM3_cice PRIVATE
   CICE/cicecore/shared/ice_arrays_column.F90
   CICE/cicecore/shared/ice_calendar.F90
   CICE/cicecore/shared/ice_constants.F90
-  CICE/cicecore/shared/ice_distribution.F90
   CICE/cicecore/shared/ice_domain_size.F90
   CICE/cicecore/shared/ice_fileunits.F90
   CICE/cicecore/shared/ice_init_column.F90
@@ -68,7 +67,6 @@ target_sources(OM3_cice PRIVATE
 
   # Infrastructure
   CICE/cicecore/cicedyn/infrastructure/ice_blocks.F90
-  CICE/cicecore/cicedyn/infrastructure/ice_domain.F90
   CICE/cicecore/cicedyn/infrastructure/ice_grid.F90
   CICE/cicecore/cicedyn/infrastructure/ice_memusage.F90
   CICE/cicecore/cicedyn/infrastructure/ice_memusage_gptl.c
@@ -154,6 +152,9 @@ elseif(OM3_CICE_IO MATCHES "Binary")
     CICE/cicecore/cicedyn/infrastructure/io/io_binary/ice_restart.F90
   )
 endif()
+
+add_patched_source(OM3_cice CICE/cicecore/cicedyn/infrastructure/ice_domain.F90)
+add_patched_source(OM3_cice CICE/cicecore/shared/ice_distribution.F90)
 
 ### Install and Export
 
