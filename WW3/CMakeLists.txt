@@ -94,6 +94,8 @@ target_sources(OM3_ww3 PRIVATE
   ${switch_files}
 )
 
+add_patched_source(OM3_ww3 WW3/model/src/w3iorsmd.F90)
+
 ## Utilities
 
 # ww3_grid
