@@ -44,7 +44,6 @@ target_sources(OM3_ww3 PRIVATE
   WW3/model/src/w3iogomd.F90
   WW3/model/src/w3iogrmd.F90
   WW3/model/src/w3iopomd.F90
-  WW3/model/src/w3iorsmd.F90
   WW3/model/src/w3iosfmd.F90
   WW3/model/src/w3iotrmd.F90
   WW3/model/src/w3macros.h
