@@ -13,6 +13,7 @@ endforeach()
 ## WW3 library
 add_fortran_library(OM3_ww3 mod STATIC)
 add_library(AccessOM3::ww3 ALIAS OM3_ww3)
+target_include_directories(OM3_ww3 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/WW3/model/src>)
 target_compile_definitions(OM3_ww3 PRIVATE ENDIANNESS="big_endian")
 set_property(SOURCE WW3/model/src/w3initmd.F90
   APPEND
