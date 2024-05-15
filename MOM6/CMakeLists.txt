@@ -324,12 +324,12 @@ target_sources(OM3_mom6 PRIVATE
 
   MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_time.F90
-  MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90
   MOM6/config_src/drivers/nuopc_cap/mom_surface_forcing_nuopc.F90
   MOM6/config_src/drivers/nuopc_cap/ocn_comp_NUOPC.F90
   MOM6/config_src/drivers/nuopc_cap/time_utils.F90
 )
 add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap.F90)
+add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90)
 
 ### Install and Export
 
