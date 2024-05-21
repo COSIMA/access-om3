@@ -122,15 +122,15 @@ target_sources(OM3_cice PRIVATE
   CICE/cicecore/cicedynB/infrastructure/comm/mpi/ice_timers.F90
 
   # NUOPC CMEPS driver
-  CICE/cicecore/drivers/nuopc/cmeps/CICE_FinalMod.F90
-  CICE/cicecore/drivers/nuopc/cmeps/CICE_InitMod.F90
-  CICE/cicecore/drivers/nuopc/cmeps/CICE_RunMod.F90
-  CICE/cicecore/drivers/nuopc/cmeps/cice_wrapper_mod.F90
-  CICE/cicecore/drivers/nuopc/cmeps/ice_comp_nuopc.F90
+  CICE/cicecore/drivers/access/cmeps/CICE_FinalMod.F90
+  CICE/cicecore/drivers/access/cmeps/CICE_InitMod.F90
+  CICE/cicecore/drivers/access/cmeps/CICE_RunMod.F90
+  CICE/cicecore/drivers/access/cmeps/cice_wrapper_mod.F90
+  CICE/cicecore/drivers/access/cmeps/ice_comp_nuopc.F90
   CICE/cicecore/drivers/access/cmeps/ice_import_export.F90
-  CICE/cicecore/drivers/nuopc/cmeps/ice_prescribed_mod.F90
-  CICE/cicecore/drivers/nuopc/cmeps/ice_scam.F90
-  CICE/cicecore/drivers/nuopc/cmeps/ice_shr_methods.F90
+  CICE/cicecore/drivers/access/cmeps/ice_prescribed_mod.F90
+  CICE/cicecore/drivers/access/cmeps/ice_scam.F90
+  CICE/cicecore/drivers/access/cmeps/ice_shr_methods.F90
 )
 add_patched_source(OM3_cice CICE/cicecore/drivers/nuopc/cmeps/ice_mesh_mod.F90)
 # Select IO source files based on CICE_IO
