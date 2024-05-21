@@ -1,5 +1,5 @@
 diff --git a/MOM6/config_src/drivers/nuopc_cap/mom_cap.F90 b/MOM6/config_src/drivers/nuopc_cap/mom_cap.F90.new
-index 3574943..48e4532 100644
+index 3574943..f948684 100644
 --- a/MOM6/config_src/drivers/nuopc_cap/mom_cap.F90
 +++ b/MOM6/config_src/drivers/nuopc_cap/mom_cap.F90.new
 @@ -2,8 +2,9 @@
@@ -158,7 +158,7 @@ index 3574943..48e4532 100644
    call query_ocean_state(ocean_state, use_waves=use_waves, wave_method=wave_method)
    if (use_waves) then
      if (wave_method == "EFACTOR") then
-@@ -789,6 +866,19 @@ subroutine InitializeAdvertise(gcomp, importState, exportState, clock, rc)
+@@ -789,6 +866,15 @@ subroutine InitializeAdvertise(gcomp, importState, exportState, clock, rc)
      endif
    endif
  
@@ -166,19 +166,15 @@ index 3574943..48e4532 100644
 +  ! Add import fields required for extra tracer fluxes
 +  do n = 1, gas_fluxes%num_bcs
 +    stdname = get_coupled_field_name(gas_fluxes%bc(n)%name)
-+    if (stdname /= UNKNOWN_CMEPS_FIELD) then
++    if (stdname /= UNKNOWN_CMEPS_FIELD) &
 +      call fld_list_add(fldsToOcn_num, fldsToOcn, stdname, "will provide")
-+    else
-+      call ESMF_LogWrite('MOM_cap: no field coupled for generic tracer flux "'//&
-+            trim(gas_fluxes%bc(n)%name)//'"', ESMF_LOGMSG_WARNING)
-+    endif
 +  enddo
 +#endif
 +
    !--------- export fields -------------
    call fld_list_add(fldsFrOcn_num, fldsFrOcn, "So_omask"   , "will provide")
    call fld_list_add(fldsFrOcn_num, fldsFrOcn, "So_t"       , "will provide")
-@@ -800,6 +890,8 @@ subroutine InitializeAdvertise(gcomp, importState, exportState, clock, rc)
+@@ -800,6 +886,8 @@ subroutine InitializeAdvertise(gcomp, importState, exportState, clock, rc)
    call fld_list_add(fldsFrOcn_num, fldsFrOcn, "Fioo_q"     , "will provide")
    call fld_list_add(fldsFrOcn_num, fldsFrOcn, "So_bldepth" , "will provide")
  
@@ -187,7 +183,7 @@ index 3574943..48e4532 100644
    do n = 1,fldsToOcn_num
      call NUOPC_Advertise(importState, standardName=fldsToOcn(n)%stdname, name=fldsToOcn(n)%shortname, rc=rc)
      if (ChkErr(rc,__LINE__,u_FILE_u)) return
-@@ -1611,11 +1703,14 @@ subroutine ModelAdvance(gcomp, rc)
+@@ -1611,11 +1699,14 @@ subroutine ModelAdvance(gcomp, rc)
    type (ocean_public_type),      pointer :: ocean_public       => NULL()
    type (ocean_state_type),       pointer :: ocean_state        => NULL()
    type(ice_ocean_boundary_type), pointer :: Ice_ocean_boundary => NULL()
@@ -202,7 +198,7 @@ index 3574943..48e4532 100644
    integer                                :: dth, dtm, dts
    integer                                :: nc
    type(ESMF_Time)                        :: MyTime
-@@ -1627,12 +1722,13 @@ subroutine ModelAdvance(gcomp, rc)
+@@ -1627,12 +1718,13 @@ subroutine ModelAdvance(gcomp, rc)
    integer                                :: writeunit
    integer                                :: localPet
    type(ESMF_VM)                          :: vm
@@ -217,7 +213,7 @@ index 3574943..48e4532 100644
    integer                                :: num_rest_files
    real(8)                                :: MPI_Wtime, timers
    logical                                :: write_restart
-@@ -1673,6 +1769,7 @@ subroutine ModelAdvance(gcomp, rc)
+@@ -1673,6 +1765,7 @@ subroutine ModelAdvance(gcomp, rc)
  
    Time_step_coupled = esmf2fms_time(timeStep)
    Time = esmf2fms_time(currTime)
@@ -225,7 +221,7 @@ index 3574943..48e4532 100644
  
    !---------------
    ! Apply ocean lag for startup runs:
-@@ -1748,8 +1845,39 @@ subroutine ModelAdvance(gcomp, rc)
+@@ -1748,8 +1841,39 @@ subroutine ModelAdvance(gcomp, rc)
      ! Import data
      !---------------
  
@@ -265,7 +261,7 @@ index 3574943..48e4532 100644
  
      !---------------
      ! Update MOM6
-@@ -1811,7 +1939,7 @@ subroutine ModelAdvance(gcomp, rc)
+@@ -1811,7 +1935,7 @@ subroutine ModelAdvance(gcomp, rc)
        ! determine restart filename
        call ESMF_ClockGetNextTime(clock, MyTime, rc=rc)
        if (ChkErr(rc,__LINE__,u_FILE_u)) return
@@ -274,7 +270,7 @@ index 3574943..48e4532 100644
        if (ChkErr(rc,__LINE__,u_FILE_u)) return
  
        if (cesm_coupled) then
-@@ -1869,6 +1997,14 @@ subroutine ModelAdvance(gcomp, rc)
+@@ -1869,6 +1993,14 @@ subroutine ModelAdvance(gcomp, rc)
  
        endif
  
@@ -289,7 +285,7 @@ index 3574943..48e4532 100644
        if (is_root_pe()) then
          write(stdout,*) subname//' writing restart file ',trim(restartname)
        endif
-@@ -2149,6 +2285,7 @@ subroutine ocean_model_finalize(gcomp, rc)
+@@ -2149,6 +2281,7 @@ subroutine ocean_model_finalize(gcomp, rc)
    integer                                :: alarmCount
    character(len=64)                      :: timestamp
    logical                                :: write_restart
@@ -297,7 +293,7 @@ index 3574943..48e4532 100644
    character(len=*),parameter  :: subname='(MOM_cap:ocean_model_finalize)'
    real(8)                                :: MPI_Wtime, timefs
  
-@@ -2182,6 +2319,18 @@ subroutine ocean_model_finalize(gcomp, rc)
+@@ -2182,6 +2315,18 @@ subroutine ocean_model_finalize(gcomp, rc)
  
    call ocean_model_end(ocean_public, ocean_State, Time, write_restart=write_restart)
  

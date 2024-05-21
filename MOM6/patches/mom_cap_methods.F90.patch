@@ -1,5 +1,5 @@
 diff --git a/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90 b/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90.new
-index 125bae5..d78b2f9 100644
+index 125bae5..67f3314 100644
 --- a/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
 +++ b/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90.new
 @@ -20,8 +20,15 @@ use MOM_ocean_model_nuopc,     only: ocean_public_type, ocean_state_type
@@ -47,7 +47,7 @@ index 125bae5..d78b2f9 100644
  
    rc = ESMF_SUCCESS
  
-@@ -364,6 +379,46 @@ subroutine mom_import(ocean_public, ocean_grid, importState, ice_ocean_boundary,
+@@ -364,6 +379,48 @@ subroutine mom_import(ocean_public, ocean_grid, importState, ice_ocean_boundary,
        deallocate(stkx,stky)
    endif
  
@@ -76,15 +76,17 @@ index 125bae5..d78b2f9 100644
 +
 +      stdname = get_coupled_field_name(atm_fields%bc(n)%name)
 +      if (stdname /= UNKNOWN_CMEPS_FIELD) then
-+        call ESMF_LogWrite(trim(subname)//': generic_tracer flux: '//trim(atm_fields%bc(n)%name)//&
-+              ', coupling field '//trim(stdname), ESMF_LOGMSG_INFO)
++        call ESMF_LogWrite(trim(subname)//': generic_tracer flux, '//trim(atm_fields%bc(n)%name)//&
++          ': setting field index '//CHAR(48+field_index)//' to '//trim(stdname)//' if provided '//&
++          'by coupler, otherwise defaulting to zero', ESMF_LOGMSG_INFO)
++        work(:,:) = 0._ESMF_KIND_R8
 +        call state_getimport(importState, trim(stdname), isc, iec, jsc, jec, work, rc=rc)
 +        if (ChkErr(rc,__LINE__,u_FILE_u)) return
 +        call set_coupler_type_data(work, n, atm_fields, &
 +              idim=(/isc,isc,iec,iec/), jdim=(/jsc,jsc,jec,jec/), field_index=field_index)
 +      else
-+        call ESMF_LogWrite(trim(subname)//': generic_tracer flux: '//trim(atm_fields%bc(n)%name)//&
-+              ', no fields coupled', ESMF_LOGMSG_INFO)
++        call ESMF_LogWrite(trim(subname)//': generic_tracer flux, '//trim(atm_fields%bc(n)%name)//&
++              ': no fields set from coupler', ESMF_LOGMSG_INFO)
 +      endif
 +    enddo
 +    deallocate(work)
