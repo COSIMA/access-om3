@@ -65,7 +65,6 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/core/MOM_dynamics_unsplit.F90
   MOM6/src/core/MOM_dynamics_unsplit_RK2.F90
   MOM6/src/core/MOM.F90
-  MOM6/src/core/MOM_forcing_type.F90
   MOM6/src/core/MOM_grid.F90
   MOM6/src/core/MOM_interface_heights.F90
   MOM6/src/core/MOM_isopycnal_slopes.F90
@@ -375,6 +374,7 @@ add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nu
 add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90)
 add_patched_source(OM3_mom6 MOM6/src/framework/MOM_coupler_types.F90)
 add_patched_source(OM3_mom6 MOM6/src/tracer/MOM_generic_tracer.F90)
+add_patched_source(OM3_mom6 MOM6/src/core/MOM_forcing_type.F90)
 
 ### Install and Export
 
