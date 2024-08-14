@@ -61,7 +61,6 @@ target_sources(OM3_cice PRIVATE
   CICE/cicecore/cicedyn/general/ice_flux_bgc.F90
   CICE/cicecore/cicedyn/general/ice_forcing.F90
   CICE/cicecore/cicedyn/general/ice_forcing_bgc.F90
-  CICE/cicecore/cicedyn/general/ice_init.F90
   CICE/cicecore/cicedyn/general/ice_state.F90
   CICE/cicecore/cicedyn/general/ice_step_mod.F90
 
@@ -155,6 +154,7 @@ endif()
 
 add_patched_source(OM3_cice CICE/cicecore/cicedyn/infrastructure/ice_domain.F90)
 add_patched_source(OM3_cice CICE/cicecore/shared/ice_distribution.F90)
+add_patched_source(OM3_cice CICE/cicecore/cicedyn/general/ice_init.F90)
 
 ### Install and Export
 
