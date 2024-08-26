@@ -1,6 +1,6 @@
 [submodule "MOM6/MOM6"]
 	path = MOM6/MOM6
-	url = https://github.com/NCAR/MOM6
+	url = https://github.com/angus-g/MOM6
 [submodule "CICE6/CICE6"]
 	path = CICE/CICE
 	url = https://github.com/ESCOMP/CICE
