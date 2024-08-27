@@ -28,7 +28,7 @@ body:
   - type: textarea
     attributes:
       label: YAML input file
-      placeholder: 
+      placeholder: |
         ```yaml
         Copy the yaml input file used
         ```
