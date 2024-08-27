@@ -21,7 +21,7 @@ body:
   - type: input
     attributes:
       label: Expts_manager Version
-      placeholder: Git URL or commit hash used
+      placeholder: Git URL including commit hash
     validations:
       required: true
 
