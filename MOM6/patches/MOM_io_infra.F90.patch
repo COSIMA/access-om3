@@ -6,7 +6,7 @@
    character(len=6) :: action_arg, position_arg
 -  character(len=:), allocatable :: filename
 -
-+  character(len=50) :: filename
++  character(len=500) :: filename
    ! NOTE: This function is written to emulate the original behavior of mpp_open
    !   from the FMS1 library, on which the MOM API is still based.  Much of this
    !   can be removed if we choose to drop this compatibility, but for now we
