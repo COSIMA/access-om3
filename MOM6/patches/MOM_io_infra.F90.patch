@@ -1,0 +1,27 @@
+--- ../MOM6/config_src/infra/FMS2/MOM_io_infra.F90	2024-10-23 10:07:33.000000000 +1100
++++ ../MOM6/config_src/infra/FMS2/MOM_io_infra.F90.new	2024-10-23 10:16:45.000000000 +1100
+@@ -376,8 +376,7 @@
+   logical :: exists
+   logical :: is_open
+   character(len=6) :: action_arg, position_arg
+-  character(len=:), allocatable :: filename
+-
++  character(len=500) :: filename
+   ! NOTE: This function is written to emulate the original behavior of mpp_open
+   !   from the FMS1 library, on which the MOM API is still based.  Much of this
+   !   can be removed if we choose to drop this compatibility, but for now we
+@@ -433,12 +432,12 @@
+     endif
+   endif
+ 
+-  inquire(file=filename, exist=exists)
++  inquire(file=trim(filename), exist=exists)
+   if (exists .and. action_flag == WRITEONLY_FILE) &
+     call MOM_error(WARNING, 'open_ASCII_file: File ' // trim(filename) // &
+                             ' opened WRITEONLY already exists!')
+ 
+-  open(newunit=unit, file=filename, action=trim(action_arg), &
++  open(newunit=unit, file=trim(filename), action=trim(action_arg), &
+        position=trim(position_arg))
+ 
+   ! This checks if open() failed but did not raise a runtime error.

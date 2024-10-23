@@ -1,0 +1,24 @@
+--- ../MOM6/src/diagnostics/MOM_PointAccel.F90	2024-10-23 10:07:22.000000000 +1100
++++ ../MOM6/src/diagnostics/MOM_PointAccel.F90.new	2024-10-23 10:15:54.000000000 +1100
+@@ -122,8 +122,8 @@
+     if (CS%u_file < 0) then
+       if (len_trim(CS%u_trunc_file) < 1) return
+       call open_ASCII_file(CS%u_file, trim(CS%u_trunc_file), action=APPEND_FILE, &
+-                           threading=MULTIPLE, fileset=SINGLE_FILE)
+-      if (CS%u_file < 0) then
++                           threading=MULTIPLE, fileset=MULTIPLE)
++      if (CS%u_file == -1) then
+         call MOM_error(NOTE, 'Unable to open file '//trim(CS%u_trunc_file)//'.')
+         return
+       endif
+@@ -461,8 +461,8 @@
+     if (CS%v_file < 0) then
+       if (len_trim(CS%v_trunc_file) < 1) return
+       call open_ASCII_file(CS%v_file, trim(CS%v_trunc_file), action=APPEND_FILE, &
+-                           threading=MULTIPLE, fileset=SINGLE_FILE)
+-      if (CS%v_file < 0) then
++                           threading=MULTIPLE, fileset=MULTIPLE)
++      if (CS%v_file == -1) then
+         call MOM_error(NOTE, 'Unable to open file '//trim(CS%v_trunc_file)//'.')
+         return
+       endif
