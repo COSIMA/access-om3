@@ -83,7 +83,6 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/diagnostics/MOM_diagnostics.F90
   MOM6/src/diagnostics/MOM_obsolete_diagnostics.F90
   MOM6/src/diagnostics/MOM_obsolete_params.F90
-  MOM6/src/diagnostics/MOM_PointAccel.F90
   MOM6/src/diagnostics/MOM_spatial_means.F90
   MOM6/src/diagnostics/MOM_sum_output.F90
   MOM6/src/diagnostics/MOM_wave_speed.F90
@@ -358,7 +357,6 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/config_src/infra/FMS2/MOM_ensemble_manager_infra.F90
   MOM6/config_src/infra/FMS2/MOM_error_infra.F90
   MOM6/config_src/infra/FMS2/MOM_interp_infra.F90
-  MOM6/config_src/infra/FMS2/MOM_io_infra.F90
   MOM6/config_src/infra/FMS2/MOM_time_manager.F90
 
   MOM6/config_src/drivers/nuopc_cap/mom_cap_time.F90
