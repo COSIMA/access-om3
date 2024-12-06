@@ -1,5 +1,7 @@
-### Targets
 
+add_compile_definitions(
+  TIMING
+)
 ## share library
 add_fortran_library(OM3_share mod/share STATIC)
 add_library(AccessOM3::share ALIAS OM3_share)
