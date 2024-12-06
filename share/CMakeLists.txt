@@ -23,6 +23,7 @@ target_sources(OM3_share PRIVATE
 
   # Modules shared among several components
   CESM_share/include/shr_assert.h
+  CESM_share/src/nuopc_shr_methods.F90
   CESM_share/src/shr_abort_mod.F90
   CESM_share/src/shr_cal_mod.F90
   CESM_share/src/shr_file_mod.F90
