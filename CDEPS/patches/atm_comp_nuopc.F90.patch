@@ -17,7 +17,7 @@ index b74e0d3..bb31c22 100644
      if ( trim(datamode) == 'CORE2_NYF'    .or. &
           trim(datamode) == 'CORE2_IAF'    .or. &
           trim(datamode) == 'CORE_IAF_JRA' .or. &
-+         trim(datamode) == 'JRA55do     ' .or. &
++         trim(datamode) == 'JRA55do'      .or. &
           trim(datamode) == 'CLMNCEP'      .or. &
           trim(datamode) == 'CPLHIST'      .or. &
           trim(datamode) == 'GEFS'         .or. &
