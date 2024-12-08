@@ -1,7 +1,4 @@
 
-add_compile_definitions(
-  TIMING
-)
 ## share library
 add_fortran_library(OM3_share mod/share STATIC)
 add_library(AccessOM3::share ALIAS OM3_share)
@@ -37,7 +34,6 @@ target_sources(OM3_share PRIVATE
   CESM_share/src/shr_orb_mod.F90
   CESM_share/src/shr_pio_mod.F90
   CESM_share/src/shr_precip_mod.F90
-  CESM_share/src/shr_reprosum_mod.F90
   CESM_share/src/shr_reprosumx86.c
   CESM_share/src/shr_strconvert_mod.F90
   CESM_share/src/shr_string_mod.F90
@@ -50,6 +46,8 @@ target_sources(OM3_share PRIVATE
   stubs/mct_mod.F90
 )
 add_patched_source(OM3_share CESM_share/src/shr_const_mod.F90)
+add_patched_source(OM3_share CESM_share/src/shr_reprosum_mod.F90)
+
 if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   # CESM reduces the precision and increases speed for the following file
   set_source_files_properties(CESM_share/src/shr_wv_sat_mod.F90 PROPERTIES COMPILE_FLAGS "-fimf-precision=low -fp-model fast")
