@@ -16,8 +16,8 @@ target_sources(OM3_cdeps_common PRIVATE
 
   CDEPS/dshr/dshr_dfield_mod.F90
   CDEPS/dshr/dshr_fldlist_mod.F90
-  CDEPS/dshr/dshr_mod.F90
 )
+add_patched_source(OM3_cdeps_common CDEPS/dshr/dshr_mod.F90)
 
 ## DATM
 add_fortran_library(OM3_cdeps_datm mod/datm STATIC)
