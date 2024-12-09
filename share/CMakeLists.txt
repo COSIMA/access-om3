@@ -25,6 +25,7 @@ target_sources(OM3_share PRIVATE
   CESM_share/src/nuopc_shr_methods.F90
   CESM_share/src/shr_abort_mod.F90
   CESM_share/src/shr_cal_mod.F90
+  CESM_share/src/shr_const_mod.F90
   CESM_share/src/shr_file_mod.F90
   CESM_share/src/shr_kind_mod.F90
   CESM_share/src/shr_log_mod.F90
@@ -34,6 +35,7 @@ target_sources(OM3_share PRIVATE
   CESM_share/src/shr_orb_mod.F90
   CESM_share/src/shr_pio_mod.F90
   CESM_share/src/shr_precip_mod.F90
+  CESM_share/src/shr_reprosum_mod.F90
   CESM_share/src/shr_reprosumx86.c
   CESM_share/src/shr_strconvert_mod.F90
   CESM_share/src/shr_string_mod.F90
@@ -46,7 +48,6 @@ target_sources(OM3_share PRIVATE
   stubs/mct_mod.F90
 )
 add_patched_source(OM3_share CESM_share/src/shr_const_mod.F90)
-add_patched_source(OM3_share CESM_share/src/shr_reprosum_mod.F90)
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   # CESM reduces the precision and increases speed for the following file
