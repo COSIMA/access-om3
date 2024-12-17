@@ -374,6 +374,10 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/config_src/infra/FMS2/MOM_io_infra.F90
   MOM6/src/diagnostics/MOM_PointAccel.F90
 
+  MOM6/src/core/MOM_dynamics_split_RK2b.F90
+  MOM6/src/equation_of_state/MOM_EOS_base_type.F90
+  MOM6/src/parameterizations/lateral/MOM_self_attr_load.F90
+
   extra_sources/mom_cap_gtracer_flux.F90
 )
 
