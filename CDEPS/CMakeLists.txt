@@ -14,9 +14,9 @@ target_sources(OM3_cdeps_common PRIVATE
   CDEPS/streams/dshr_stream_mod.F90
   CDEPS/streams/dshr_tinterp_mod.F90
 
+  CDEPS/dshr/dshr_mod.F90
   CDEPS/dshr/dshr_dfield_mod.F90
   CDEPS/dshr/dshr_fldlist_mod.F90
-  CDEPS/dshr/dshr_mod.F90
 )
 
 ## DATM
@@ -52,6 +52,8 @@ target_sources(OM3_cdeps_docn PRIVATE
   CDEPS/docn/docn_datamode_aquaplanet_mod.F90
   CDEPS/docn/docn_datamode_copyall_mod.F90
   CDEPS/docn/docn_datamode_cplhist_mod.F90
+  CDEPS/docn/docn_datamode_multilev_mod.F90
+  CDEPS/docn/docn_datamode_multilev_dom_mod.F90
   CDEPS/docn/docn_datamode_iaf_mod.F90
   CDEPS/docn/docn_datamode_som_mod.F90
   CDEPS/docn/docn_import_data_mod.F90
