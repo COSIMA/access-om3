@@ -378,7 +378,7 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/equation_of_state/MOM_EOS_base_type.F90
   MOM6/src/parameterizations/lateral/MOM_self_attr_load.F90
 
-  extra_sources/mom_cap_gtracer_flux.F90
+  MOM6/config_src/drivers/nuopc_cap/mom_cap_gtracer_flux.F90
 )
 
 #turning off patches - cb 17/12/24
