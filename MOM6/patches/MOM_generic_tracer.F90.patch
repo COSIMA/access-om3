@@ -1,5 +1,5 @@
 diff --git a/MOM6/src/tracer/MOM_generic_tracer.F90 b/MOM6/src/tracer/MOM_generic_tracer.F90.new
-index 131110e..ae75b2e 100644
+index 6b10d15..e092aa7 100644
 --- a/MOM6/src/tracer/MOM_generic_tracer.F90
 +++ b/MOM6/src/tracer/MOM_generic_tracer.F90.new
 @@ -21,7 +21,7 @@ module MOM_generic_tracer
@@ -11,18 +11,7 @@ index 131110e..ae75b2e 100644
  
    use g_tracer_utils,   only: g_tracer_get_name,g_tracer_set_values,g_tracer_set_common,g_tracer_get_common
    use g_tracer_utils,   only: g_tracer_get_next,g_tracer_type,g_tracer_is_prog,g_tracer_flux_init
-@@ -352,7 +352,9 @@ contains
-           enddo ; enddo ; enddo
- 
-           !jgj: Reset CASED to 0 below K=1
--          if ( (trim(g_tracer_name) == 'cased') .or. (trim(g_tracer_name) == 'ca13csed') ) then
-+          ! dts: also WOMBAT sediment tracers
-+          if ( (trim(g_tracer_name) == 'cased') .or. (trim(g_tracer_name) == 'ca13csed') .or. &
-+            (trim(g_tracer_name) == 'det_sediment') .or. (trim(g_tracer_name) == 'caco3_sediment')) then
-             do k=2,nk ; do j=jsc,jec ; do i=isc,iec
-               if (tr_ptr(i,j,k) /= CS%tracer_land_val) then
-                 tr_ptr(i,j,k) = 0.0
-@@ -507,6 +509,11 @@ contains
+@@ -527,6 +527,11 @@ contains
      !      the fluxes without coming into this subroutine.
      !      MOM5 has to modified to conform.
  
