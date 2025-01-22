@@ -1,6 +1,8 @@
---- ../MOM6/config_src/infra/FMS2/MOM_io_infra.F90	2024-10-23 10:07:33.000000000 +1100
-+++ ../MOM6/config_src/infra/FMS2/MOM_io_infra.F90.new	2024-10-23 10:16:45.000000000 +1100
-@@ -376,8 +376,7 @@
+diff --git a/MOM6/config_src/infra/FMS2/MOM_io_infra.F90 b/MOM6/config_src/infra/FMS2/MOM_io_infra.F90.new
+index a43b4e9..169ed25 100644
+--- a/MOM6/config_src/infra/FMS2/MOM_io_infra.F90
++++ b/MOM6/config_src/infra/FMS2/MOM_io_infra.F90.new
+@@ -376,8 +376,7 @@ subroutine open_ASCII_file(unit, file, action, threading, fileset)
    logical :: exists
    logical :: is_open
    character(len=6) :: action_arg, position_arg
@@ -10,7 +12,7 @@
    ! NOTE: This function is written to emulate the original behavior of mpp_open
    !   from the FMS1 library, on which the MOM API is still based.  Much of this
    !   can be removed if we choose to drop this compatibility, but for now we
-@@ -433,12 +432,12 @@
+@@ -433,12 +432,12 @@ subroutine open_ASCII_file(unit, file, action, threading, fileset)
      endif
    endif
  

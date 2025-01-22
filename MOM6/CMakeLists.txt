@@ -62,6 +62,7 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/core/MOM_CoriolisAdv.F90
   MOM6/src/core/MOM_density_integrals.F90
   MOM6/src/core/MOM_dynamics_split_RK2.F90
+  MOM6/src/core/MOM_dynamics_split_RK2b.F90
   MOM6/src/core/MOM_dynamics_unsplit.F90
   MOM6/src/core/MOM_dynamics_unsplit_RK2.F90
   MOM6/src/core/MOM.F90
@@ -80,7 +81,9 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/core/MOM_verticalGrid.F90
 
   MOM6/src/diagnostics/MOM_debugging.F90
+  MOM6/src/diagnostics/MOM_diagnose_MLD.F90
   MOM6/src/diagnostics/MOM_diagnostics.F90
+  MOM6/src/diagnostics/MOM_harmonic_analysis.F90
   MOM6/src/diagnostics/MOM_obsolete_diagnostics.F90
   MOM6/src/diagnostics/MOM_obsolete_params.F90
   MOM6/src/diagnostics/MOM_spatial_means.F90
@@ -97,6 +100,7 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/equation_of_state/MOM_EOS_Wright.F90
   MOM6/src/equation_of_state/MOM_EOS_Wright_full.F90
   MOM6/src/equation_of_state/MOM_EOS_Wright_red.F90
+  MOM6/src/equation_of_state/MOM_EOS_base_type.F90
   MOM6/src/equation_of_state/MOM_temperature_convert.F90
   MOM6/src/equation_of_state/MOM_TFreeze.F90
 
@@ -201,7 +205,9 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/parameterizations/lateral/MOM_MEKE.F90
   MOM6/src/parameterizations/lateral/MOM_MEKE_types.F90
   MOM6/src/parameterizations/lateral/MOM_mixed_layer_restrat.F90
+  MOM6/src/parameterizations/lateral/MOM_self_attr_load.F90
   MOM6/src/parameterizations/lateral/MOM_spherical_harmonics.F90
+  MOM6/src/parameterizations/lateral/MOM_streaming_filter.F90
   MOM6/src/parameterizations/lateral/MOM_thickness_diffuse.F90
   MOM6/src/parameterizations/lateral/MOM_tidal_forcing.F90
   MOM6/src/parameterizations/lateral/MOM_Zanna_Bolton.F90

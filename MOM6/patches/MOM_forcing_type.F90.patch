@@ -1,8 +1,8 @@
 diff --git a/MOM6/src/core/MOM_forcing_type.F90 b/MOM6/src/core/MOM_forcing_type.F90.new
-index 200bbd7..fca9187 100644
+index 998713d..a2efcaa 100644
 --- a/MOM6/src/core/MOM_forcing_type.F90
 +++ b/MOM6/src/core/MOM_forcing_type.F90.new
-@@ -2080,6 +2080,11 @@ subroutine fluxes_accumulate(flux_tmp, fluxes, G, wt2, forces)
+@@ -2280,6 +2280,11 @@ subroutine fluxes_accumulate(flux_tmp, fluxes, G, wt2, forces)
  
      fluxes%salt_flux(i,j) = wt1*fluxes%salt_flux(i,j) + wt2*flux_tmp%salt_flux(i,j)
    enddo ; enddo
