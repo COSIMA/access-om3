@@ -12,6 +12,7 @@ if(OpenMP_Fortran_FOUND)
 endif()
 target_sources(OM3_cmeps PRIVATE
   CMEPS/cesm/flux_atmocn/shr_flux_mod.F90
+  CMEPS/mediator/med_phases_history_mod.F90
   CMEPS/mediator/med_phases_restart_mod.F90
   CMEPS/mediator/med_map_mod.F90
   CMEPS/mediator/med_methods_mod.F90
@@ -31,7 +32,6 @@ target_sources(OM3_cmeps PRIVATE
   CMEPS/mediator/med_phases_prep_ocn_mod.F90
   CMEPS/mediator/esmFlds.F90
   CMEPS/mediator/med.F90
-  CMEPS/mediator/med_time_mod.F90
   CMEPS/mediator/med_phases_ocnalb_mod.F90
   CMEPS/mediator/med_phases_prep_wav_mod.F90
   CMEPS/mediator/med_utils_mod.F90
@@ -48,8 +48,6 @@ target_sources(OM3_cmeps PRIVATE
   CMEPS/mediator/med_phases_post_wav_mod.F90
 )
 
-add_patched_source(OM3_cmeps CMEPS/mediator/med_phases_history_mod.F90)
-
 ## NUOPC cap share
 add_fortran_library(OM3_nuopc_cap_share mod/nuopc_cap_share STATIC)
 add_library(AccessOM3::nuopc_cap_share ALIAS OM3_nuopc_cap_share)
@@ -61,7 +59,6 @@ target_sources(OM3_nuopc_cap_share PRIVATE
   CMEPS/cesm/nuopc_cap_share/driver_pio_mod.F90
   CMEPS/cesm/nuopc_cap_share/esm_utils_mod.F90
   CMEPS/cesm/nuopc_cap_share/glc_elevclass_mod.F90
-  CMEPS/cesm/nuopc_cap_share/nuopc_shr_methods.F90
 )
 
 

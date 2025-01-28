@@ -44,6 +44,7 @@ target_sources(OM3_ww3 PRIVATE
   WW3/model/src/w3iogomd.F90
   WW3/model/src/w3iogrmd.F90
   WW3/model/src/w3iopomd.F90
+  WW3/model/src/w3iorsmd.F90
   WW3/model/src/w3iosfmd.F90
   WW3/model/src/w3iotrmd.F90
   WW3/model/src/w3macros.h
@@ -62,7 +63,6 @@ target_sources(OM3_ww3 PRIVATE
   WW3/model/src/w3parall.F90
   WW3/model/src/w3partmd.F90
   WW3/model/src/w3servmd.F90
-  WW3/model/src/w3srcemd.F90
   WW3/model/src/w3strkmd.F90
   WW3/model/src/w3timemd.F90
   WW3/model/src/w3triamd.F90
@@ -83,17 +83,18 @@ target_sources(OM3_ww3 PRIVATE
   WW3/model/src/wav_grdout.F90
   WW3/model/src/w3iogoncdmd.F90
   WW3/model/src/wav_shr_flags.F90
-
+  
   WW3/model/src/wav_kind_mod.F90
   WW3/model/src/wav_shr_mod.F90
   WW3/model/src/wav_shel_inp.F90
   WW3/model/src/wav_comp_nuopc.F90
   WW3/model/src/wav_import_export.F90
+  WW3/model/src/wav_wrapper_mod.F90
 
   ${switch_files}
 )
 
-add_patched_source(OM3_ww3 WW3/model/src/w3iorsmd.F90)
+add_patched_source(OM3_ww3 WW3/model/src/w3srcemd.F90)
 
 ## Utilities
 

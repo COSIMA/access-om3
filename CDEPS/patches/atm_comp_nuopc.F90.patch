@@ -1,27 +1,27 @@
---- CDEPS/datm/atm_comp_nuopc.F90	2023-08-31 10:49:23.508874000 +1000
-+++ extra_sources/atm_comp_nuopc.F90	2023-08-31 10:48:55.428272000 +1000
-@@ -52,6 +52,12 @@
-   use datm_datamode_jra_mod     , only : datm_datamode_jra_restart_write
-   use datm_datamode_jra_mod     , only : datm_datamode_jra_restart_read
+diff --git a/datm/atm_comp_nuopc.F90 b/datm/atm_comp_nuopc.F90
+index b74e0d3..bb31c22 100644
+--- a/datm/atm_comp_nuopc.F90
++++ b/datm/atm_comp_nuopc.F90
+@@ -48,6 +48,10 @@ module cdeps_datm_comp
+   use datm_datamode_jra_mod     , only : datm_datamode_jra_init_pointers
+   use datm_datamode_jra_mod     , only : datm_datamode_jra_advance
  
 +  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_advertise
 +  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_init_pointers
 +  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_advance
-+  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_restart_write
-+  use datm_datamode_jra55do_mod , only : datm_datamode_jra55do_restart_read
 +
    use datm_datamode_clmncep_mod , only : datm_datamode_clmncep_advertise
    use datm_datamode_clmncep_mod , only : datm_datamode_clmncep_init_pointers
    use datm_datamode_clmncep_mod , only : datm_datamode_clmncep_advance
-@@ -342,6 +348,7 @@
+@@ -357,6 +361,7 @@ contains
      if ( trim(datamode) == 'CORE2_NYF'    .or. &
           trim(datamode) == 'CORE2_IAF'    .or. &
           trim(datamode) == 'CORE_IAF_JRA' .or. &
-+         trim(datamode) == 'JRA55do'.or. &
++         trim(datamode) == 'JRA55do'      .or. &
           trim(datamode) == 'CLMNCEP'      .or. &
           trim(datamode) == 'CPLHIST'      .or. &
           trim(datamode) == 'GEFS'         .or. &
-@@ -361,6 +368,10 @@
+@@ -377,6 +382,10 @@ contains
         call datm_datamode_jra_advertise(exportState, fldsExport, flds_scalar_name, &
              flds_co2, flds_wiso, flds_presaero, flds_presndep, rc)
         if (ChkErr(rc,__LINE__,u_FILE_u)) return
@@ -32,7 +32,7 @@
      case ('CLMNCEP')
         call datm_datamode_clmncep_advertise(exportState, fldsExport, flds_scalar_name, &
              flds_co2, flds_wiso, flds_presaero, flds_presndep, flds_preso3, rc)
-@@ -606,6 +617,9 @@
+@@ -627,6 +636,9 @@ contains
         case('CORE_IAF_JRA')
            call datm_datamode_jra_init_pointers(exportState, sdat, rc)
            if (ChkErr(rc,__LINE__,u_FILE_u)) return
@@ -42,16 +42,16 @@
         case('CLMNCEP')
            call datm_datamode_clmncep_init_pointers(importState, exportState, sdat, rc)
            if (ChkErr(rc,__LINE__,u_FILE_u)) return
-@@ -630,6 +644,8 @@
-              call datm_datamode_core2_restart_read(restfilm, inst_suffix, logunit, my_task, mpicom, sdat)
-           case('CORE_IAF_JRA')
-              call datm_datamode_jra_restart_read(restfilm, inst_suffix, logunit, my_task, mpicom, sdat)
-+          case('JRA55do')
-+             call datm_datamode_jra55do_restart_read(restfilm, inst_suffix, logunit, my_task, mpicom, sdat)
-           case('CLMNCEP')
-              call datm_datamode_clmncep_restart_read(restfilm, inst_suffix, logunit, my_task, mpicom, sdat)
-           case('CPLHIST')
-@@ -677,6 +693,9 @@
+@@ -652,7 +664,7 @@ contains
+           call shr_get_rpointer_name(gcomp, 'atm', target_ymd, target_tod, rpfile, 'read', rc)
+           if (ChkErr(rc,__LINE__,u_FILE_u)) return
+           select case (trim(datamode))
+-          case('CORE2_NYF','CORE2_IAF','CORE_IAF_JRA','CLMNCEP','CPLHIST','ERA5','GEFS','CFSR','SIMPLE')
++          case('CORE2_NYF','CORE2_IAF','CORE_IAF_JRA','JRA55do','CLMNCEP','CPLHIST','ERA5','GEFS','CFSR','SIMPLE')
+              call dshr_restart_read(restfilm, rpfile, logunit, my_task, mpicom, sdat, rc)
+              if (ChkErr(rc,__LINE__,u_FILE_u)) return
+           case default
+@@ -694,6 +706,9 @@ contains
      case('CORE_IAF_JRA')
         call datm_datamode_jra_advance(exportstate, target_ymd, target_tod, sdat%model_calendar, rc)
         if (ChkErr(rc,__LINE__,u_FILE_u)) return
@@ -61,13 +61,12 @@
      case('CLMNCEP')
         call datm_datamode_clmncep_advance(mainproc, logunit, mpicom,  rc)
         if (ChkErr(rc,__LINE__,u_FILE_u)) return
-@@ -705,6 +724,9 @@
-        case('CORE_IAF_JRA')
-           call datm_datamode_jra_restart_write(case_name, inst_suffix, target_ymd, target_tod, &
-                logunit, my_task, sdat)
-+       case('JRA55do')
-+          call datm_datamode_jra55do_restart_write(case_name, inst_suffix, target_ymd, target_tod, &
-+               logunit, my_task, sdat)
-        case('CLMNCEP')
-           call datm_datamode_clmncep_restart_write(case_name, inst_suffix, target_ymd, target_tod, &
-                logunit, my_task, sdat)
+@@ -722,7 +737,7 @@ contains
+        call shr_get_rpointer_name(gcomp, 'atm', target_ymd, target_tod, rpfile, 'write', rc)
+        if (ChkErr(rc,__LINE__,u_FILE_u)) return
+        select case (trim(datamode))
+-       case('CORE2_NYF','CORE2_IAF','CORE_IAF_JRA','CLMNCEP','CPLHIST','ERA5','GEFS','CFSR','SIMPLE')
++       case('CORE2_NYF','CORE2_IAF','CORE_IAF_JRA','JRA55do','CLMNCEP','CPLHIST','ERA5','GEFS','CFSR','SIMPLE')
+           call dshr_restart_write(rpfile, case_name, 'datm', inst_suffix, target_ymd, target_tod, logunit, &
+                my_task, sdat, rc)
+           if (ChkErr(rc,__LINE__,u_FILE_u)) return
