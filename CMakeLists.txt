@@ -56,6 +56,9 @@ message(STATUS "  - OM3_CICE_IO       ${OM3_CICE_IO}")
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(GNUInstallDirs)
+if(OM3_LIB_INSTALL)
+  include(CMakePackageConfigHelpers)
+endif()
 
 # Include some custom cmake modules
 include(FortranLib)
@@ -65,20 +68,24 @@ include(AddPatchedSource)
 
 # Do not build components that are not going to be used
 if(OM3_ENABLE_MOM6 OR OM3_ENABLE_MOM6-CICE6 OR OM3_ENABLE_MOM6-WW3 OR OM3_ENABLE_MOM6-CICE6-WW3)
-  set(OM3_MOM6 ON FORCE)
+  set(OM3_BUILD_MOM6 ON)
 else()
-  set(OM3_MOM6 OFF FORCE)
+  set(OM3_BUILD_MOM6 OFF)
 endif()
 if(OM3_ENABLE_CICE6 OR OM3_ENABLE_MOM6-CICE6 OR OM3_ENABLE_CICE6-WW3 OR OM3_ENABLE_MOM6-CICE6-WW3)
-  set(OM3_CICE6 ON FORCE)
+  set(OM3_BUILD_CICE6 ON)
 else()
-  set(OM3_CICE6 OFF FORCE)
+  set(OM3_BUILD_CICE6 OFF)
 endif()
 if(OM3_ENABLE_WW3 OR OM3_ENABLE_MOM6-WW3 OR OM3_ENABLE_CICE6-WW3 OR OM3_ENABLE_MOM6-CICE6-WW3)
-  set(OM3_WW3 ON FORCE)
+  set(OM3_BUILD_WW3 ON)
 else()
-  set(OM3_WW3 OFF FORCE)
+  set(OM3_BUILD_WW3 OFF)
 endif()
+message(STATUS "Components to build")
+message(STATUS "  - OM3_BUILD_MOM6    ${OM3_BUILD_MOM6}")
+message(STATUS "  - OM3_BUILD_CICE6   ${OM3_BUILD_CICE6}")
+message(STATUS "  - OM3_BUILD_WW3     ${OM3_BUILD_WW3}")
 
 # Common compiler flags and definitions
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
@@ -127,6 +134,7 @@ find_package(MPI REQUIRED)
 if(OM3_OPENMP)
   find_package(OpenMP REQUIRED)
 endif()
+find_package(FoX 4.1.2 REQUIRED)
 find_package(NetCDF 4.7.3 REQUIRED Fortran)
 find_package(ESMF 8.3.0 MODULE REQUIRED)
 find_package(fms COMPONENTS R8 REQUIRED)
@@ -145,17 +153,17 @@ add_subdirectory(share)
 add_subdirectory(CDEPS)
 
 # Ocean component (MOM6)
-if(OM3_MOM6)
+if(OM3_BUILD_MOM6)
   add_subdirectory(MOM6)
 endif()
 
 # Sea-ice component (CICE6)
-if(OM3_CICE6)
+if(OM3_BUILD_CICE6)
   add_subdirectory(CICE)
 endif()
 
 # Wave component (WW3)
-if(OM3_WW3)
+if(OM3_BUILD_WW3)
   add_subdirectory(WW3)
 endif()
 
@@ -170,19 +178,19 @@ foreach(CONF IN LISTS KnownConfigurations)
 
   set(ComponentsTargets "")
   if(OM3_${CONF} MATCHES MOM6)
-    list(APPEND ComponentsTargets OM3_mom6)
+    list(APPEND ComponentsTargets AccessOM3::mom6)
   else()
-    list(APPEND ComponentsTargets OM3_cdeps_docn)
+    list(APPEND ComponentsTargets AccessOM3::cdeps_docn)
   endif()
   if(OM3_${CONF} MATCHES CICE6)
-    list(APPEND ComponentsTargets OM3_cice)
+    list(APPEND ComponentsTargets AccessOM3::cice)
   else()
-    list(APPEND ComponentsTargets OM3_cdeps_dice)
+    list(APPEND ComponentsTargets AccessOM3::cdeps_dice)
   endif()
   if(OM3_${CONF} MATCHES WW3)
-    list(APPEND ComponentsTargets OM3_ww3)
+    list(APPEND ComponentsTargets AccessOM3::ww3)
   else()
-    list(APPEND ComponentsTargets OM3_cdeps_dwav)
+    list(APPEND ComponentsTargets AccessOM3::cdeps_dwav)
   endif()
 
   # We use the CESM driver from CMEPS
@@ -193,7 +201,7 @@ foreach(CONF IN LISTS KnownConfigurations)
   )
   target_link_libraries(OM3_cesm_driver_${CONF}
     PUBLIC esmf
-    PRIVATE ${ComponentsTargets} OM3_cdeps_drof OM3_cdeps_datm OM3_cmeps OM3_nuopc_cap_share OM3_share OM3_timing
+    PRIVATE ${ComponentsTargets} AccessOM3::cdeps_drof AccessOM3::cdeps_datm AccessOM3::cmeps AccessOM3::nuopc_cap_share AccessOM3::share AccessOM3::timing
   )
   target_compile_definitions(OM3_cesm_driver_${CONF} PRIVATE MED_PRESENT
                                                              ATM_PRESENT
@@ -205,7 +213,7 @@ foreach(CONF IN LISTS KnownConfigurations)
   )
 
   add_executable(OM3_${CONF} CMEPS/CMEPS/cesm/driver/esmApp.F90)
-  target_link_libraries(OM3_${CONF} PRIVATE OM3_cesm_driver_${CONF} OM3_share esmf)
+  target_link_libraries(OM3_${CONF} PRIVATE OM3_cesm_driver_${CONF} AccessOM3::share esmf)
 
   set_target_properties(OM3_${CONF} PROPERTIES
     LINKER_LANGUAGE Fortran
@@ -236,25 +244,13 @@ endif()
 
 # Libraries
 if(OM3_LIB_INSTALL)
-  # Library of common stuff
-  add_library(OM3_libcommon STATIC
-    $<TARGET_OBJECTS:OM3_nuopc_cap_share>
-    $<TARGET_OBJECTS:OM3_share>
-    $<TARGET_OBJECTS:OM3_timing>
+  configure_package_config_file(
+    cmake/AccessOM3Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/AccessOM3Config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
   )
-  set_target_properties(OM3_libcommon PROPERTIES
-    OUTPUT_NAME access-common
+  install(FILES ${CMAKE_SOURCE_DIR}/cmake/FindFoX.cmake ${CMAKE_CURRENT_BINARY_DIR}/AccessOM3Config.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+    COMPONENT AccessOM3_Development
   )
-  install(TARGETS OM3_libcommon
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-  )
-  # Fortran module files are a special case, as currently there is no standard
-  # way of handling them in CMake
-  get_target_property(timing_moddir OM3_timing Fortran_MODULE_DIRECTORY)
-  get_target_property(share_moddir OM3_share Fortran_MODULE_DIRECTORY)
-  get_target_property(nuopc_cap_share_moddir OM3_nuopc_cap_share Fortran_MODULE_DIRECTORY)
-  install(DIRECTORY ${timing_moddir}/ ${share_moddir}/ ${nuopc_cap_share_moddir}/ DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-common)
-
 endif()

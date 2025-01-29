@@ -7,10 +7,16 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   set(fortran_compile_flags -r8)
 endif()
 
+add_compile_definitions(
+  _USE_GENERIC_TRACER
+  _USE_MOM6_DIAG
+)
+
 ### Targets
 
 ## MOM6 library
 add_fortran_library(OM3_mom6 mod STATIC)
+add_library(AccessOM3::mom6 ALIAS OM3_mom6)
 target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/src/framework>)
 if(OM3_MOM_SYMMETRIC)
   target_include_directories(OM3_mom6 PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MOM6/config_src/memory/dynamic_symmetric>)
@@ -20,14 +26,13 @@ endif()
 target_compile_options(OM3_mom6 PRIVATE "$<$<COMPILE_LANGUAGE:Fortran>:${fortran_compile_flags}>")
 target_link_libraries(OM3_mom6
   PUBLIC esmf
-  PRIVATE OM3_nuopc_cap_share OM3_share FMS::fms_r8
+  PRIVATE AccessOM3::nuopc_cap_share AccessOM3::share FMS::fms_r8
 )
 target_sources(OM3_mom6 PRIVATE
   MOM6/src/ALE/coord_adapt.F90
   MOM6/src/ALE/coord_hycom.F90
   MOM6/src/ALE/coord_rho.F90
   MOM6/src/ALE/coord_sigma.F90
-  MOM6/src/ALE/coord_slight.F90
   MOM6/src/ALE/coord_zlike.F90
   MOM6/src/ALE/MOM_ALE.F90
   MOM6/src/ALE/MOM_hybgen_regrid.F90
@@ -46,6 +51,7 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/ALE/regrid_edge_values.F90
   MOM6/src/ALE/regrid_interp.F90
   MOM6/src/ALE/regrid_solvers.F90
+  MOM6/src/ALE/remapping_attic.F90
 
   MOM6/src/core/MOM_barotropic.F90
   MOM6/src/core/MOM_boundary_update.F90
@@ -56,10 +62,10 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/core/MOM_CoriolisAdv.F90
   MOM6/src/core/MOM_density_integrals.F90
   MOM6/src/core/MOM_dynamics_split_RK2.F90
+  MOM6/src/core/MOM_dynamics_split_RK2b.F90
   MOM6/src/core/MOM_dynamics_unsplit.F90
   MOM6/src/core/MOM_dynamics_unsplit_RK2.F90
   MOM6/src/core/MOM.F90
-  MOM6/src/core/MOM_forcing_type.F90
   MOM6/src/core/MOM_grid.F90
   MOM6/src/core/MOM_interface_heights.F90
   MOM6/src/core/MOM_isopycnal_slopes.F90
@@ -75,21 +81,27 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/core/MOM_verticalGrid.F90
 
   MOM6/src/diagnostics/MOM_debugging.F90
+  MOM6/src/diagnostics/MOM_diagnose_MLD.F90
   MOM6/src/diagnostics/MOM_diagnostics.F90
+  MOM6/src/diagnostics/MOM_harmonic_analysis.F90
   MOM6/src/diagnostics/MOM_obsolete_diagnostics.F90
   MOM6/src/diagnostics/MOM_obsolete_params.F90
-  MOM6/src/diagnostics/MOM_PointAccel.F90
   MOM6/src/diagnostics/MOM_spatial_means.F90
   MOM6/src/diagnostics/MOM_sum_output.F90
   MOM6/src/diagnostics/MOM_wave_speed.F90
-  MOM6/src/diagnostics/MOM_wave_structure.F90
 
   MOM6/src/equation_of_state/MOM_EOS.F90
+  MOM6/src/equation_of_state/MOM_EOS_Jackett06.F90
   MOM6/src/equation_of_state/MOM_EOS_linear.F90
-  MOM6/src/equation_of_state/MOM_EOS_NEMO.F90
+  MOM6/src/equation_of_state/MOM_EOS_Roquet_rho.F90
+  MOM6/src/equation_of_state/MOM_EOS_Roquet_SpV.F90
   MOM6/src/equation_of_state/MOM_EOS_TEOS10.F90
   MOM6/src/equation_of_state/MOM_EOS_UNESCO.F90
   MOM6/src/equation_of_state/MOM_EOS_Wright.F90
+  MOM6/src/equation_of_state/MOM_EOS_Wright_full.F90
+  MOM6/src/equation_of_state/MOM_EOS_Wright_red.F90
+  MOM6/src/equation_of_state/MOM_EOS_base_type.F90
+  MOM6/src/equation_of_state/MOM_temperature_convert.F90
   MOM6/src/equation_of_state/MOM_TFreeze.F90
 
   MOM6/src/equation_of_state/TEOS10/gsw_chem_potential_water_t_exact.f90
@@ -128,12 +140,10 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/framework/MOM_array_transform.F90
   MOM6/src/framework/MOM_checksums.F90
   MOM6/src/framework/MOM_coms.F90
-  MOM6/src/framework/MOM_coupler_types.F90
   MOM6/src/framework/MOM_cpu_clock.F90
   MOM6/src/framework/MOM_data_override.F90
   MOM6/src/framework/MOM_diag_mediator.F90
   MOM6/src/framework/MOM_diag_remap.F90
-  MOM6/src/framework/MOM_diag_vkernels.F90
   MOM6/src/framework/MOM_document.F90
   MOM6/src/framework/MOM_domains.F90
   MOM6/src/framework/MOM_dyn_horgrid.F90
@@ -146,7 +156,9 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/framework/MOM_interpolate.F90
   MOM6/src/framework/MOM_intrinsic_functions.F90
   MOM6/src/framework/MOM_io.F90
+  MOM6/src/framework/MOM_io_file.F90
   MOM6/src/framework/MOM_memory_macros.h
+  MOM6/src/framework/MOM_netcdf.F90
   MOM6/src/framework/MOM_random.F90
   MOM6/src/framework/MOM_restart.F90
   MOM6/src/framework/MOM_safe_alloc.F90
@@ -193,9 +205,12 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/parameterizations/lateral/MOM_MEKE.F90
   MOM6/src/parameterizations/lateral/MOM_MEKE_types.F90
   MOM6/src/parameterizations/lateral/MOM_mixed_layer_restrat.F90
+  MOM6/src/parameterizations/lateral/MOM_self_attr_load.F90
   MOM6/src/parameterizations/lateral/MOM_spherical_harmonics.F90
+  MOM6/src/parameterizations/lateral/MOM_streaming_filter.F90
   MOM6/src/parameterizations/lateral/MOM_thickness_diffuse.F90
   MOM6/src/parameterizations/lateral/MOM_tidal_forcing.F90
+  MOM6/src/parameterizations/lateral/MOM_Zanna_Bolton.F90
 
   MOM6/src/parameterizations/stochastic/MOM_stochastics.F90
 
@@ -231,7 +246,6 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/tracer/ideal_age_example.F90
   MOM6/src/tracer/ISOMIP_tracer.F90
   MOM6/src/tracer/MOM_CFC_cap.F90
-  MOM6/src/tracer/MOM_generic_tracer.F90
   MOM6/src/tracer/MOM_hor_bnd_diffusion.F90
   MOM6/src/tracer/MOM_neutral_diffusion.F90
   MOM6/src/tracer/MOM_OCMIP2_CFC.F90
@@ -291,9 +305,47 @@ target_sources(OM3_mom6 PRIVATE
 
   MOM6/config_src/external/drifters/MOM_particles.F90
   MOM6/config_src/external/drifters/MOM_particles_types.F90
-  MOM6/config_src/external/GFDL_ocean_BGC/FMS_coupler_util.F90
-  MOM6/config_src/external/GFDL_ocean_BGC/generic_tracer.F90
-  MOM6/config_src/external/GFDL_ocean_BGC/generic_tracer_utils.F90
+
+  GFDL_generic_tracers/generic_tracers/FMS_coupler_util.F90
+  GFDL_generic_tracers/generic_tracers/generic_tracer.F90
+  GFDL_generic_tracers/generic_tracers/generic_tracer_utils.F90
+  GFDL_generic_tracers/generic_tracers/FMS_ocmip2_co2calc.F90
+  GFDL_generic_tracers/generic_tracers/generic_abiotic.F90
+  GFDL_generic_tracers/generic_tracers/generic_age.F90
+  GFDL_generic_tracers/generic_tracers/generic_argon.F90
+  GFDL_generic_tracers/generic_tracers/generic_BLING.F90
+  GFDL_generic_tracers/generic_tracers/generic_blres.F90
+  GFDL_generic_tracers/generic_tracers/generic_CFC.F90
+  GFDL_generic_tracers/generic_tracers/generic_COBALT.F90
+  GFDL_generic_tracers/generic_tracers/generic_ERGOM.F90
+  GFDL_generic_tracers/generic_tracers/generic_miniBLING.F90
+  GFDL_generic_tracers/generic_tracers/generic_SF6.F90
+  GFDL_generic_tracers/generic_tracers/generic_TOPAZ.F90
+  GFDL_generic_tracers/generic_tracers/generic_WOMBATlite.F90
+
+  GFDL_generic_tracers/mocsy/src/mocsy_buffesm.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_constants.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_depth2press.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_derivauto.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_derivnum.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_DNAD.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_errors.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_f2pCO2.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_gasx.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_p2fCO2.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_p80.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_phsolvers.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_rho.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_rhoinsitu.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_singledouble.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_sw_adtg.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_sw_ptmp.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_sw_temp.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_tis.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_tpot.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_vars.F90
+  GFDL_generic_tracers/mocsy/src/mocsy_varsolver.F90
+
   MOM6/config_src/external/ODA_hooks/kdtree.f90
   MOM6/config_src/external/ODA_hooks/ocean_da_core.F90
   MOM6/config_src/external/ODA_hooks/ocean_da_types.F90
@@ -302,43 +354,58 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/config_src/external/stochastic_physics/get_stochy_pattern.F90
   MOM6/config_src/external/stochastic_physics/stochastic_physics.F90
 
-  MOM6/config_src/infra/FMS1/MOM_coms_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_constants.F90
-  MOM6/config_src/infra/FMS1/MOM_couplertype_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_cpu_clock_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_data_override_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_diag_manager_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_domain_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_ensemble_manager_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_error_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_interp_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_io_infra.F90
-  MOM6/config_src/infra/FMS1/MOM_time_manager.F90
+  MOM6/config_src/infra/FMS2/MOM_coms_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_constants.F90
+  MOM6/config_src/infra/FMS2/MOM_cpu_clock_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_data_override_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_diag_manager_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_domain_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_ensemble_manager_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_error_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_interp_infra.F90
+  MOM6/config_src/infra/FMS2/MOM_time_manager.F90
 
-  MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
   MOM6/config_src/drivers/nuopc_cap/mom_cap_time.F90
-  MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90
   MOM6/config_src/drivers/nuopc_cap/mom_surface_forcing_nuopc.F90
   MOM6/config_src/drivers/nuopc_cap/ocn_comp_NUOPC.F90
   MOM6/config_src/drivers/nuopc_cap/time_utils.F90
+
+  extra_sources/mom_cap_gtracer_flux.F90
 )
 add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap.F90)
-
+add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90)
+add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90)
+add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90)
+add_patched_source(OM3_mom6 MOM6/src/framework/MOM_coupler_types.F90)
+add_patched_source(OM3_mom6 MOM6/src/tracer/MOM_generic_tracer.F90)
+add_patched_source(OM3_mom6 MOM6/src/core/MOM_forcing_type.F90)
+add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_io_infra.F90)
+add_patched_source(OM3_mom6 MOM6/src/diagnostics/MOM_PointAccel.F90)
 ### Install and Export
 
 ## Library
 if(OM3_LIB_INSTALL)
   set_target_properties(OM3_mom6 PROPERTIES
     OUTPUT_NAME access-mom6
+    EXPORT_NAME mom6
   )
   install(TARGETS OM3_mom6
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    EXPORT AccessOM3mom6_Targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_RunTime NAMELINK_COMPONENT AccessOM3_Development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT AccessOM3_Development
   )
   # Fortran module files are a special case, as currently there is no standard
   # way of handling them in CMake
+  target_include_directories(OM3_mom6 PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-mom6>")
   get_target_property(mom_moddir OM3_mom6 Fortran_MODULE_DIRECTORY)
-  install(FILES ${mom_moddir}/ocn_comp_nuopc.mod DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-mom6)
+  install(FILES ${mom_moddir}/ocn_comp_nuopc.mod ${mom_moddir}/mom_cap_mod.mod
+    DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-mom6
+    COMPONENT AccessOM3_Development
+  )
   install(FILES ${mom_moddir}/mom_cap_mod.mod DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-mom6)
+  install(EXPORT AccessOM3mom6_Targets
+    FILE AccessOM3mom6Targets.cmake
+    NAMESPACE AccessOM3::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/AccessOM3
+  )
 endif()
