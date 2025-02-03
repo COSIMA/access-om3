@@ -1,4 +1,3 @@
-### Targets
 
 ## share library
 add_fortran_library(OM3_share mod/share STATIC)
@@ -46,7 +45,9 @@ target_sources(OM3_share PRIVATE
   # The following file is a stub.
   stubs/mct_mod.F90
 )
+add_patched_source(OM3_share CESM_share/src/nuopc_shr_methods.F90)
 add_patched_source(OM3_share CESM_share/src/shr_const_mod.F90)
+
 if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
   # CESM reduces the precision and increases speed for the following file
   set_source_files_properties(CESM_share/src/shr_wv_sat_mod.F90 PROPERTIES COMPILE_FLAGS "-fimf-precision=low -fp-model fast")
