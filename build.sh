@@ -11,7 +11,7 @@ set -e
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"  # dir of this script
 
 BUILD_TYPES=('Release')
-COMPILER_VERSION=2021.6.0
+COMPILER_VERSION=2021.6.0 
 OPENMPI_VERSION=4.1.4
 
 
