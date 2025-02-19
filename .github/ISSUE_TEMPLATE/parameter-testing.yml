@@ -1,0 +1,41 @@
+name: Parameter Testing
+description: Template for tracking parameter testing issues
+title: "[Parameter Testing] "
+labels: "Parameter-testing"
+assignees: [optional-assignee]
+body:
+  - type: markdown
+    attributes: 
+      value: |
+        Please fill out the sections below to clearly and concisely describe: 
+        1. the parameter(s) tested,
+        2. the exact version of the test tool (Expts_manager) used.
+
+  - type: textarea
+    attributes:
+      label: Parameter Tests Description
+      placeholder: "including a short description and Parameter Name(s): Value(s) Tested"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Expts_manager Version
+      placeholder: Git URL including commit hash
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: YAML input file
+      placeholder: |
+        ```yaml
+        Copy the yaml input file used
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    attributes: 
+      label: Additional Information
+      placeholder: Any other relevant information...
