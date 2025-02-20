@@ -229,7 +229,7 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/parameterizations/vertical/MOM_full_convection.F90
   MOM6/src/parameterizations/vertical/MOM_geothermal.F90
   MOM6/src/parameterizations/vertical/MOM_internal_tide_input.F90
-  MOM6/src/parameterizations/vertical/MOM_kappa_shear.F90
+ # MOM6/src/parameterizations/vertical/MOM_kappa_shear.F90
   MOM6/src/parameterizations/vertical/MOM_opacity.F90
   MOM6/src/parameterizations/vertical/MOM_regularize_layers.F90
   MOM6/src/parameterizations/vertical/MOM_set_diffusivity.F90
@@ -381,6 +381,7 @@ add_patched_source(OM3_mom6 MOM6/src/tracer/MOM_generic_tracer.F90)
 add_patched_source(OM3_mom6 MOM6/src/core/MOM_forcing_type.F90)
 add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_io_infra.F90)
 add_patched_source(OM3_mom6 MOM6/src/diagnostics/MOM_PointAccel.F90)
+add_patched_source(OM3_mom6 MOM6/src/parameterizations/vertical/MOM_kappa_shear.F90)
 ### Install and Export
 
 ## Library
