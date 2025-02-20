@@ -1,0 +1,82 @@
+@PACKAGE_INIT@
+
+if(NOT AccessOM3_FIND_QUIETLY)
+  message(STATUS "Found AccessOM3: ${PACKAGE_PREFIX_DIR}")
+endif()
+
+# Available components
+
+# The following components are always available (order is important!)
+set(_supported_components timing share nuopc_cap_share cmeps cdeps mom6 cice ww3)
+
+# Check validity of requested components
+foreach(_comp ${AccessOM3_FIND_COMPONENTS})
+  if (NOT _comp IN_LIST _supported_components)
+    set(AccessOM3_FOUND False)
+    set(AccessOM3_NOT_FOUND_MESSAGE "Unsupported component: ${_comp}")
+  endif()
+endforeach()
+
+# Some components are only available if they were built
+if ((mom6 IN_LIST ${AccessOM3_FIND_COMPONENTS}) AND (NOT @OM3_BUILD_MOM6@))
+  set(AccessOM3_FOUND False)
+  set(AccessOM3_NOT_FOUND_MESSAGE "The following component is not available: mom6")
+endif()
+if ((cice IN_LIST ${AccessOM3_FIND_COMPONENTS}) AND (NOT @OM3_BUILD_CICE6@))
+  set(AccessOM3_FOUND False)
+  set(AccessOM3_NOT_FOUND_MESSAGE "The following component is not available: cice")
+endif()
+if ((ww3 IN_LIST ${AccessOM3_FIND_COMPONENTS}) AND (NOT @OM3_BUILD_WW3@))
+  set(AccessOM3_FOUND False)
+  set(AccessOM3_NOT_FOUND_MESSAGE "The following component is not available: ww3")
+endif()
+
+# Build a list of all the required components, taking into account their dependencies
+set(_required_components ${AccessOM3_FIND_COMPONENTS})
+if(cice IN_LIST _required_components)
+  list(APPEND _required_components cdeps nuopc_cap_share share timing)
+endif()
+if(mom6 IN_LIST _required_components)
+  list(APPEND _required_components nuopc_cap_share share)
+endif()
+if(cdeps IN_LIST _required_components)
+  list(APPEND _required_components cmeps share nuopc_cap_share)
+endif()
+if(cmeps IN_LIST _required_components)
+  list(APPEND _required_components nuopc_cap_share share timing)
+endif()
+if(nuopc_cap_share IN_LIST _required_components)
+  list(APPEND _required_components share timing)
+endif()
+if(share IN_LIST _required_components)
+  list(APPEND _required_components timing)
+endif()
+list(REMOVE_DUPLICATES _required_components)
+
+if(NOT AccessOM3_FIND_QUIETLY)
+  message(STATUS "  - AccessOM3 Components: ${_required_components}")
+endif()
+
+# Include required targets. We do this by looping over the _supported_components
+# list because the order in which targets are loaded matters.
+foreach(_comp ${_supported_components})
+  if (_comp IN_LIST _required_components)
+    include("${CMAKE_CURRENT_LIST_DIR}/AccessOM3${_comp}Targets.cmake")
+  endif()
+endforeach()
+
+# Find dependencies of required components
+include(CMakeFindDependencyMacro)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
+
+if (cdeps IN_LIST _required_components)
+  find_dependency(FoX)
+endif()
+if (mom6 IN_LIST _required_components)
+  find_dependency(fms COMPONENTS R8 REQUIRED)
+endif()
+
+list(REMOVE_ITEM CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
+
+check_required_components(_supported_components)
