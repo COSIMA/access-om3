@@ -1,8 +1,3 @@
-### Subdirectories
-
-## Build FoX
-add_subdirectory(fox)
-
 ### Targets
 
 ## Common library
