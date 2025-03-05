@@ -26,6 +26,7 @@ target_sources(OM3_cmeps PRIVATE
   CMEPS/mediator/med_merge_mod.F90
   CMEPS/mediator/med_constants_mod.F90
   CMEPS/mediator/med_kind_mod.F90
+  CMEPS/mediator/esmFldsExchange_access_mod.F90
   CMEPS/mediator/esmFldsExchange_ufs_mod.F90
   CMEPS/mediator/med_phases_prep_lnd_mod.F90
   CMEPS/mediator/med_phases_prep_atm_mod.F90
@@ -79,7 +80,7 @@ if(OM3_LIB_INSTALL)
   # way of handling them in CMake
   target_include_directories(OM3_cmeps PUBLIC "$<INSTALL_INTERFACE:${CMAKE_INSTALL_MODULEDIR}/access-cmeps>")
   get_target_property(cmeps_moddir OM3_cmeps Fortran_MODULE_DIRECTORY)
-  install(FILES ${cmeps_moddir}/med.mod ${cmeps_moddir}/med_time_mod.mod ${cmeps_moddir}/med_internalstate_mod.mod
+  install(FILES ${cmeps_moddir}/med.mod ${cmeps_moddir}/med_internalstate_mod.mod
     DESTINATION ${CMAKE_INSTALL_MODULEDIR}/access-cmeps
     COMPONENT AccessOM3_Development
   )
