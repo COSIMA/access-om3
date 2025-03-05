@@ -18,7 +18,7 @@ target_sources(OM3_cmeps PRIVATE
   CMEPS/mediator/med_phases_prep_ice_mod.F90
   CMEPS/mediator/med_phases_prep_glc_mod.F90
   CMEPS/mediator/med_internalstate_mod.F90
-  CMEPS/mediator/med_phases_profile_mod.F90
+  # CMEPS/mediator/med_phases_profile_mod.F90
   CMEPS/mediator/esmFldsExchange_hafs_mod.F90
   CMEPS/mediator/med_phases_prep_rof_mod.F90
   CMEPS/mediator/esmFldsExchange_cesm_mod.F90
@@ -49,6 +49,7 @@ target_sources(OM3_cmeps PRIVATE
 )
 
 add_patched_source(OM3_cmeps CMEPS/mediator/med_phases_history_mod.F90)
+add_patched_source(OM3_cmeps CMEPS/mediator/med_phases_profile_mod.F90)
 
 ## NUOPC cap share
 add_fortran_library(OM3_nuopc_cap_share mod/nuopc_cap_share STATIC)
