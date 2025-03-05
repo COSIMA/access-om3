@@ -61,7 +61,7 @@ target_sources(OM3_nuopc_cap_share PRIVATE
   CMEPS/cesm/nuopc_cap_share/driver_pio_mod.F90
   CMEPS/cesm/nuopc_cap_share/esm_utils_mod.F90
   CMEPS/cesm/nuopc_cap_share/glc_elevclass_mod.F90
-  CMEPS/cesm/nuopc_cap_share/nuopc_shr_methods.F90
+  # CMEPS/cesm/nuopc_cap_share/nuopc_shr_methods.F90
 )
 
 
