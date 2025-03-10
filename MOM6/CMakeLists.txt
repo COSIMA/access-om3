@@ -263,6 +263,8 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/src/tracer/pseudo_salt_tracer.F90
   MOM6/src/tracer/RGC_tracer.F90
   MOM6/src/tracer/tracer_example.F90
+  MOM6/src/tracer/MARBL_forcing_mod.F90
+  MOM6/src/tracer/MARBL_tracers.F90
 
   MOM6/src/user/adjustment_initialization.F90
   MOM6/src/user/baroclinic_zone_initialization.F90
@@ -305,6 +307,11 @@ target_sources(OM3_mom6 PRIVATE
 
   MOM6/config_src/external/drifters/MOM_particles.F90
   MOM6/config_src/external/drifters/MOM_particles_types.F90
+
+  MOM6/config_src/external/MARBL/marbl_constants_mod.F90
+  MOM6/config_src/external/MARBL/marbl_interface.F90
+  MOM6/config_src/external/MARBL/marbl_interface_public_types.F90
+  MOM6/config_src/external/MARBL/marbl_logging.F90
 
   GFDL_generic_tracers/generic_tracers/FMS_coupler_util.F90
   GFDL_generic_tracers/generic_tracers/generic_tracer.F90
