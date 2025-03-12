@@ -35,8 +35,8 @@ message(STATUS "  - CICE6-WW3         ${OM3_ENABLE_CICE6-WW3}")
 message(STATUS "  - MOM6-CICE6-WW3    ${OM3_ENABLE_MOM6-CICE6-WW3}")
 
 # Build options
-option(OM3_BIN_INSTALL   "Instal ACCESS-OM3 executables" OFF)
-option(OM3_LIB_INSTALL   "Instal ACCESS-OM3 libraries" ON)
+option(OM3_BIN_INSTALL   "Install ACCESS-OM3 executables" OFF)
+option(OM3_LIB_INSTALL   "Install ACCESS-OM3 libraries" ON)
 option(OM3_OPENMP        "Enable OpenMP threading" OFF)
 option(OM3_MOM_SYMMETRIC "Use symmetric memory" OFF)
 set(OM3_CICE_IO   "PIO" CACHE STRING "CICE OPTIONS: Choose IO options.")
