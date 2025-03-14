@@ -2,15 +2,17 @@
 <br/> <br/>
 [![Compilation Status](https://github.com/COSIMA/access-om3/actions/workflows/compilation.yml/badge.svg)](https://github.com/COSIMA/access-om3/actions/workflows/compilation.yml)
 
+<i><b>WARNING:</b> this is a pre-release version!</i>
+
 # ACCESS-OM3
 
 ACCESS-OM3 is a global coupled ocean - sea ice - wave model being developed by [COSIMA](http://www.cosima.org.au) and [ACCESS-NRI](https://www.access-nri.org.au/). 
 
-<i><b>WARNING:</b> this is a very early pre-release development version and doesn't yet work!</i>
+This repository only stores the model source code. The model configurations are available from separate repositories, as explained [here](https://github.com/COSIMA/access-om3/wiki/Configurations#cmeps-coupled-configurations).
 
 # Downloading
 
-NCI-based users of ACCESS-OM3 typically won't need to download this repository, as there are pre-built executables available on NCI (see the [quick start](https://github.com/COSIMA/access-om3/wiki/Quick-start)).
+NCI-based users of ACCESS-OM3 typically won't need to download this repository, as there are pre-built executables available on NCI which are used by the [standard configurations](https://github.com/COSIMA/access-om3/wiki/Configurations#cmeps-coupled-configurations); see the [quick start instructions](https://github.com/COSIMA/access-om3/wiki/Quick-start) for how to run these.
 
 This respository contains submodules, so you will need to clone it with the `--recursive` flag:
 ```
