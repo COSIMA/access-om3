@@ -112,7 +112,7 @@ set_target_properties(OM3_ww3_strt PROPERTIES
   LINKER_LANGUAGE Fortran
   OUTPUT_NAME ww3_strt
 )
-target_link_libraries(OM3_ww3_strt PRIVATE AccessOM3::ww3)
+target_link_libraries(OM3_ww3_strt PRIVATE AccessOM3::ww3 MPI::MPI_Fortran)
 
 # ww3_outf
 add_executable(OM3_ww3_outf WW3/model/src/ww3_outf.F90)
