@@ -370,17 +370,26 @@ target_sources(OM3_mom6 PRIVATE
   MOM6/config_src/drivers/nuopc_cap/ocn_comp_NUOPC.F90
   MOM6/config_src/drivers/nuopc_cap/time_utils.F90
 
-  extra_sources/mom_cap_gtracer_flux.F90
+#   extra_sources/mom_cap_gtracer_flux.F90
+  MOM6/config_src/drivers/nuopc_cap/mom_cap.F90
+  MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
+  MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90
+  MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90
+  MOM6/src/framework/MOM_coupler_types.F90
+  MOM6/src/tracer/MOM_generic_tracer.F90
+  MOM6/src/core/MOM_forcing_type.F90
+  MOM6/config_src/infra/FMS2/MOM_io_infra.F90
+  MOM6/src/diagnostics/MOM_PointAccel.F90
 )
-add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap.F90)
-add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90)
-add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90)
-add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90)
-add_patched_source(OM3_mom6 MOM6/src/framework/MOM_coupler_types.F90)
-add_patched_source(OM3_mom6 MOM6/src/tracer/MOM_generic_tracer.F90)
-add_patched_source(OM3_mom6 MOM6/src/core/MOM_forcing_type.F90)
-add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_io_infra.F90)
-add_patched_source(OM3_mom6 MOM6/src/diagnostics/MOM_PointAccel.F90)
+# add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap.F90)
+# add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90)
+# add_patched_source(OM3_mom6 MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90)
+# add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90)
+# add_patched_source(OM3_mom6 MOM6/src/framework/MOM_coupler_types.F90)
+# add_patched_source(OM3_mom6 MOM6/src/tracer/MOM_generic_tracer.F90)
+# add_patched_source(OM3_mom6 MOM6/src/core/MOM_forcing_type.F90)
+# add_patched_source(OM3_mom6 MOM6/config_src/infra/FMS2/MOM_io_infra.F90)
+# add_patched_source(OM3_mom6 MOM6/src/diagnostics/MOM_PointAccel.F90)
 ### Install and Export
 
 ## Library
