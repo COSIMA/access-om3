@@ -1,5 +1,7 @@
 diff --git a/MOM6/config_src/infra/FMS2/MOM_io_infra.F90 b/MOM6/config_src/infra/FMS2/MOM_io_infra.F90.new
-index a43b4e9..169ed25 100644
+old mode 100644
+new mode 100755
+index a43b4e9..169ed25
 --- a/MOM6/config_src/infra/FMS2/MOM_io_infra.F90
 +++ b/MOM6/config_src/infra/FMS2/MOM_io_infra.F90.new
 @@ -376,8 +376,7 @@ subroutine open_ASCII_file(unit, file, action, threading, fileset)

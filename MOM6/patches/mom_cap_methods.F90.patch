@@ -1,5 +1,7 @@
 diff --git a/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90 b/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90.new
-index 180202c..c4b57b4 100644
+old mode 100644
+new mode 100755
+index 809a507..067e43c
 --- a/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90
 +++ b/MOM6/config_src/drivers/nuopc_cap/mom_cap_methods.F90.new
 @@ -20,8 +20,15 @@ use MOM_ocean_model_nuopc,     only: ocean_public_type, ocean_state_type
@@ -37,19 +39,18 @@ index 180202c..c4b57b4 100644
    integer                       , intent(inout) :: rc                 !< Return code
  
    ! Local Variables
-@@ -89,8 +102,11 @@ subroutine mom_import(ocean_public, ocean_grid, importState, ice_ocean_boundary,
+@@ -89,7 +102,10 @@ subroutine mom_import(ocean_public, ocean_grid, importState, ice_ocean_boundary,
    real(ESMF_KIND_R8), allocatable :: tauy(:,:)
    real(ESMF_KIND_R8), allocatable :: stkx(:,:,:)
    real(ESMF_KIND_R8), allocatable :: stky(:,:,:)
 +  real(ESMF_KIND_R8), allocatable :: work(:,:)
-   logical                         :: med_has_co2
    character(len=*)  , parameter   :: subname = '(mom_import)'
 +  character(len=256)              :: stdname
 +  integer                         :: field_index
  
    rc = ESMF_SUCCESS
  
-@@ -552,6 +568,48 @@ subroutine mom_import(ocean_public, ocean_grid, importState, ice_ocean_boundary,
+@@ -551,6 +567,48 @@ subroutine mom_import(ocean_public, ocean_grid, importState, ice_ocean_boundary,
        deallocate(stkx,stky)
    endif
  

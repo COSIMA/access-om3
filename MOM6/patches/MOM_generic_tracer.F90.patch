@@ -1,5 +1,7 @@
 diff --git a/MOM6/src/tracer/MOM_generic_tracer.F90 b/MOM6/src/tracer/MOM_generic_tracer.F90.new
-index 6b10d15..e092aa7 100644
+old mode 100644
+new mode 100755
+index 6b10d15..e092aa7
 --- a/MOM6/src/tracer/MOM_generic_tracer.F90
 +++ b/MOM6/src/tracer/MOM_generic_tracer.F90.new
 @@ -21,7 +21,7 @@ module MOM_generic_tracer

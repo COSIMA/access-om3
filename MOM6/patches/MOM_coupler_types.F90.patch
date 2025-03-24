@@ -1,5 +1,7 @@
 diff --git a/MOM6/src/framework/MOM_coupler_types.F90 b/MOM6/src/framework/MOM_coupler_types.F90.new
-index b931a2d..cac9309 100644
+old mode 100644
+new mode 100755
+index b931a2d..cac9309
 --- a/MOM6/src/framework/MOM_coupler_types.F90
 +++ b/MOM6/src/framework/MOM_coupler_types.F90.new
 @@ -9,7 +9,10 @@ use MOM_couplertype_infra, only : CT_set_diags, CT_send_data, CT_write_chksums,

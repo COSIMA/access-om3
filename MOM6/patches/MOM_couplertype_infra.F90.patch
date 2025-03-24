@@ -1,5 +1,7 @@
 diff --git a/MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90 b/MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90.new
-index 3bcccc1..50fd5b0 100644
+old mode 100644
+new mode 100755
+index 3bcccc1..50fd5b0
 --- a/MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90
 +++ b/MOM6/config_src/infra/FMS2/MOM_couplertype_infra.F90.new
 @@ -9,7 +9,10 @@ use coupler_types_mod, only : coupler_type_write_chksums, coupler_type_redistrib

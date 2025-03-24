@@ -1,5 +1,5 @@
 diff --git a/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90 b/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90.new
-index 329f436..7acd6c8 100644
+index a835760..e07c0f8 100644
 --- a/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90
 +++ b/MOM6/config_src/drivers/nuopc_cap/mom_ocean_model_nuopc.F90.new
 @@ -20,6 +20,7 @@ use MOM_coms,                only : field_chksum
