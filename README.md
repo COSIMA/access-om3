@@ -4,13 +4,11 @@
 
 # ACCESS-OM3
 
-ACCESS-OM3 is a global coupled ocean - sea ice - wave model being developed by [COSIMA](http://www.cosima.org.au) and [ACCESS-NRI](https://www.access-nri.org.au/). 
-
-<i><b>WARNING:</b> this is a very early pre-release development version and doesn't yet work!</i>
+ACCESS-OM3 is a global coupled ocean - sea ice - wave model being developed by [COSIMA](http://www.cosima.org.au) and [ACCESS-NRI](https://www.access-nri.org.au/). It consists of MOM6, CICE6 and (optionally) WaveWatch3, coupled with NUOPC and driven by prescribed surface forcing - see [here](https://access-om3-configs.access-hive.org.au/pages/Architecture/).
 
 # Downloading
 
-NCI-based users of ACCESS-OM3 typically won't need to download this repository, as there are pre-built executables available on NCI (see the [quick start](https://github.com/COSIMA/access-om3/wiki/Quick-start)).
+This repository only stores the model source code. Model configurations are available from branches in [github.com/ACCESS-NRI/access-om3-configs](https://github.com/ACCESS-NRI/access-om3-configs), which use pre-built executables available on [NCI](https://nci.org.au/), so NCI-based users of ACCESS-OM3 typically won't need to download this repository unless they need to make model component code changes.
 
 This respository contains submodules, so you will need to clone it with the `--recursive` flag:
 ```
@@ -20,13 +18,10 @@ git clone --recursive https://github.com/COSIMA/access-om3.git
 To update a previous clone of this repository to the latest version, you will need to do 
 ```
 git pull
-```
-followed by
-```
 git submodule update --init --recursive
 ```
 to update all the submodules.
 
-# Further information (including building and running the model)
+# Documentation (including building and running the model)
 
-See the [ACCESS-OM3 wiki](https://github.com/COSIMA/access-om3/wiki), particularly the [quick start](https://github.com/COSIMA/access-om3/wiki/Quick-start).
+See [access-om3-configs.access-hive.org.au](https://access-om3-configs.access-hive.org.au/), particularly the [quick start](https://access-om3-configs.access-hive.org.au/pages/Quick-start/).
